@@ -2,9 +2,16 @@
 
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  Suspense,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { en } from "../locales/en";
 import { vi } from "../locales/vi";
+import Loading from "../loading";
 
 const translations = { en, vi };
 
@@ -18,7 +25,7 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
   undefined
 );
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
+function LanguageProviderInner({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -26,14 +33,12 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLangState] = useState<"en" | "vi">("vi");
 
   useEffect(() => {
-
     const currentLang = searchParams.get("lang");
 
     const validLang =
       currentLang && ["vi", "en"].includes(currentLang) ? currentLang : "vi";
 
     setLangState(validLang === "en" ? "en" : "vi");
-
 
     if (currentLang !== validLang) {
       const params = new URLSearchParams(searchParams.toString());
@@ -60,6 +65,15 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     </LanguageContext.Provider>
   );
 }
+
+export function LanguageProvider({ children }: { children: React.ReactNode }) {
+  return (
+    <Suspense fallback={<Loading />}>
+      <LanguageProviderInner>{children}</LanguageProviderInner>
+    </Suspense>
+  );
+}
+
 export function useLang() {
   const context = useContext(LanguageContext);
   if (!context) throw new Error("useLang must be used within LanguageProvider");
