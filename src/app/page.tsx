@@ -74,7 +74,7 @@ export default function Home() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      const secret = process.env.NEXT_PUBLIC_SECRET_KEYBOARD!;
+      const secret = process.env.SECRET_KEYBOARD!;
       bufferRef.current += e.key.toLowerCase();
 
       if (bufferRef.current.length > secret.length) {
