@@ -183,8 +183,9 @@ export default function Home() {
           <Element name="home">
             <section className="flex w-full justify-between">
               <div className="flex flex-col w-full md:w-[74%]">
-                <p className="topic flex flex-wrap">
-                  Hi there, I`m Truong Thanh Long
+                <p className="topic flex flex-wrap gap-x-2.5">
+                  <span>{"Hi there, I'm"}</span>
+                  <span>Truong Thanh Long</span>
                 </p>
                 <TypeAnimation
                   sequence={[
