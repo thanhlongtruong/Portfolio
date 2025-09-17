@@ -54,9 +54,10 @@ import { SplitText } from "gsap/SplitText";
 import Paragraph from "./components/character";
 
 import { getFile } from "./api-client/save-file";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Loading from "./loading";
 import Lenis from "lenis";
+import { checkKeyboard } from "./api-client/check-keyboard";
 
 const LazyUploadFile = lazy(() => import("./components/upload-file"));
 
@@ -72,17 +73,26 @@ export default function Home() {
 
   const handleTurnOffDropdown = () => setDropdownMenu(false);
 
+  const mutationCallCheckKey = useMutation({
+    mutationFn: checkKeyboard,
+    retry: 0,
+    onSuccess: () => {
+      setUIUploadFile(true);
+    },
+  });
   useEffect(() => {
+    const buffer: string[] = [];
+
     const handleKeyDown = (e: KeyboardEvent) => {
-      const secret = process.env.SECRET_KEYBOARD!;
+      console.log(e.key.length);
+      if (e.key.length !== 1 || isUIUploadFile) return;
+      buffer.push(e.key.toLowerCase());
+      if (buffer.length > 6) buffer.length = 0;
+
       bufferRef.current += e.key.toLowerCase();
 
-      if (bufferRef.current.length > secret.length) {
-        bufferRef.current = bufferRef.current.slice(-secret.length);
-      }
-      if (bufferRef.current === secret) {
-        setUIUploadFile(true);
-        bufferRef.current = "";
+      if (buffer.length === 6) {
+        mutationCallCheckKey.mutate(buffer.join(""));
       }
     };
 
