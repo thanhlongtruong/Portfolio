@@ -1,8 +1,8 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: "https://yourdomain.com",
+  siteUrl: "https://portfolio-thanhlong.vercel.app/",
   generateRobotsTxt: true,
   changefreq: "daily",
-  priority: 0.7,
+  priority: 1,
   sitemapSize: 5000,
 };
