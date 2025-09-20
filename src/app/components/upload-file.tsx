@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { memo, useCallback } from "react";
 import {
   UploaderProvider,
   type UploadFn,
@@ -20,7 +20,7 @@ function UploadFile({
 
   const mutionSaveFile = useMutation({
     mutationFn: saveFile,
-    onSuccess: (res) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["cv"],
       });
@@ -81,4 +81,4 @@ function UploadFile({
   );
 }
 
-export default UploadFile;
+export default memo(UploadFile);

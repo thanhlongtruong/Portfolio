@@ -9,21 +9,8 @@ import { useLang } from "./contexts/languege";
 import { TypeAnimation } from "react-type-animation";
 import { Link as React_Scrool, Element } from "react-scroll";
 import { ListX, Menu, Phone } from "lucide-react";
-import { Swiper, SwiperSlide } from "swiper/react";
+
 import {
-  Navigation,
-  Pagination,
-  Autoplay,
-  EffectCoverflow,
-} from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/effect-coverflow";
-import {
-  PATH_ICONS_DESIGN,
-  PATH_ICONS_HOSTING,
-  PATH_ICONS_SOFTWARE,
   PathIconDatabase,
   PathIconDesign,
   PathIconFramework,
@@ -35,14 +22,21 @@ import {
 import {
   TravFruit,
   TravFruitAdmin,
+  TravFruitAdminDeploy,
   TravfruitAdminTechnologies,
   TravfruitBackendTechnologies,
+  TravFruitDeploy,
   TravfruitTechnologies,
 } from "./configs/lang_image_travfruit";
-import { Grapfood, GrapfoodTechnologies } from "./configs/lang_image_grapfood";
 import {
-  Cinefruit,
-  CinefruitTechnologies,
+  Grapfood,
+  GrapfoodDeploy,
+  GrapfoodTechnologies,
+} from "./configs/lang_image_grapfood";
+import {
+  CineFruit,
+  CineFruitDeploy,
+  CineFruitTechnologies,
 } from "./configs/lang_image_cinefruit";
 import { useEffect, useRef, useState, Suspense, lazy } from "react";
 
@@ -51,15 +45,18 @@ import moment from "moment";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
-import Paragraph from "./components/character";
 
 import { getFile } from "./api-client/save-file";
 import { useMutation, useQuery } from "@tanstack/react-query";
+
 import Loading from "./loading";
-import Lenis from "lenis";
 import { checkKeyboard } from "./api-client/check-keyboard";
 
 const LazyUploadFile = lazy(() => import("./components/upload-file"));
+
+const LazySwiperSlideComponent = lazy(
+  () => import("./components/swiper-slide")
+);
 
 export default function Home() {
   gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -80,11 +77,11 @@ export default function Home() {
       setUIUploadFile(true);
     },
   });
+
   useEffect(() => {
     const buffer: string[] = [];
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      console.log(e.key.length);
       if (e.key.length !== 1 || isUIUploadFile) return;
       buffer.push(e.key.toLowerCase());
       if (buffer.length > 6) buffer.length = 0;
@@ -102,7 +99,7 @@ export default function Home() {
     };
   }, []);
 
-  const { status, data, error } = useQuery({
+  const { data } = useQuery({
     queryKey: ["cv"],
     queryFn: getFile,
     refetchOnWindowFocus: false,
@@ -249,7 +246,7 @@ export default function Home() {
                           duration={1000}
                           offset={-115}
                           className="font-semibold cursor-pointer text-shadow-md hover:underline hover:underline-offset-4 text-shadow-pink-600">
-                          dự án
+                          đồ án
                         </React_Scrool>{" "}
                         môn học, tôi đã tiếp cận với các{" "}
                         <React_Scrool
@@ -263,11 +260,11 @@ export default function Home() {
                         khác nhau, các khái niệm về lập trình hướng đối
                         tượng(OOP), thuật toán,... Tôi{" "}
                         <span className="text-blue-600 font-bold">
-                          đang tìm kiếm công việc thực tập
+                          đang tìm kiếm công việc thực tập full-time
                         </span>{" "}
                         liên quan đến kiến thức đã học là lập trình web{" "}
                         <span className="font-semibold underline underline-offset-4 decoration-2 decoration-wavy decoration-blue-600">
-                          React
+                          NextJS-React
                         </span>{" "}
                         &{" "}
                         <span className="font-semibold underline underline-offset-4 decoration-2 decoration-wavy decoration-blue-600">
@@ -335,11 +332,11 @@ export default function Home() {
                         </React_Scrool>
                         . I{" "}
                         <span className="text-blue-600 font-extrabold">
-                          am looking for an internship
+                          am looking for a full-time internship
                         </span>{" "}
                         related to my knowledge of{" "}
                         <span className="font-semibold underline underline-offset-4 decoration-2 decoration-wavy decoration-blue-600">
-                          React
+                          NextJS-React
                         </span>{" "}
                         web programming &{" "}
                         <span className="font-semibold underline underline-offset-4 decoration-2 decoration-wavy decoration-blue-600">
@@ -423,16 +420,7 @@ export default function Home() {
 
           <Element name="skills">
             <section className="w-full gap-10 flex flex-col">
-              <div>
-                <h1 className="topic autoShow">{text.navbar.skills.label}</h1>
-                <Paragraph
-                  value={
-                    lang !== "en"
-                      ? "Thiết kế, phần mềm, framework, ngôn ngữ lập trình, library,... trong quá trình học và làm đồ án tại trường:"
-                      : "Design, software, framework, programming language, library during study and project at school:"
-                  }
-                />
-              </div>
+              <h1 className="topic autoShow">{text.navbar.skills.label}</h1>
 
               <div className="flex flex-col gap-y-4 text-base">
                 <div className="flex flex-wrap gap-5">
@@ -577,7 +565,7 @@ export default function Home() {
               <h1 className="topic autoShow">{text.navbar.projects.label}</h1>
               <div className="gap-y-28 flex flex-col w-full">
                 <div className="w-full gap-10 flex flex-col">
-                  <div className="gap-4 flex flex-col">
+                  <div className="gap-1 flex flex-col">
                     <div className="autoShow">
                       <p className="text-xl lg:text-2xl font-semibold">
                         FrontEnd GrapFood
@@ -586,88 +574,35 @@ export default function Home() {
                         Last updated April 27, 2024
                       </h6>
                     </div>
-                    <Paragraph
-                      value={
-                        lang != "en"
+
+                    <ul className="list-disc list-inside autoShow text-base lg:text-lg">
+                      <li>
+                        {lang != "en"
                           ? "Project đầu tiên sử dụng ReactJS để xây dựng giao diện cơ bản về GrapFood."
-                          : "The first project uses ReactJS to build the basic interface of GrapFood."
-                      }
-                    />
+                          : "The first project uses ReactJS to build the basic interface of GrapFood."}
+                      </li>
+                      <li>
+                        {lang != "en"
+                          ? "Khởi tạo: npx create-react-app my-app"
+                          : "Initialization: npx create-react-app my-app"}
+                      </li>
+                      <li>{"Style & Responsive Design: Tailwind CSS"}</li>
+                      <li>Format code: Prettier</li>
+                      <li>Deploy: GitHub Pages</li>
+                    </ul>
                   </div>
-                  <div>
-                    <Swiper
-                      modules={[
-                        Navigation,
-                        Pagination,
-                        EffectCoverflow,
-                        Autoplay,
-                      ]}
-                      slidesPerView={"auto"}
-                      pagination={{ clickable: true }}
-                      speed={2000}
-                      centeredSlides
-                      effect={"coverflow"}
-                      preventClicks
-                      loop={true}
-                      grabCursor
-                      coverflowEffect={{
-                        rotate: 0,
-                        stretch: 80,
-                        depth: 350,
-                        modifier: 1,
-                        slideShadows: true,
-                      }}
-                      navigation
-                      autoplay={{
-                        delay: 3000,
-                        disableOnInteraction: false,
-                      }}>
-                      {Grapfood.map((i, index) => (
-                        <SwiperSlide key={index} className="slide-inner">
-                          <div className="relative w-full h-[200px] md:h-[430px] lg:w-5xl lg:h-[570px] mx-auto">
-                            <Image
-                              src={i.path}
-                              alt={lang !== "en" ? i.vi : i.en}
-                              fill
-                              className="rounded-md"
-                            />
-                            <div className="absolute bottom-0 right-0 bg-[url('/background/zwartevilt.png')] text-center w-fit px-3 md:px-7 max-w-full py-1 rounded-tl-xl">
-                              <p className=" multi-color-text font-semibold font-mono w-fit md:text-base text-sm">
-                                {lang != "en" ? i.vi : i.en}
-                              </p>
-                            </div>
-                          </div>
-                        </SwiperSlide>
-                      ))}
-                    </Swiper>
-                  </div>
-                  <div className="flex flex-wrap items-center gap-4 w-full">
-                    {GrapfoodTechnologies.map((t) => (
-                      <div
-                        key={t.name}
-                        className="flex items-center py-1 px-4 w-fit border rounded-md border-stone-600 gap-x-1">
-                        {t.path != "" && (
-                          <Image
-                            aria-hidden
-                            src={t.path}
-                            alt={t.name}
-                            width={24}
-                            height={24}
-                            className="w-6 h-6 imageReveal"
-                          />
-                        )}
-                        <p className="imageReveal">{t.name}</p>
+                  <Suspense
+                    fallback={
+                      <div className="mx-auto text-lg w-fit h-fit py-1 px-3 text-white">
+                        Loading slide...
                       </div>
-                    ))}
-                  </div>
-                  <ComponentVisitWeb_Github
-                    icon={{
-                      name: "GitHub Pages",
-                      path: `${PATH_ICONS_SOFTWARE}github.svg`,
-                    }}
-                    web="https://thanhlongtruong.github.io/GrapFood_TTL/"
-                    github="https://github.com/thanhlongtruong/GrapFood_TTL"
-                  />
+                    }>
+                    <LazySwiperSlideComponent
+                      arrTechStack={GrapfoodTechnologies}
+                      arrImg={Grapfood}
+                      arrDeploy={GrapfoodDeploy}
+                    />
+                  </Suspense>
                 </div>
 
                 <div className="gap-4 flex flex-col">
@@ -684,184 +619,139 @@ export default function Home() {
                   </div>
 
                   <div className="gap-10 flex flex-col">
-                    <div className="gap-y-1 flex flex-col">
+                    <div className="gap-1 flex flex-col">
                       <p className="text-lg font-semibold autoShow">
                         1. FrontEnd Client
                       </p>
 
-                      <Paragraph
-                        value={
-                          lang != "en"
-                            ? "TRAVFRUIT là một website mô tả quá trình đặt vé máy bay được xây dựng từ thư viện ReactJS viết bằng Javascript và Tailwind CSS để tạo UI và responsive design. Với các tính năng như: tìm chuyến, đặt và hủy vé đi và khứ hồi, thanh toán bằng MOMO, Paypal và VietQR,... Sử dụng với React hooks, React-query, React Hook Form, React-toastify, React-datepicker, axios, React-chatbot-kit, jwt-decode, React-dom,..."
-                            : "TRAVFRUIT is a website that describes the process of booking airline tickets built from the ReactJS library written in Javascript and Tailwind CSS to create UI and responsive design. With features such as: finding flights, booking and canceling round-trip and round-trip tickets, paying with MOMO, Paypal and VietQR,... Using with React hooks, React-query, React Hook Form, React-toastify, React-datepicker, axios, React-chatbot-kit, jwt-decode, React-dom,..."
-                        }
-                      />
+                      <ul className="list-disc list-inside autoShow text-base lg:text-lg">
+                        <li>
+                          {lang != "en"
+                            ? "TRAVFRUIT là website mô tả quá trình đặt vé máy bay."
+                            : "TRAVFRUIT is a website that describes the process of booking airline tickets."}
+                        </li>
+
+                        <li>
+                          {lang != "en"
+                            ? "Xây dựng components bằng library ReactJS (JavaScript)"
+                            : "Building components using ReactJS (JavaScript) library"}
+                        </li>
+                        <li>Style & Responsive Design: Tailwind CSS</li>
+                        <li>
+                          {lang != "en" ? "Chức năng:" : "Feature:"}
+                          <ul className="list-disc list-inside ml-5">
+                            <li>
+                              {lang != "en"
+                                ? "Tìm, sort chuyến bay."
+                                : "Find and sort flights."}
+                            </li>
+                            <li>
+                              {lang != "en"
+                                ? "Đặt vé đi & khứ hồi."
+                                : "Book one-way and round-trip tickets"}
+                            </li>
+                            <li>
+                              {lang != "en"
+                                ? "Chọn vị trí ngồi & điền thông tin."
+                                : "Select your seat & fill in your information."}
+                            </li>
+                            <li>
+                              {lang != "en"
+                                ? "Thanh toán trực tuyến: MoMo, VietQR, PayPal."
+                                : "Online payment: MoMo, VietQR, PayPal."}
+                            </li>
+                            <li>
+                              {lang != "en"
+                                ? "Xem lịch sử & hủy vé đi/khứ hồi."
+                                : "View history and cancel one-way/return tickets."}
+                            </li>
+                          </ul>
+                        </li>
+                        <li>
+                          {lang != "en"
+                            ? "Call API: axios + useQuery & useMutation giúp tự động catching, giảm số lần call API."
+                            : "Call API: axios + useQuery & useMutation helps automatically catching, reducing the number of API calls."}
+                        </li>
+                        <li>
+                          {lang != "en"
+                            ? "React Hook Form: hỗ trợ xây dựng form giúp hạn chế sử dụng useState và validate dữ liệu dễ dàng."
+                            : "React Hook Form: supports form building to help limit the use of useState and validate data easily."}
+                        </li>
+                        <li>
+                          {lang != "en"
+                            ? "Các hook đã sử dụng: useState, useEffect, useCallback, useContext,..."
+                            : "Hooks used: useState, useEffect, useCallback, useContext,..."}
+                        </li>
+                        <li>
+                          {lang != "en"
+                            ? "Authentication: gửi mã xác nhận tới email khi đặt vé, accessToken và refreshToken được lưu tại localStorage giúp lưu trạng thái login và được đính kèm vào Headers mỗi khi request nhằm check role và authorization."
+                            : "Authentication: send confirmation code to email when booking ticket, accessToken and refreshToken are saved in localStorage to save login status and are attached to Headers every request to check role and authorization."}
+                        </li>
+                        <li>Deploy: Vercel</li>
+                        <li>Account demo: 0000000000, password: travFruit</li>
+                      </ul>
                     </div>
-                    <div>
-                      <Swiper
-                        modules={[
-                          Navigation,
-                          Pagination,
-                          EffectCoverflow,
-                          Autoplay,
-                        ]}
-                        slidesPerView={"auto"}
-                        pagination={{ clickable: true }}
-                        speed={2000}
-                        centeredSlides
-                        effect={"coverflow"}
-                        preventClicks
-                        loop={true}
-                        grabCursor
-                        coverflowEffect={{
-                          rotate: 0,
-                          stretch: 80,
-                          depth: 350,
-                          modifier: 1,
-                          slideShadows: true,
-                        }}
-                        navigation
-                        autoplay={{
-                          delay: 3000,
-                          disableOnInteraction: false,
-                        }}>
-                        {TravFruit.map((i, index) => (
-                          <SwiperSlide key={index} className="slide-inner">
-                            <div className="relative w-full h-[200px] md:h-[430px] lg:w-5xl lg:h-[570px] mx-auto">
-                              <Image
-                                src={i.path}
-                                alt={lang !== "en" ? i.vi : i.en}
-                                fill
-                                className="rounded-md"
-                              />
-                              <div className="absolute bottom-0 right-0 bg-[url('/background/zwartevilt.png')] text-center w-fit px-3 md:px-7 max-w-full py-1 rounded-tl-xl">
-                                <p className="multi-color-text font-semibold font-mono w-fit md:text-base text-sm">
-                                  {lang != "en" ? i.vi : i.en}
-                                </p>
-                              </div>
-                            </div>
-                          </SwiperSlide>
-                        ))}
-                      </Swiper>
-                    </div>
-                    <div className="flex flex-wrap items-center gap-4 w-full">
-                      {TravfruitTechnologies.map((t) => (
-                        <div
-                          key={t.name}
-                          className="flex items-center py-1 px-4 w-fit border rounded-md border-stone-600 gap-x-1">
-                          {t.path != "" && (
-                            <Image
-                              aria-hidden
-                              src={t.path}
-                              alt={t.name}
-                              width={24}
-                              height={24}
-                              className="w-6 h-6 imageReveal"
-                            />
-                          )}
-                          <p className="imageReveal">{t.name}</p>
+
+                    <Suspense
+                      fallback={
+                        <div className="mx-auto text-lg w-fit h-fit py-1 px-3 text-white">
+                          Loading slide...
                         </div>
-                      ))}
-                    </div>
-                    <ComponentVisitWeb_Github
-                      icon={{
-                        name: "Vercel",
-                        path: `${PATH_ICONS_HOSTING}vercel.svg`,
-                      }}
-                      web="https://travfruitv4.vercel.app/"
-                      github="https://github.com/thanhlongtruong/travFruit/tree/travFruit.v4/client"
-                    />
+                      }>
+                      <LazySwiperSlideComponent
+                        arrImg={TravFruit}
+                        arrTechStack={TravfruitTechnologies}
+                        arrDeploy={TravFruitDeploy}
+                      />
+                    </Suspense>
                   </div>
 
                   <div className="gap-10 flex flex-col">
-                    <div className="gap-y-1 flex flex-col">
+                    <div className="gap-1 flex flex-col">
                       <p className="text-lg font-semibold autoShow">
                         2. FrontEnd Admin
                       </p>
 
-                      <Paragraph
-                        value={
-                          lang != "en"
-                            ? "Website Admin TRAVFRUIT quản lý: tài khoản người dùng, chuyến bay, giao dịch."
-                            : "Admin TRAVFRUIT website manages: user accounts, flights, transactions."
-                        }
-                      />
+                      <ul className="list-disc list-inside autoShow text-base lg:text-lg">
+                        <li>Build: Vite + React (JavaScript).</li>
+                        <li>Style: Tailwind CSS.</li>
+                        <li>
+                          {lang != "en" ? "Chức năng:" : "Feature"}
+                          <ul className="list-disc list-inside ml-4">
+                            <li>
+                              {lang != "en"
+                                ? "Quản lý account & vé theo từng account."
+                                : "Manage accounts & tickets by account."}
+                            </li>
+                            <li>
+                              {lang != "en"
+                                ? "Quản lý chuyến bay."
+                                : "Flight management."}
+                            </li>
+                            <li>
+                              {lang != "en"
+                                ? "Quản lý giao dịch."
+                                : "Transaction management."}
+                            </li>
+                          </ul>
+                        </li>
+                        <li>Deploy: Vercel</li>
+                        <li>Account demo: 0000000000, password: travFruit</li>
+                      </ul>
                     </div>
 
-                    <div>
-                      <Swiper
-                        modules={[
-                          Navigation,
-                          Pagination,
-                          EffectCoverflow,
-                          Autoplay,
-                        ]}
-                        slidesPerView={"auto"}
-                        pagination={{ clickable: true }}
-                        speed={2000}
-                        centeredSlides
-                        loop
-                        effect={"coverflow"}
-                        preventClicks
-                        grabCursor
-                        coverflowEffect={{
-                          rotate: 0,
-                          stretch: 80,
-                          depth: 350,
-                          modifier: 1,
-                          slideShadows: true,
-                        }}
-                        navigation
-                        autoplay={{
-                          delay: 3000,
-                          disableOnInteraction: false,
-                        }}>
-                        {TravFruitAdmin.map((i, index) => (
-                          <SwiperSlide key={index} className="slide-inner">
-                            <div className="relative w-full h-[200px] md:h-[430px] lg:w-5xl lg:h-[570px] mx-auto">
-                              <Image
-                                src={i.path}
-                                alt={lang !== "en" ? i.vi : i.en}
-                                fill
-                                className="rounded-md "
-                              />
-                              <div className="absolute bottom-0 right-0 bg-[url('/background/zwartevilt.png')] max-w-full text-center w-fit px-3 md:px-7 py-1 rounded-tl-xl">
-                                <p className="multi-color-text font-semibold font-mono w-fit md:text-base text-sm">
-                                  {lang != "en" ? i.vi : i.en}
-                                </p>
-                              </div>
-                            </div>
-                          </SwiperSlide>
-                        ))}
-                      </Swiper>
-                    </div>
-                    <div className="flex flex-wrap items-center gap-4 w-full">
-                      {TravfruitAdminTechnologies.map((t) => (
-                        <div
-                          key={t.name}
-                          className="flex items-center py-1 px-4 w-fit border rounded-md border-stone-600 gap-x-1">
-                          {t.path != "" && (
-                            <Image
-                              aria-hidden
-                              src={t.path}
-                              alt={t.name}
-                              width={24}
-                              height={24}
-                              className="w-6 h-6 imageReveal"
-                            />
-                          )}
-                          <p className="imageReveal">{t.name}</p>
+                    <Suspense
+                      fallback={
+                        <div className="mx-auto text-lg w-fit h-fit py-1 px-3 text-white">
+                          Loading slide...
                         </div>
-                      ))}
-                    </div>
-                    <ComponentVisitWeb_Github
-                      icon={{
-                        name: "Vercel",
-                        path: `${PATH_ICONS_HOSTING}vercel.svg`,
-                      }}
-                      web="https://travfruitv3admin.vercel.app/"
-                      github="https://github.com/thanhlongtruong/travFruit/tree/travFruit.v4/admin.v2"
-                    />
+                      }>
+                      <LazySwiperSlideComponent
+                        arrImg={TravFruitAdmin}
+                        arrTechStack={TravfruitAdminTechnologies}
+                        arrDeploy={TravFruitAdminDeploy}
+                      />
+                    </Suspense>
                   </div>
 
                   <div className="gap-10 flex flex-col">
@@ -869,33 +759,50 @@ export default function Home() {
                       <p className="text-lg font-semibold autoShow">
                         3. BackEnd{" "}
                       </p>
-                      <Paragraph
-                        value={
-                          lang != "en"
-                            ? "Sử dụng Framework Express tạo các API, middleware xác thực người dùng khi gửi request và sử dụng MongoDB để lưu trữ dữ liệu. Ngoài ra còn có các thư viện để hỗ trợ như: cors, express-validator, moment,jsonwebtoken, nodemailer, nodemon,..."
-                            : "Use the Express Framework to create APIs, middleware to authenticate users when sending requests and MongoDB to store data. There are also supporting libraries such as: cors, express-validator, moment, jsonwebtoken, nodemailer, nodemon,..."
-                        }
-                      />
+
+                      <ul className="list-disc list-inside autoShow text-base lg:text-lg">
+                        <li>
+                          Build server: NodeJS(Express) & Database: MongoDB.
+                        </li>
+                        <li>
+                          {lang != "en"
+                            ? "Giới hạn request (rate-limit), gửi email xác thực (nodemailer)."
+                            : "Rate-limit requests, send verification emails (nodemailer)."}
+                        </li>
+                        <li>
+                          {lang != "en"
+                            ? "Middleware: xác thực quyền truy cập từ token được đính kèm vào Headers."
+                            : "Middleware: authenticates access from tokens attached to Headers."}
+                        </li>
+                        <li>
+                          {lang != "en"
+                            ? "Tự động xóa và hoàn vé vé nếu chưa thanh toán sau 15 phút."
+                            : "Automatically delete and refund tickets if not paid after 15 minutes."}
+                        </li>
+                        <li>
+                          {lang != "en"
+                            ? "Cors: xác định domain nào được phép call API."
+                            : "Cors: determines which domains are allowed to call the API."}
+                        </li>
+                        <li>
+                          {lang != "en"
+                            ? "Helmet: hạn chế rủi ro bị tấn công web."
+                            : "Helmet: reduces the risk of web attacks."}
+                        </li>
+                        <li>Postman: test API.</li>
+                      </ul>
                     </div>
-                    <div className="flex flex-wrap items-center gap-4 w-full">
-                      {TravfruitBackendTechnologies.map((t) => (
-                        <div
-                          key={t.name}
-                          className="flex items-center py-1 px-4 w-fit border rounded-md border-stone-600 gap-x-1">
-                          {t.path != "" && (
-                            <Image
-                              aria-hidden
-                              src={t.path}
-                              alt={t.name}
-                              width={24}
-                              height={24}
-                              className="w-6 h-6 imageReveal"
-                            />
-                          )}
-                          <p className="imageReveal">{t.name}</p>
+
+                    <Suspense
+                      fallback={
+                        <div className="mx-auto text-lg w-fit h-fit py-1 px-3 text-white">
+                          Loading slide...
                         </div>
-                      ))}
-                    </div>
+                      }>
+                      <LazySwiperSlideComponent
+                        arrTechStack={TravfruitBackendTechnologies}
+                      />
+                    </Suspense>
                   </div>
                 </div>
 
@@ -912,133 +819,129 @@ export default function Home() {
                         May, 2025 - August, 2025
                       </h6>
                     </div>
-                    <Paragraph
-                      value={
-                        lang != "en"
-                          ? "CINEFRUIT là ứng dụng đặt vé xem phim được xây dựng bằng Framework Flutter. Ứng dụng được triển khai với tính năng: xác minh email, danh sách phim hot, suất chiếu theo phim và rạp, chọn và giữ ghế,... Cùng với đó sử dụng Riverpod, GetX, http, shared_preferences, webview_flutter, Cupertino widgets, dio,... nhằm tối ưu quản lí trạng thái và trải nghiệm người dùng. Xây dựng BackEnd với Express và MongoDB để xử lý và thiết lập trạng thái ghế và xác thực JWT khi người dùng gửi request."
-                          : "CINEFRUIT is a movie ticket booking application built on the Flutter Framework platform. The application is deployed with features: email authentication, hot movie list, theater showtimes, seat selection and booking,... Along with that, the application uses Riverpod, GetX, http, shared_preferences, webview_flutter, Cupertino widgets, dio,... to optimize state management and user experience. Build BackEnd with Express and MongoDB to process and set seat status, and authenticate JWT when users send requests."
-                      }
-                    />
+
+                    <ul className="list-disc list-inside autoShow text-base lg:text-lg">
+                      <li>
+                        {lang != "en"
+                          ? "CINEFRUIT là ứng dụng đặt vé xem phim được xây dựng bằng Framework Flutter(Dart)."
+                          : "CINEFRUIT is a movie ticket booking application built using Flutter (Dart) Framework."}
+                      </li>
+                      <li>
+                        {lang != "en"
+                          ? "Sử dụng Figma để thiết kế UI cho ứng dụng."
+                          : "Use Figma to design UI for apps."}
+                      </li>
+
+                      <li>
+                        {lang != "en" ? "Chức năng: " : "Feature: "}
+                        <ul className="list-disc list-inside ml-4">
+                          <li>
+                            {lang != "en"
+                              ? "Tìm & xem danh sách phim."
+                              : "Find & view movie lists."}
+                          </li>
+                          <li>
+                            {lang != "en"
+                              ? "Top 5 phim có đánh cao."
+                              : "Top 5 movies with high ratings."}
+                          </li>
+                          <li>
+                            {lang != "en"
+                              ? "Danh sách rạp."
+                              : "List of theaters."}
+                          </li>
+                          <li>
+                            {lang != "en"
+                              ? "Suất chiếu theo phim và rạp."
+                              : "Showtimes by movie and theater."}
+                          </li>
+                          <li>
+                            {lang != "en"
+                              ? "Chọn vị trí ngồi và giữ ghế trong 15 phút."
+                              : "Choose a seat and hold it for 15 minutes."}
+                          </li>
+                          <li>
+                            {lang != "en"
+                              ? "Chọn số lượng & xem danh sách thức ăn, đồ uống."
+                              : "Select quantity & view food and beverage list."}
+                          </li>
+                          <li>
+                            {lang != "en"
+                              ? "Thanh toán trực tuyến: MoMo, Paypal."
+                              : "Online payment: MoMo, Paypal."}
+                          </li>
+                          <li>
+                            {lang != "en"
+                              ? "Hủy & tiếp tục thanh toán."
+                              : "Cancel & continue payment."}
+                          </li>
+                          <li>
+                            {lang != "en"
+                              ? "Giữ trạng thái đặt vé khi vào lại ứng dụng nếu còn thời gian."
+                              : "Keep your booking status when you re-enter the app if there is still time."}
+                          </li>
+                          <li>
+                            {lang != "en"
+                              ? "Lưu token tại shared preferences giúp giữ trạng thái login."
+                              : "Saving tokens in shared preferences helps maintain login state."}
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        {lang != "en"
+                          ? "Dio: là 1 HTTP Client để call API giống http nhưng dio hỗ trợ interceptor giúp gắn token vào headers,..."
+                          : "Dio: is an HTTP Client to call API like http but dio supports interceptor to help attach token to headers,..."}
+                      </li>
+                      <li>
+                        {lang != "en"
+                          ? "GetX: quản lý route và truyền state, hỗ trợ snackbar, dialog,... mà không cần context."
+                          : "GetX: route management and state transfer, support snackbar, dialog,... without context."}
+                      </li>
+                      <li>
+                        {lang != "en"
+                          ? "Riverpod: quản lý trạng thái, không cần truyền data giữa các widget."
+                          : "Riverpod: state management, no need to pass data between widgets."}
+                      </li>
+                      <li>
+                        {lang != "en"
+                          ? "Webview: mở trình duyệt ngay trong app Flutter."
+                          : "Webview: open the browser right in the Flutter app."}
+                      </li>
+                      <li>
+                        Build server: NodeJS(Express) & Database: MongoDB.
+                      </li>
+                      <li>
+                        {lang != "en"
+                          ? "Tự động xóa trạng thái giữ ghế khi hết thời gian."
+                          : "Automatically clear seat hold status when time expires."}
+                      </li>
+                      <li>
+                        {lang != "en"
+                          ? "Authentication: gửi mail xác thực, tạo và xác thực token(JWT)."
+                          : "Authentication: send verification email, generate and authenticate token (JWT)."}
+                      </li>
+                      <li>Postman: test API.</li>
+                      <li>
+                        {lang != "en"
+                          ? "Deploy: sử dụng AltServer & AltStore chạy ứng dụng trên điện thoại."
+                          : "Deploy: use AltServer & AltStore to run the application on the phone."}
+                      </li>
+                    </ul>
                   </div>
-                  <div>
-                    <Swiper
-                      modules={[
-                        Navigation,
-                        Pagination,
-                        EffectCoverflow,
-                        Autoplay,
-                      ]}
-                      slidesPerView="auto"
-                      breakpoints={{
-                        768: { slidesPerView: 2 },
-                      }}
-                      pagination={{ clickable: true }}
-                      speed={2000}
-                      effect={"coverflow"}
-                      preventClicks
-                      centeredSlides
-                      loop={true}
-                      grabCursor
-                      coverflowEffect={{
-                        rotate: 30,
-                        stretch: 65,
-                        depth: 350,
-                        modifier: 1,
-                        slideShadows: true,
-                      }}
-                      navigation
-                      autoplay={{
-                        delay: 3000,
-                        disableOnInteraction: false,
-                      }}>
-                      {Cinefruit.map((i, index) => (
-                        <SwiperSlide key={index} className="slide-inner">
-                          <div className="relative w-[245px] h-[450px] md:w-[240px] md:h-[450px] lg:w-[280px] lg:h-[560px] mx-auto">
-                            <Image
-                              src={i.path}
-                              alt={lang !== "en" ? i.vi : i.en}
-                              fill
-                              className="rounded-md "
-                            />
-                            <div className="absolute bottom-0 right-0 bg-[url('/background/zwartevilt.png')] text-center w-fit px-3 md:px-7 max-w-full py-1 rounded-tl-xl">
-                              <p className="multi-color-text font-semibold font-mono w-fit md:text-base text-sm">
-                                {lang != "en" ? i.vi : i.en}
-                              </p>
-                            </div>
-                          </div>
-                        </SwiperSlide>
-                      ))}
-                    </Swiper>
-                  </div>
-                  <div className="flex flex-wrap items-center gap-4 w-full">
-                    {CinefruitTechnologies.map((t) => (
-                      <div
-                        key={t.name}
-                        className="flex items-center py-1 px-4 w-fit border rounded-md border-stone-600 gap-x-1">
-                        {t.path != "" && (
-                          <Image
-                            aria-hidden
-                            src={t.path}
-                            alt={t.name}
-                            width={24}
-                            height={24}
-                            className="w-6 h-6 imageReveal"
-                          />
-                        )}
-                        <p className="imageReveal">{t.name}</p>
+
+                  <Suspense
+                    fallback={
+                      <div className="mx-auto text-lg w-fit h-fit py-1 px-3 text-white">
+                        Loading slide...
                       </div>
-                    ))}
-                  </div>
-                  <div className="flex flex-wrap gap-4">
-                    <Link
-                      target="_blank"
-                      href="https://www.figma.com/design/kbXqz4aedVBh7FknIAquoJ/App-dat-ve-xem-phim---CineFruit?node-id=0-1&t=1FfdUidmf1A5n0VV-1"
-                      className="transition-all ease-out hover:scale-110 duration-700 flex items-center w-fit py-1 px-4 border rounded-md border-stone-600 hover:border-blue-500 gap-x-1">
-                      <Image
-                        aria-hidden
-                        src={`${PATH_ICONS_DESIGN}figma.svg`}
-                        alt="Figma"
-                        width={24}
-                        height={24}
-                        className="w-6 h-6 imageReveal"
-                      />
-                      <p className="multi-color-text font-semibold font-mono w-fit imageReveal">
-                        Visit Figma
-                      </p>
-                    </Link>
-                    <Link
-                      target="_blank"
-                      href="https://youtu.be/tnN4lSVfiu0"
-                      className="transition-all ease-out hover:scale-110 duration-700 flex items-center w-fit py-1 px-4 border rounded-md border-stone-600 hover:border-blue-500 gap-x-1">
-                      <Image
-                        aria-hidden
-                        src="icons-social/youtube.svg"
-                        alt="Youtube"
-                        width={24}
-                        height={24}
-                        className="w-6 h-6 imageReveal"
-                      />
-                      <p className="multi-color-text font-semibold font-mono w-fit imageReveal text-zinc-950">
-                        Youtube
-                      </p>
-                    </Link>
-                    <Link
-                      target="_blank"
-                      href="https://github.com/thanhlongtruong/cinefruit"
-                      className="flex items-center py-1 px-4 border w-fit rounded-md border-stone-600 hover:border-blue-600 gap-x-1 transition-all ease-out hover:scale-110 duration-700">
-                      <Image
-                        aria-hidden
-                        src={`${PATH_ICONS_SOFTWARE}github.svg`}
-                        alt="GitHub"
-                        width={24}
-                        height={24}
-                        className="w-6 h-6 imageReveal"
-                      />
-                      <p className="multi-color-text font-semibold font-mono w-fit imageReveal">
-                        Github
-                      </p>
-                    </Link>
-                  </div>
+                    }>
+                    <LazySwiperSlideComponent
+                      slideType="mobile"
+                      arrImg={CineFruit}
+                      arrTechStack={CineFruitTechnologies}
+                      arrDeploy={CineFruitDeploy}
+                    />
+                  </Suspense>
                 </div>
               </div>
             </section>
@@ -1173,53 +1076,5 @@ export default function Home() {
         </Suspense>
       </div>
     </>
-  );
-}
-
-interface Props {
-  icon: {
-    path: string;
-    name: string;
-  };
-  web: string;
-  github: string;
-}
-
-function ComponentVisitWeb_Github({ icon, web, github }: Props) {
-  return (
-    <div className="flex flex-wrap gap-4">
-      <Link
-        target="_blank"
-        href={web}
-        className="transition-all ease-out hover:scale-110 duration-700 flex items-center w-fit py-1 px-4 border rounded-md border-stone-600 hover:border-blue-500 gap-x-1">
-        <Image
-          aria-hidden
-          src={icon?.path}
-          alt={icon?.name}
-          width={24}
-          height={24}
-          className="w-6 h-6 imageReveal"
-        />
-        <p className="multi-color-text font-semibold font-mono w-fit imageReveal">
-          Visit website
-        </p>
-      </Link>
-      <Link
-        target="_blank"
-        href={github}
-        className="flex items-center py-1 px-4 border w-fit rounded-md border-stone-600 hover:border-blue-500 gap-x-1 transition-all ease-out hover:scale-110 duration-700">
-        <Image
-          aria-hidden
-          src={`${PATH_ICONS_SOFTWARE}github.svg`}
-          alt="GitHub"
-          width={24}
-          height={24}
-          className="w-6 h-6 imageReveal"
-        />
-        <p className="multi-color-text font-semibold font-mono w-fit imageReveal">
-          Github
-        </p>
-      </Link>
-    </div>
   );
 }

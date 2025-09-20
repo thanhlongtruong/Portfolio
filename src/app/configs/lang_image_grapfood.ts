@@ -1,25 +1,11 @@
-import { PATH_ICONS_FRAMEWORK, PATH_ICONS_LANGUAGE, PATH_ICONS_LIBRARY, PATH_ICONS_SOFTWARE } from "./path_icons_skill";
+import {
+  PATH_ICONS_FRAMEWORK,
+  PATH_ICONS_LANGUAGE,
+  PATH_ICONS_LIBRARY,
+  PATH_ICONS_SOFTWARE,
+} from "./path_icons_skill";
 
 const PATH_IMAGE_GRAPFOOD = "/projects/grapfood/";
-
-export const GrapfoodTechnologies = [
-  {
-    path: `${PATH_ICONS_LIBRARY}react.svg`,
-    name: "ReactJS",
-  },
-  {
-    path: `${PATH_ICONS_LANGUAGE}javascript.svg`,
-    name: "Javascript",
-  },
-  {
-    path: `${PATH_ICONS_FRAMEWORK}tailwindcss.svg`,
-    name: "Tailwind CSS",
-  },
-  {
-    path: "",
-    name: "Responsive design",
-  },
-];
 
 export const Grapfood = [
   {
@@ -41,5 +27,39 @@ export const Grapfood = [
     path: `${PATH_IMAGE_GRAPFOOD}dat_mon.jpg`,
     vi: "Dat mon",
     en: "Order",
+  },
+];
+
+export const GrapfoodTechnologies = [
+  {
+    path: `${PATH_ICONS_LIBRARY}react.svg`,
+    name: "ReactJS",
+  },
+  {
+    path: `${PATH_ICONS_LANGUAGE}javascript.svg`,
+    name: "Javascript",
+  },
+  {
+    path: `${PATH_ICONS_FRAMEWORK}tailwindcss.svg`,
+    name: "Tailwind CSS",
+  },
+  {
+    path: "",
+    name: "Responsive design",
+  },
+];
+
+export const GrapfoodDeploy = [
+  {
+    linkWeb: "https://thanhlongtruong.github.io/GrapFood_TTL/",
+    iconSrc: `${PATH_ICONS_SOFTWARE}github.svg`,
+    iconName: "GitHub Pages",
+    content: "Visit website",
+  },
+  {
+    linkWeb: "https://github.com/thanhlongtruong/GrapFood_TTL",
+    iconSrc: `${PATH_ICONS_SOFTWARE}github.svg`,
+    iconName: "GitHub",
+    content: "Github",
   },
 ];

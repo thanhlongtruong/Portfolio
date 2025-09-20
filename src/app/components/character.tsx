@@ -20,20 +20,20 @@ function Paragraph({ value }: { value: string }) {
   const words = value.split(" ");
 
   return (
-    <p
-      className={`lg:text-lg text-base flex flex-wrap max-w-[1280px] text-stone-200`}
-      ref={element}>
-      {words.map((w, i) => {
-        const start = i / words.length;
-        const end = start + 1 / words.length;
+    <li className="flex items-start lg:text-lg text-base text-stone-200 before:content-['●'] before:mr-2">
+      <p className="flex flex-wrap max-w-[1280px]" ref={element}>
+        {words.map((w, i) => {
+          const start = i / words.length;
+          const end = start + 1 / words.length;
 
-        return (
-          <Word key={i} range={[start, end]} progress={scrollYProgress}>
-            {w}
-          </Word>
-        );
-      })}
-    </p>
+          return (
+            <Word key={i} range={[start, end]} progress={scrollYProgress}>
+              {w}
+            </Word>
+          );
+        })}
+      </p>
+    </li>
   );
 }
 

@@ -163,11 +163,11 @@ export const PathIconFramework = [
     name: "Next.js",
     link: "https://nextjs.org/",
   },
-  {
-    path: `${PATH_ICONS_FRAMEWORK}reactquery.svg`,
-    name: "React Query",
-    link: "https://tanstack.com/query/v4",
-  },
+  // {
+  //   path: `${PATH_ICONS_FRAMEWORK}reactquery.svg`,
+  //   name: "React Query",
+  //   link: "https://tanstack.com/query/v4",
+  // },
   {
     path: `${PATH_ICONS_FRAMEWORK}tailwindcss.svg`,
     name: "Tailwind CSS",
@@ -222,19 +222,18 @@ export const PathIconDesign = [
 ];
 export const PathIconSocial = [
   {
-    path:"",
+    path: "",
     name: "Linkedin",
     link: "",
   },
   {
-    path:"",
+    path: "",
     name: "Gmail",
     link: "",
   },
   {
-    path:"",
+    path: "",
     name: "Gmail",
     link: "",
   },
-  
 ];
