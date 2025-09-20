@@ -239,7 +239,7 @@ export default function Home() {
                           className="text-amber-400 font-semibold hover:underline hover:underline-offset-4">
                           HUFLIT
                         </Link>
-                        ). Trong quá trình học tập và làm{" "}
+                        ), GPA hiện tại 2.94/4.0. Trong quá trình học tập và làm{" "}
                         <React_Scrool
                           to={text.navbar.projects.href}
                           smooth={true}
@@ -312,7 +312,7 @@ export default function Home() {
                           className="text-amber-400 font-semibold hover:underline hover:underline-offset-4">
                           HUFLIT
                         </Link>
-                        ). During my studies and{" "}
+                        ), Current GPA 2.94/4.0. During my studies and{" "}
                         <React_Scrool
                           to={text.navbar.projects.href}
                           smooth={true}
