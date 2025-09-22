@@ -51,6 +51,12 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 
 import Loading from "./loading";
 import { checkKeyboard } from "./api-client/check-keyboard";
+import {
+  BackendTechnologies,
+  Writing,
+  WritingDeploy,
+  WritingTechnologies,
+} from "./configs/lang_writing";
 
 const LazyUploadFile = lazy(() => import("./components/upload-file"));
 
@@ -636,7 +642,7 @@ export default function Home() {
                             ? "Xây dựng components bằng library ReactJS (JavaScript)."
                             : "Building components using ReactJS (JavaScript) library."}
                         </li>
-                        <li>Style & Responsive Design: Tailwind CSS</li>
+                        <li>Style & Responsive Design: Tailwind CSS.</li>
                         <li>
                           {lang != "en" ? "Chức năng:" : "Feature:"}
                           <ul className="list-disc list-inside ml-5">
@@ -801,6 +807,125 @@ export default function Home() {
                       }>
                       <LazySwiperSlideComponent
                         arrTechStack={TravfruitBackendTechnologies}
+                      />
+                    </Suspense>
+                  </div>
+                </div>
+
+                <div className="gap-4 flex flex-col">
+                  <div className="autoShow">
+                    <p className="text-xl lg:text-2xl font-semibold">
+                      {lang != "en"
+                        ? "Website luyện viết cùng AI."
+                        : "Website to practice writing with AI."}
+                    </p>
+                    <h6 className="text-stone-500 text-base">
+                      Last updated Aug 13, 2025
+                    </h6>
+                  </div>
+
+                  <div className="gap-10 flex flex-col">
+                    <div className="gap-1 flex flex-col">
+                      <p className="text-lg font-semibold autoShow">
+                        1. FrontEnd
+                      </p>
+
+                      <ul className="list-disc list-inside autoShow text-base lg:text-lg">
+                        <li>
+                          {lang != "en"
+                            ? "Website được xây dựng bằng Vite + React + TypeScript."
+                            : "Website built with Vite + React + TypeScript."}
+                        </li>
+                        <li>Style & Responsive Design: Tailwind CSS.</li>
+                        <li>
+                          {lang != "en" ? "Chức năng:" : "Feature:"}
+                          <ul className="list-disc list-inside ml-5">
+                            <li>
+                              {lang != "en"
+                                ? "Đăng, chỉnh sửa, gỡ bài viết."
+                                : "Post, edit, remove posts."}
+                            </li>
+                            <li>
+                              {lang != "en"
+                                ? "Bình luận bài viết."
+                                : "Comment on the article."}
+                            </li>
+                            <li>
+                              {lang != "en"
+                                ? "Làm thử Writing từ bài viết."
+                                : "Try Writing from the article."}
+                            </li>
+                            <li>
+                              {lang != "en"
+                                ? "Tạo bài viết bằng AI và đánh giá bài viết."
+                                : "Create Writing with AI and Evaluate Papers"}
+                            </li>
+                          </ul>
+                        </li>
+                        <li>Deploy: Vercel.</li>
+                        <li>
+                          Account demo: travfruit@gmail.com, password: travfruit
+                        </li>
+                      </ul>
+                    </div>
+                    <Suspense
+                      fallback={
+                        <div className="mx-auto text-lg w-fit h-fit py-1 px-3 text-white">
+                          Loading slide...
+                        </div>
+                      }>
+                      <LazySwiperSlideComponent
+                        arrImg={Writing}
+                        arrTechStack={WritingTechnologies}
+                        arrDeploy={WritingDeploy}
+                      />
+                    </Suspense>
+                  </div>
+
+                  <div className="gap-10 flex flex-col">
+                    <div className="gap-y-1 flex flex-col">
+                      <p className="text-lg font-semibold autoShow">
+                        2. BackEnd
+                      </p>
+
+                      <ul className="list-disc list-inside autoShow text-base lg:text-lg">
+                        <li>Build server: NodeJS(Express) - TypeScript.</li>
+                        <li>
+                          {lang != "en"
+                            ? "MongoDB: lưu trữ các model như: stories, accounts, comments, emailverifications, generatewritings."
+                            : "MongoDB: stores models such as stories, accounts, comments, emailverifications, generatewritings."}
+                        </li>
+                        <li>
+                          {lang != "en"
+                            ? "Gửi thông báo đến email khi có bình luận mới."
+                            : "Send email notifications when there are new comments."}
+                        </li>
+                        <li>
+                          {lang != "en"
+                            ? "Từ chối đăng bài hoặc bình luận chứa từ ngữ không hợp lệ."
+                            : "Reject posts or comments containing invalid language."}
+                        </li>
+                        <li>
+                          {lang != "en"
+                            ? "Viết prompt cho OpenAI để tạo bài viết theo yêu cầu và đánh giá bài viết."
+                            : "Write prompts for OpenAI to create articles on demand and evaluate articles."}
+                        </li>
+                        <li>
+                          {lang != "en"
+                            ? "Sử dụng Zod để yêu cầu OpenAI trả về đúng format."
+                            : "Use Zod to get OpenAI to return the correct format."}
+                        </li>
+                        <li>Postman: test API.</li>
+                      </ul>
+                    </div>
+                    <Suspense
+                      fallback={
+                        <div className="mx-auto text-lg w-fit h-fit py-1 px-3 text-white">
+                          Loading slide...
+                        </div>
+                      }>
+                      <LazySwiperSlideComponent
+                        arrTechStack={BackendTechnologies}
                       />
                     </Suspense>
                   </div>
