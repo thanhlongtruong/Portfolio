@@ -34,7 +34,7 @@ function UploadFile({
         signal,
         input: { type: "post/cv" },
         options: {
-          manualFileName: file.name,
+          manualFileName: file.name + `_v${Date.now()}`,
         },
         onProgressChange,
       });
