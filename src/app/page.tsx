@@ -312,7 +312,7 @@ export default function Home() {
                           className="text-amber-400 font-semibold hover:underline hover:underline-offset-4">
                           HUFLIT
                         </Link>
-                        ), Current GPA 2.94/4.0. During my studies and{" "}
+                        ), current GPA 2.94/4.0. During my studies and{" "}
                         <React_Scrool
                           to={text.navbar.projects.href}
                           smooth={true}
@@ -389,11 +389,11 @@ export default function Home() {
                     />
                   </Link>
                   {data?.data
-                    .filter((cv: { _id: string; url: string; name: string }) =>
-                      lang === "en"
-                        ? cv.name.toLowerCase().includes("english")
-                        : !cv.name.toLowerCase().includes("english")
-                    )
+                    // .filter((cv: { _id: string; url: string; name: string }) =>
+                    //   lang === "en"
+                    //     ? cv.name.toLowerCase().includes("english")
+                    //     : !cv.name.toLowerCase().includes("english")
+                    // )
                     .map((cv: { _id: string; url: string; name: string }) => (
                       <Link
                         key={cv._id}
@@ -583,12 +583,12 @@ export default function Home() {
                       </li>
                       <li>
                         {lang != "en"
-                          ? "Khởi tạo: npx create-react-app my-app"
-                          : "Initialization: npx create-react-app my-app"}
+                          ? "Khởi tạo: npx create-react-app my-app."
+                          : "Initialization: npx create-react-app my-app."}
                       </li>
-                      <li>{"Style & Responsive Design: Tailwind CSS"}</li>
-                      <li>Format code: Prettier</li>
-                      <li>Deploy: GitHub Pages</li>
+                      <li>{"Style & Responsive Design: Tailwind CSS."}</li>
+                      <li>Format code: Prettier.</li>
+                      <li>Deploy: GitHub Pages.</li>
                     </ul>
                   </div>
                   <Suspense
@@ -633,8 +633,8 @@ export default function Home() {
 
                         <li>
                           {lang != "en"
-                            ? "Xây dựng components bằng library ReactJS (JavaScript)"
-                            : "Building components using ReactJS (JavaScript) library"}
+                            ? "Xây dựng components bằng library ReactJS (JavaScript)."
+                            : "Building components using ReactJS (JavaScript) library."}
                         </li>
                         <li>Style & Responsive Design: Tailwind CSS</li>
                         <li>
@@ -648,7 +648,7 @@ export default function Home() {
                             <li>
                               {lang != "en"
                                 ? "Đặt vé đi & khứ hồi."
-                                : "Book one-way and round-trip tickets"}
+                                : "Book one-way and round-trip tickets."}
                             </li>
                             <li>
                               {lang != "en"
@@ -687,7 +687,7 @@ export default function Home() {
                             ? "Authentication: gửi mã xác nhận tới email khi đặt vé, accessToken và refreshToken được lưu tại localStorage giúp lưu trạng thái login và được đính kèm vào Headers mỗi khi request nhằm check role và authorization."
                             : "Authentication: send confirmation code to email when booking ticket, accessToken and refreshToken are saved in localStorage to save login status and are attached to Headers every request to check role and authorization."}
                         </li>
-                        <li>Deploy: Vercel</li>
+                        <li>Deploy: Vercel.</li>
                         <li>Account demo: 0000000000, password: travFruit</li>
                       </ul>
                     </div>
@@ -716,7 +716,7 @@ export default function Home() {
                         <li>Build: Vite + React (JavaScript).</li>
                         <li>Style: Tailwind CSS.</li>
                         <li>
-                          {lang != "en" ? "Chức năng:" : "Feature"}
+                          {lang != "en" ? "Chức năng:" : "Feature:"}
                           <ul className="list-disc list-inside ml-4">
                             <li>
                               {lang != "en"
@@ -735,7 +735,7 @@ export default function Home() {
                             </li>
                           </ul>
                         </li>
-                        <li>Deploy: Vercel</li>
+                        <li>Deploy: Vercel.</li>
                         <li>Account demo: 0000000000, password: travFruit</li>
                       </ul>
                     </div>
