@@ -1,13 +1,19 @@
 "use client";
 
+import { useEffect, useRef, useState, Suspense, lazy, useMemo } from "react";
+
 import dynamic from "next/dynamic";
-import Image from "next/image";
-import Cursor from "./components/cursor";
-import AnimationBg from "./components/animation-bg";
+
 import Link from "next/link";
+
+import Image from "next/image";
+
+import AnimationBg from "./components/animation-bg";
+
 import { useLang } from "./contexts/languege";
+
 import { TypeAnimation } from "react-type-animation";
-import { Link as React_Scrool, Element } from "react-scroll";
+
 import { ListX, Menu, Phone } from "lucide-react";
 
 import {
@@ -19,6 +25,7 @@ import {
   PathIconLibrary,
   PathIconSoftware,
 } from "./configs/path_icons_skill";
+
 import {
   TravFruit,
   TravFruitAdmin,
@@ -28,29 +35,37 @@ import {
   TravFruitDeploy,
   TravfruitTechnologies,
 } from "./configs/lang_image_travfruit";
+
 import {
   Grapfood,
   GrapfoodDeploy,
   GrapfoodTechnologies,
 } from "./configs/lang_image_grapfood";
+
 import {
   CineFruit,
   CineFruitDeploy,
   CineFruitTechnologies,
 } from "./configs/lang_image_cinefruit";
-import { useEffect, useRef, useState, Suspense, lazy } from "react";
 
 const Countdown = dynamic(() => import("react-countdown"), { ssr: false });
+
 import moment from "moment";
+
 import gsap from "gsap";
+
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 import { SplitText } from "gsap/SplitText";
 
 import { getFile } from "./api-client/save-file";
+
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 import Loading from "./loading";
+
 import { checkKeyboard } from "./api-client/check-keyboard";
+
 import {
   BackendTechnologies,
   Writing,
@@ -58,17 +73,80 @@ import {
   WritingTechnologies,
 } from "./configs/lang_writing";
 
+import ScrambledText from "./components/scrambled-text";
+
+import {
+  InternshipManagement,
+  InternshipManagementDeploy,
+  InternshipManagementTechnologies,
+} from "./configs/lang_image_internship_management";
+
 const LazyUploadFile = lazy(() => import("./components/upload-file"));
 
 const LazySwiperSlideComponent = lazy(
   () => import("./components/swiper-slide")
 );
 
+const animationTime: number = 600;
+const particleCount: number = 15;
+const particleDistances: [number, number] = [90, 10];
+const particleR: number = 100;
+const timeVariance: number = 300;
+const colors: number[] = [1, 2, 3, 1, 2, 3, 1, 4];
+const initialActiveIndex: number = 0;
+
 export default function Home() {
   gsap.registerPlugin(ScrollTrigger, SplitText);
 
   const { text, lang, setLang } = useLang();
 
+  const arrProjects: Array<{ href: string; label: string }> = useMemo(
+    () => [
+      { href: "GrapFood", label: "GrapFood" },
+      {
+        href: "Flight_booking_website",
+        label: `${
+          lang != "en" ? "Website đặt vé máy bay" : "Flight booking website"
+        }`,
+      },
+      {
+        href: "Website_to_practice_writing_with_AI",
+        label: `${
+          lang != "en"
+            ? "Website luyện viết cùng AI"
+            : "Website to practice writing with AI."
+        }`,
+      },
+      {
+        href: "Movie_ticket_booking_app",
+        label: `${
+          lang != "en" ? "App đặt vé xem phim" : "Movie ticket booking app"
+        }`,
+      },
+      {
+        href: "Build_a_website_to_manage_internships_at_the_university",
+        label: `${
+          lang != "en"
+            ? "Xây dựng website quản lý thực tập tại Trường Đại học"
+            : "Build a website to manage internships at the university"
+        }`,
+      },
+    ],
+    [lang]
+  );
+
+  const getProjectByHref = (href: string) =>
+    arrProjects.find((p) => p.href === href)?.href || "";
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLUListElement>(null);
+  const containerProjectRef = useRef<HTMLUListElement>(null);
+  const filterRef = useRef<HTMLSpanElement>(null);
+  const textRef = useRef<HTMLSpanElement>(null);
+  const sectionsRef = useRef<{ [key: string]: HTMLElement | null }>({});
+  const divProjectRef = useRef<{ [key: string]: HTMLElement | null }>({});
+  const activeIndexRef = useRef<number>(initialActiveIndex);
+  const activeIndexProjectRef = useRef<number>(initialActiveIndex);
   const [isDropdownMenu, setDropdownMenu] = useState<boolean>(false);
   const [isUIUploadFile, setUIUploadFile] = useState(false);
 
@@ -82,6 +160,13 @@ export default function Home() {
     onSuccess: () => {
       setUIUploadFile(true);
     },
+  });
+
+  const { data } = useQuery({
+    queryKey: ["cv"],
+    queryFn: getFile,
+    refetchOnWindowFocus: false,
+    retryDelay: 1000,
   });
 
   useEffect(() => {
@@ -105,39 +190,250 @@ export default function Home() {
     };
   }, []);
 
-  const { data } = useQuery({
-    queryKey: ["cv"],
-    queryFn: getFile,
-    refetchOnWindowFocus: false,
-    retryDelay: 1000,
-  });
+  const updateActiveClassOnly = (index: number) => {
+    if (!navRef.current) return;
+    const listItems = navRef.current.querySelectorAll("li");
+
+    listItems.forEach((li) => li.classList.remove("active"));
+
+    const activeLi = listItems[index];
+    if (activeLi) {
+      activeLi.classList.add("active");
+    }
+
+    activeIndexRef.current = index;
+  };
+
+  const updateActiveClassProjectOnly = (index: number) => {
+    if (!containerProjectRef.current) return;
+    const listItems = containerProjectRef.current.querySelectorAll("li");
+
+    listItems.forEach((li) => {
+      li.classList.remove("text-white");
+      li.classList.add("text-zinc-600");
+    });
+
+    const activeLi = listItems[index];
+    if (activeLi) {
+      activeLi.classList.remove("text-zinc-600");
+      activeLi.classList.add("text-white");
+    }
+
+    activeIndexProjectRef.current = index;
+  };
+
+  useEffect(() => {
+    let ticking = false;
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollPos = window.scrollY;
+
+          const navItems = Object.values(text.navbar);
+
+          for (let i = 0; i < navItems.length; i++) {
+            const item = navItems[i];
+            const sectionId = item.href;
+            const section = sectionsRef.current[sectionId];
+
+            if (section) {
+              const top = section.offsetTop - 150;
+              const bottom = top + section.offsetHeight;
+
+              if (scrollPos >= top && scrollPos < bottom) {
+                if (activeIndexRef.current !== i) {
+                  updateActiveClassOnly(i);
+                }
+                break;
+              }
+            }
+          }
+          ticking = false;
+        });
+
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const href = entry.target.getAttribute("data-href");
+            const index = arrProjects.findIndex((p) => p.href === href);
+            if (index !== -1) updateActiveClassProjectOnly(index);
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+      }
+    );
+
+    arrProjects.forEach((p) => {
+      const div = divProjectRef.current[p.href];
+      if (div) observer.observe(div);
+    });
+
+    return () => observer.disconnect();
+  }, [arrProjects]);
+
+  const noise = (n = 1) => n / 2 - Math.random() * n;
+
+  const getXY = (
+    distance: number,
+    pointIndex: number,
+    totalPoints: number
+  ): [number, number] => {
+    const angle =
+      ((360 + noise(8)) / totalPoints) * pointIndex * (Math.PI / 180);
+    return [distance * Math.cos(angle), distance * Math.sin(angle)];
+  };
+
+  const createParticle = (
+    i: number,
+    t: number,
+    d: [number, number],
+    r: number
+  ) => {
+    const rotate = noise(r / 10);
+    return {
+      start: getXY(d[0], particleCount - i, particleCount),
+      end: getXY(d[1] + noise(7), particleCount - i, particleCount),
+      time: t,
+      scale: 1 + noise(0.2),
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rotate: rotate > 0 ? (rotate + r / 20) * 10 : (rotate - r / 20) * 10,
+    };
+  };
+
+  const makeParticles = (element: HTMLElement) => {
+    const d: [number, number] = particleDistances;
+    const r = particleR;
+    const bubbleTime = animationTime * 2 + timeVariance;
+    element.style.setProperty("--time", `${bubbleTime}ms`);
+    for (let i = 0; i < particleCount; i++) {
+      const t = animationTime * 2 + noise(timeVariance * 2);
+      const p = createParticle(i, t, d, r);
+      element.classList.remove("active");
+      setTimeout(() => {
+        const particle = document.createElement("span");
+        const point = document.createElement("span");
+        particle.classList.add("particle");
+        particle.style.setProperty("--start-x", `${p.start[0]}px`);
+        particle.style.setProperty("--start-y", `${p.start[1]}px`);
+        particle.style.setProperty("--end-x", `${p.end[0]}px`);
+        particle.style.setProperty("--end-y", `${p.end[1]}px`);
+        particle.style.setProperty("--time", `${p.time}ms`);
+        particle.style.setProperty("--scale", `${p.scale}`);
+        particle.style.setProperty("--color", `var(--color-${p.color}, white)`);
+        particle.style.setProperty("--rotate", `${p.rotate}deg`);
+        point.classList.add("point");
+        particle.appendChild(point);
+        element.appendChild(particle);
+        requestAnimationFrame(() => {
+          element.classList.add("active");
+        });
+        setTimeout(() => {
+          try {
+            element.removeChild(particle);
+          } catch {}
+        }, t);
+      }, 30);
+    }
+  };
+
+  const updateEffectPosition = (element: HTMLElement) => {
+    if (!containerRef.current || !filterRef.current || !textRef.current) return;
+    const containerRect = containerRef.current.getBoundingClientRect();
+    const pos = element.getBoundingClientRect();
+    const styles = {
+      left: `${pos.x - containerRect.x}px`,
+      top: `${pos.y - containerRect.y}px`,
+      width: `${pos.width}px`,
+      height: `${pos.height}px`,
+    };
+    Object.assign(filterRef.current.style, styles);
+    Object.assign(textRef.current.style, styles);
+    textRef.current.innerText = element.innerText;
+  };
+
+  const updateAnimationEffect = (element: HTMLElement) => {
+    updateEffectPosition(element);
+
+    if (filterRef.current) {
+      const particles = filterRef.current.querySelectorAll(".particle");
+      particles.forEach((p) => filterRef.current!.removeChild(p));
+    }
+
+    if (textRef.current) {
+      textRef.current.classList.remove("active");
+      void textRef.current.offsetWidth;
+      textRef.current.classList.add("active");
+    }
+    if (filterRef.current) {
+      makeParticles(filterRef.current);
+    }
+  };
+
+  const handleClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    index: number
+  ) => {
+    const liEl = e.currentTarget;
+    updateActiveClassOnly(index);
+
+    requestAnimationFrame(() => {
+      if (liEl) {
+        updateAnimationEffect(liEl);
+      }
+    });
+  };
 
   return (
     <>
-      <Cursor />
       <AnimationBg />
       <Loading />
       <div
+        ref={containerRef}
         className={`${
           isUIUploadFile && "h-screen overflow-hidden"
         } relative items-center min-h-screen w-full flex flex-col text-white max-w-[85.375rem] mx-auto`}>
-        <nav className="w-[90%] border-2 border-zinc-800 rounded-lg flex justify-between items-center backdrop-blur-[2px] bg-zinc-900/40 h-13 px-5 sticky top-3 z-50">
-          <Link href="/" className="uppercase text-lg">
-            Fruit.
+        <nav
+          className="h-13 top-3 w-[90%] mx-auto px-5 flex items-center sticky z-50 justify-between backdrop-blur-[2px] bg-zinc-900/40 border-2 border-zinc-800 rounded-lg"
+          style={{ transform: "translate3d(0,0,0.01px)" }}>
+          <Link href="/" className="uppercase text-lg font-extrabold">
+            <ScrambledText>Fruit.</ScrambledText>
           </Link>
-          <div className=" gap-1 duration-1000 transition-all hidden md:flex">
-            {Object.values(text.navbar).map((i) => (
-              <React_Scrool
-                to={i.href}
-                smooth={true}
-                duration={2000}
-                key={i.label}
-                offset={-100}
-                className=" hover:bg-zinc-900 hover:outline-2 hover:outline-stone-300 hover:cursor-pointer px-4 duration-1000 transition-colors py-1 rounded-md hover:text-white text-stone-300">
-                {i.label}
-              </React_Scrool>
+
+          <ul
+            ref={navRef}
+            className="lg:gap-8 list-none p-0 px-4 m-0 relative z-[3] hidden md:flex"
+            style={{
+              color: "white",
+              textShadow: "0 1px 1px hsl(205deg 30% 10% / 0.2)",
+            }}>
+            {Object.values(text.navbar).map((i, index) => (
+              <li
+                key={index}
+                className={`rounded-full relative cursor-pointer transition-[background-color_color_box-shadow] duration-300 ease shadow-[0_0_0.5px_1.5px_transparent] text-white ${
+                  initialActiveIndex === index ? "active" : ""
+                }`}>
+                <a
+                  href={`#${i.href}`}
+                  onClick={(e) => handleClick(e, index)}
+                  className="outline-none py-[0.3em] px-[1em] inline-block">
+                  {i.label}
+                </a>
+              </li>
             ))}
-          </div>
+          </ul>
 
           <Image
             alt={lang !== "en" ? "VI" : "EN"}
@@ -157,420 +453,427 @@ export default function Home() {
             onClick={() => setDropdownMenu(!isDropdownMenu)}>
             {isDropdownMenu ? <ListX className="text-red-500" /> : <Menu />}
 
-            <div
+            <ul
               className={` ${
                 isDropdownMenu ? "scale-y-100" : "scale-y-0"
-              }  flex origin-top gap-1 duration-700 transition-all rounded-md absolute bg-stone-800 top-12 -left-23 flex-col w-fit`}>
-              {Object.values(text.navbar).map((i) => (
-                <React_Scrool
-                  to={i.href}
-                  smooth={true}
-                  duration={1100}
-                  key={i.label}
-                  offset={-115}
-                  onClick={handleTurnOffDropdown}
-                  className="whitespace-nowrap hover:scale-110 shadow-lg cursor-pointer px-4 duration-700 transition-colors py-1 text-white ">
-                  {i.label}
-                </React_Scrool>
+              } list-none flex origin-top gap-1 duration-700 transition-all rounded-md absolute bg-stone-800 top-12 -left-23 flex-col w-fit`}>
+              {Object.values(text.navbar).map((i, index) => (
+                <li
+                  key={index}
+                  className={`rounded-full relative cursor-pointer transition-[background-color_color_box-shadow] duration-300 ease shadow-[0_0_0.5px_1.5px_transparent] text-white`}>
+                  <a
+                    href={`#${i.href}`}
+                    onClick={handleTurnOffDropdown}
+                    className="outline-none py-[0.6em] inline-block">
+                    {i.label}
+                  </a>
+                </li>
               ))}
               <div
                 onClick={() => setLang(lang === "en" ? "vi" : "en")}
                 className="multi-color-text whitespace-nowrap hover:scale-110 shadow-lg cursor-pointer px-4 duration-700 transition-colors py-1">
                 {lang != "en" ? "English" : "Vietnamese"}
               </div>
-            </div>
+            </ul>
           </button>
         </nav>
 
-        <main className="w-full lg:w-[90%] h-fit lg:px-0 px-5 pt-16 flex flex-col gap-y-20">
-          <Element name="home">
-            <section className="flex w-full justify-between">
-              <div className="flex flex-col w-full md:w-[74%]">
-                <p className="topic flex flex-wrap gap-x-2.5">
-                  <span>{"Hi there, I'm"}</span>
-                  <span>Truong Thanh Long</span>
-                </p>
-                <TypeAnimation
-                  sequence={[
-                    "Web Developer - ReactJS",
-                    1000,
-                    "Mobile Flutter - Dart",
-                    1000,
-                    "FullStack - NextJS (ReactJS + Express)",
-                    1000,
-                  ]}
-                  wrapper="div"
-                  speed={60}
-                  repeat={Infinity}
-                  className="text-base md:text-xl lg:text-3xl tracking-wider uppercase inline-block mb-1"
-                />
-                <div className="mb-4 w-full">
-                  <p className="lg:text-lg text-base break-words">
-                    {lang !== "en" ? (
-                      <>
-                        Hiện tôi đang sống tại TP.Hồ Chí Minh và đang là{" "}
-                        <span className="cursor-pointer relative group">
-                          sinh viên năm 4
-                          <span className="absolute hidden group-hover:block z-[1] bg-stone-900 text-white top-10 left-0 border border-stone-400">
-                            <Countdown
-                              date={moment(
-                                "2025-11-21 12:00:00",
-                                "YYYY-MM-DD HH:mm:ss"
-                              ).valueOf()}
-                              renderer={({
-                                days,
-                                hours,
-                                minutes,
-                                seconds,
-                                completed,
-                              }) =>
-                                completed ? (
-                                  <span className="multi-color-text px-3 py-1 whitespace-nowrap">
-                                    University Graduate 🎓
-                                  </span>
-                                ) : (
-                                  <span className="multi-color-text px-3 py-1 whitespace-nowrap">
-                                    {days}d {hours}h {minutes}m {seconds}s
-                                  </span>
-                                )
-                              }
-                            />
-                          </span>
-                        </span>{" "}
-                        chuyên ngành Công nghệ phần mềm của Trường Đại học Ngoại
-                        ngữ - Tin học TP.Hồ Chí Minh (
-                        <Link
-                          target="_blank"
-                          href="https://huflit.edu.vn/"
-                          className="text-amber-400 font-semibold hover:underline hover:underline-offset-4">
-                          HUFLIT
-                        </Link>
-                        ), GPA hiện tại 2.94/4.0. Trong quá trình học tập và làm{" "}
-                        <React_Scrool
-                          to={text.navbar.projects.href}
-                          smooth={true}
-                          duration={1000}
-                          offset={-115}
-                          className="font-semibold cursor-pointer text-shadow-md hover:underline hover:underline-offset-4 text-shadow-pink-600">
-                          đồ án
-                        </React_Scrool>{" "}
-                        môn học, tôi đã tiếp cận với các{" "}
-                        <React_Scrool
-                          to={text.navbar.skills.href}
-                          smooth={true}
-                          duration={1000}
-                          offset={-115}
-                          className="font-semibold cursor-pointer text-shadow-md text-shadow-pink-600 hover:underline hover:underline-offset-4">
-                          Frameworks & Libraries
-                        </React_Scrool>{" "}
-                        khác nhau, các khái niệm về lập trình hướng đối
-                        tượng(OOP), thuật toán,... Tôi{" "}
-                        <span className="text-blue-600 font-bold">
-                          đang tìm kiếm công việc thực tập full-time
-                        </span>{" "}
-                        liên quan đến kiến thức đã học là lập trình web{" "}
-                        <span className="font-semibold underline underline-offset-4 decoration-2 decoration-wavy decoration-blue-600">
-                          NextJS-React
-                        </span>{" "}
-                        &{" "}
-                        <span className="font-semibold underline underline-offset-4 decoration-2 decoration-wavy decoration-blue-600">
-                          Mobile Flutter
-                        </span>{" "}
-                        nhằm học hỏi, áp dụng kiến thức, trải nghiệm tại môi
-                        trường làm việc và hoàn thành môn thực tập công nghiệp.
-                      </>
-                    ) : (
-                      <>
-                        I am currently living in Ho Chi Minh City and am a{" "}
-                        <span className="cursor-pointer relative group">
-                          4th year student
-                          <span className="absolute hidden group-hover:block z-[1] bg-stone-900 text-white top-10 left-0  border border-stone-400">
-                            <Countdown
-                              date={moment(
-                                "2025-11-21 12:00:00",
-                                "YYYY-MM-DD HH:mm:ss"
-                              ).valueOf()}
-                              renderer={({
-                                days,
-                                hours,
-                                minutes,
-                                seconds,
-                                completed,
-                              }) =>
-                                completed ? (
-                                  <span className="multi-color-text px-3 py-1 whitespace-nowrap">
-                                    University Graduate 🎓
-                                  </span>
-                                ) : (
-                                  <span className="multi-color-text px-3 py-1 whitespace-nowrap">
-                                    {days}d {hours}h {minutes}m {seconds}s
-                                  </span>
-                                )
-                              }
-                            />
-                          </span>
-                        </span>{" "}
-                        majoring in Software Technology at HCMC University of
-                        Foreign Languages - Information Technology (
-                        <Link
-                          target="_blank"
-                          href="https://huflit.edu.vn/en/"
-                          className="text-amber-400 font-semibold hover:underline hover:underline-offset-4">
-                          HUFLIT
-                        </Link>
-                        ), current GPA 2.94/4.0. During my studies and{" "}
-                        <React_Scrool
-                          to={text.navbar.projects.href}
-                          smooth={true}
-                          duration={1000}
-                          offset={-115}
-                          className="font-semibold cursor-pointer text-shadow-md hover:underline hover:underline-offset-4 text-shadow-pink-600">
-                          project
-                        </React_Scrool>{" "}
-                        work, I have been exposed to different{" "}
-                        <React_Scrool
-                          to={text.navbar.skills.href}
-                          smooth={true}
-                          duration={1000}
-                          offset={-115}
-                          className="font-semibold cursor-pointer text-shadow-md text-shadow-pink-600 hover:underline hover:underline-offset-4">
-                          Frameworks & Libraries
-                        </React_Scrool>
-                        . I{" "}
-                        <span className="text-blue-600 font-extrabold">
-                          am looking for a full-time internship
-                        </span>{" "}
-                        related to my knowledge of{" "}
-                        <span className="font-semibold underline underline-offset-4 decoration-2 decoration-wavy decoration-blue-600">
-                          NextJS-React
-                        </span>{" "}
-                        web programming &{" "}
-                        <span className="font-semibold underline underline-offset-4 decoration-2 decoration-wavy decoration-blue-600">
-                          Mobile Flutter
-                        </span>{" "}
-                        to learn, apply my knowledge, gain experience in the
-                        working environment and complete my industrial
-                        internship.
-                      </>
-                    )}
-                  </p>
-                </div>
+        <span className="effect filter" ref={filterRef} />
+        <span className="effect text" ref={textRef} />
 
-                <div className="flex gap-5 items-center flex-wrap">
+        <main className="w-full lg:w-[90%] h-fit lg:px-0 px-5 pt-16 flex flex-col gap-y-20">
+          <section
+            ref={(el) => {
+              sectionsRef.current["home"] = el;
+            }}
+            id="home"
+            className="flex w-full justify-between">
+            <div className="flex flex-col w-full md:w-[74%]">
+              <p className="topic flex flex-wrap gap-x-2.5">
+                <span>{"Hi there, I'm"}</span>
+                <span>Truong Thanh Long</span>
+              </p>
+              <TypeAnimation
+                sequence={[
+                  "Web Developer - ReactJS",
+                  1000,
+                  "Mobile Flutter - Dart",
+                  1000,
+                  "FullStack - NextJS (ReactJS + Express)",
+                  1000,
+                ]}
+                wrapper="div"
+                speed={60}
+                repeat={Infinity}
+                className="text-base md:text-xl lg:text-3xl tracking-wider uppercase inline-block mb-1"
+              />
+              <div className="mb-4 w-full">
+                <p className="lg:text-lg text-base break-words">
+                  {lang !== "en" ? (
+                    <>
+                      Hiện tôi đang sống tại TP.Hồ Chí Minh và đang là{" "}
+                      <span className="cursor-pointer relative group">
+                        sinh viên năm 4
+                        <span className="absolute hidden group-hover:block z-[1] bg-stone-900 text-white top-10 left-0 border border-stone-400">
+                          <Countdown
+                            date={moment(
+                              "2025-11-21 12:00:00",
+                              "YYYY-MM-DD HH:mm:ss"
+                            ).valueOf()}
+                            renderer={({
+                              days,
+                              hours,
+                              minutes,
+                              seconds,
+                              completed,
+                            }) =>
+                              completed ? (
+                                <span className="multi-color-text px-3 py-1 whitespace-nowrap">
+                                  University Graduate 🎓
+                                </span>
+                              ) : (
+                                <span className="multi-color-text px-3 py-1 whitespace-nowrap">
+                                  {days}d {hours}h {minutes}m {seconds}s
+                                </span>
+                              )
+                            }
+                          />
+                        </span>
+                      </span>{" "}
+                      chuyên ngành Công nghệ phần mềm của Trường Đại học Ngoại
+                      ngữ - Tin học TP.Hồ Chí Minh (
+                      <Link
+                        target="_blank"
+                        href="https://huflit.edu.vn/"
+                        className="text-amber-400 font-semibold hover:underline hover:underline-offset-4">
+                        HUFLIT
+                      </Link>
+                      ), GPA hiện tại 2.94/4.0. Trong quá trình học tập và làm{" "}
+                      <a
+                        href={`#${text.navbar.projects.href}`}
+                        className="font-semibold cursor-pointer text-shadow-md hover:underline hover:underline-offset-4 text-shadow-pink-600">
+                        đồ án
+                      </a>{" "}
+                      môn học, tôi đã tiếp cận với các{" "}
+                      <a
+                        href={`#${text.navbar.skills.href}`}
+                        className="font-semibold cursor-pointer text-shadow-md text-shadow-pink-600 hover:underline hover:underline-offset-4">
+                        Frameworks & Libraries
+                      </a>{" "}
+                      khác nhau, các khái niệm về lập trình hướng đối
+                      tượng(OOP), thuật toán,... Tôi{" "}
+                      <span className="text-blue-600 font-bold">
+                        đang tìm kiếm công việc thực tập full-time
+                      </span>{" "}
+                      liên quan đến kiến thức đã học là lập trình web{" "}
+                      <span className="font-semibold underline underline-offset-4 decoration-2 decoration-wavy decoration-blue-600">
+                        NextJS-React
+                      </span>{" "}
+                      &{" "}
+                      <span className="font-semibold underline underline-offset-4 decoration-2 decoration-wavy decoration-blue-600">
+                        Mobile Flutter
+                      </span>{" "}
+                      nhằm học hỏi, áp dụng kiến thức, trải nghiệm tại môi
+                      trường làm việc và hoàn thành môn thực tập công nghiệp.
+                    </>
+                  ) : (
+                    <>
+                      I am currently living in Ho Chi Minh City and am a{" "}
+                      <span className="cursor-pointer relative group">
+                        4th year student
+                        <span className="absolute hidden group-hover:block z-[1] bg-stone-900 text-white top-10 left-0  border border-stone-400">
+                          <Countdown
+                            date={moment(
+                              "2025-11-21 12:00:00",
+                              "YYYY-MM-DD HH:mm:ss"
+                            ).valueOf()}
+                            renderer={({
+                              days,
+                              hours,
+                              minutes,
+                              seconds,
+                              completed,
+                            }) =>
+                              completed ? (
+                                <span className="multi-color-text px-3 py-1 whitespace-nowrap">
+                                  University Graduate 🎓
+                                </span>
+                              ) : (
+                                <span className="multi-color-text px-3 py-1 whitespace-nowrap">
+                                  {days}d {hours}h {minutes}m {seconds}s
+                                </span>
+                              )
+                            }
+                          />
+                        </span>
+                      </span>{" "}
+                      majoring in Software Technology at HCMC University of
+                      Foreign Languages - Information Technology (
+                      <Link
+                        target="_blank"
+                        href="https://huflit.edu.vn/en/"
+                        className="text-amber-400 font-semibold hover:underline hover:underline-offset-4">
+                        HUFLIT
+                      </Link>
+                      ), current GPA 2.94/4.0. During my studies and{" "}
+                      <a
+                        href={`#${text.navbar.projects.href}`}
+                        className="font-semibold cursor-pointer text-shadow-md hover:underline hover:underline-offset-4 text-shadow-pink-600">
+                        project
+                      </a>{" "}
+                      work, I have been exposed to different{" "}
+                      <a
+                        href={`#${text.navbar.skills.href}`}
+                        className="font-semibold cursor-pointer text-shadow-md text-shadow-pink-600 hover:underline hover:underline-offset-4">
+                        Frameworks & Libraries
+                      </a>
+                      . I{" "}
+                      <span className="text-blue-600 font-extrabold">
+                        am looking for a full-time internship
+                      </span>{" "}
+                      related to my knowledge of{" "}
+                      <span className="font-semibold underline underline-offset-4 decoration-2 decoration-wavy decoration-blue-600">
+                        NextJS-React
+                      </span>{" "}
+                      web programming &{" "}
+                      <span className="font-semibold underline underline-offset-4 decoration-2 decoration-wavy decoration-blue-600">
+                        Mobile Flutter
+                      </span>{" "}
+                      to learn, apply my knowledge, gain experience in the
+                      working environment and complete my industrial internship.
+                    </>
+                  )}
+                </p>
+              </div>
+
+              <div className="flex gap-5 items-center flex-wrap">
+                <Link
+                  target="_blank"
+                  href="https://www.linkedin.com/in/long-thành-54629237a"
+                  className="w-fit h-fit">
+                  <Image
+                    alt="LinkedIn"
+                    src="icons-social/linkedin.svg"
+                    className="transition-all hover:ease-in-out hover:scale-125 duration-700"
+                    width={25}
+                    height={25}
+                  />
+                </Link>
+                <Link
+                  target="_blank"
+                  href="https://github.com/thanhlongtruong"
+                  className="w-fit h-fit">
+                  <Image
+                    alt="GitHub"
+                    src="icons-software/github.svg"
+                    className="transition-all hover:ease-in-out hover:scale-125 duration-700"
+                    width={25}
+                    height={25}
+                  />
+                </Link>
+                <Link
+                  target="_blank"
+                  href="mailto:truongthanhlong1542004@gmail.com"
+                  className="w-fit h-fit">
+                  <Image
+                    aria-hidden
+                    src="icons-social/gmail.svg"
+                    alt="Email"
+                    width={25}
+                    height={25}
+                    className="transition-all hover:ease-in-out hover:scale-125 duration-700"
+                  />
+                </Link>
+                {data?.data
+                  // .filter((cv: { _id: string; url: string; name: string }) =>
+                  //   lang === "en"
+                  //     ? cv.name.toLowerCase().includes("english")
+                  //     : !cv.name.toLowerCase().includes("english")
+                  // )
+                  .map((cv: { _id: string; url: string; name: string }) => (
+                    <Link
+                      key={cv._id}
+                      target="_blank"
+                      href={cv.url}
+                      className="outline-2 rounded-md transition-all hover:ease-out hover:outline-blue-500 hover:text-blue-300 duration-700 px-4 py-1">
+                      {cv.name}
+                    </Link>
+                  ))}
+              </div>
+            </div>
+            <div className="card-author hidden md:flex">
+              <div className="author-inner">
+                <Image
+                  src="/background/personal.JPEG"
+                  alt="Author"
+                  fill
+                  className="rounded-full pointer-events-none "
+                />
+              </div>
+            </div>
+          </section>
+
+          <section
+            ref={(el) => {
+              sectionsRef.current["skills"] = el;
+            }}
+            id="skills"
+            className="w-full gap-10 flex flex-col">
+            <h1 className="topic autoShow">{text.navbar.skills.label}</h1>
+
+            <div className="flex flex-col gap-y-4 text-base">
+              <div className="flex flex-wrap gap-5">
+                {PathIconDesign.map((ds) => (
                   <Link
                     target="_blank"
-                    href="https://www.linkedin.com/in/long-thành-54629237a"
-                    className="w-fit h-fit">
-                    <Image
-                      alt="LinkedIn"
-                      src="icons-social/linkedin.svg"
-                      className="transition-all hover:ease-in-out hover:scale-125 duration-700"
-                      width={25}
-                      height={25}
-                    />
-                  </Link>
-                  <Link
-                    target="_blank"
-                    href="https://github.com/thanhlongtruong"
-                    className="w-fit h-fit">
-                    <Image
-                      alt="GitHub"
-                      src="icons-software/github.svg"
-                      className="transition-all hover:ease-in-out hover:scale-125 duration-700"
-                      width={25}
-                      height={25}
-                    />
-                  </Link>
-                  <Link
-                    target="_blank"
-                    href="mailto:truongthanhlong1542004@gmail.com"
-                    className="w-fit h-fit">
+                    href={ds.link}
+                    key={ds.name}
+                    className="flex items-center py-1 px-4 border rounded-md border-stone-600 gap-x-1">
                     <Image
                       aria-hidden
-                      src="icons-social/gmail.svg"
-                      alt="Email"
-                      width={25}
-                      height={25}
-                      className="transition-all hover:ease-in-out hover:scale-125 duration-700"
+                      src={ds.path}
+                      alt={ds.name}
+                      width={24}
+                      height={24}
+                      className="w-6 h-6 imageReveal"
                     />
+                    <p className="imageReveal">{ds.name}</p>
                   </Link>
-                  {data?.data
-                    // .filter((cv: { _id: string; url: string; name: string }) =>
-                    //   lang === "en"
-                    //     ? cv.name.toLowerCase().includes("english")
-                    //     : !cv.name.toLowerCase().includes("english")
-                    // )
-                    .map((cv: { _id: string; url: string; name: string }) => (
-                      <Link
-                        key={cv._id}
-                        target="_blank"
-                        href={cv.url}
-                        className="outline-2 rounded-md transition-all hover:ease-out hover:outline-blue-500 hover:text-blue-300 duration-700 px-4 py-1">
-                        {cv.name}
-                      </Link>
-                    ))}
-                </div>
+                ))}
               </div>
-              <div className="card-author hidden md:flex">
-                <div className="author-inner">
-                  <Image
-                    src="/background/personal.JPEG"
-                    alt="Author"
-                    fill
-                    className="rounded-full pointer-events-none "
-                  />
-                </div>
+              <div className="flex flex-wrap gap-5">
+                {PathIconSoftware.map((s) => (
+                  <Link
+                    target="_blank"
+                    href={s.link}
+                    key={s.name}
+                    className="flex items-center py-1 px-4 border rounded-md border-stone-600 gap-x-1">
+                    <Image
+                      aria-hidden
+                      src={s.path}
+                      alt={s.name}
+                      width={24}
+                      height={24}
+                      className="w-6 h-6 imageReveal"
+                    />
+                    <p className="imageReveal">{s.name}</p>
+                  </Link>
+                ))}
               </div>
-            </section>
-          </Element>
-
-          <Element name="skills">
-            <section className="w-full gap-10 flex flex-col">
-              <h1 className="topic autoShow">{text.navbar.skills.label}</h1>
-
-              <div className="flex flex-col gap-y-4 text-base">
-                <div className="flex flex-wrap gap-5">
-                  {PathIconDesign.map((ds) => (
-                    <Link
-                      target="_blank"
-                      href={ds.link}
-                      key={ds.name}
-                      className="flex items-center py-1 px-4 border rounded-md border-stone-600 gap-x-1">
-                      <Image
-                        aria-hidden
-                        src={ds.path}
-                        alt={ds.name}
-                        width={24}
-                        height={24}
-                        className="w-6 h-6 imageReveal"
-                      />
-                      <p className="imageReveal">{ds.name}</p>
-                    </Link>
-                  ))}
-                </div>
-                <div className="flex flex-wrap gap-5">
-                  {PathIconSoftware.map((s) => (
-                    <Link
-                      target="_blank"
-                      href={s.link}
-                      key={s.name}
-                      className="flex items-center py-1 px-4 border rounded-md border-stone-600 gap-x-1">
-                      <Image
-                        aria-hidden
-                        src={s.path}
-                        alt={s.name}
-                        width={24}
-                        height={24}
-                        className="w-6 h-6 imageReveal"
-                      />
-                      <p className="imageReveal">{s.name}</p>
-                    </Link>
-                  ))}
-                </div>
-                <div className="flex flex-wrap gap-5">
-                  {PathIconFramework.map((f) => (
-                    <Link
-                      target="_blank"
-                      href={f.link}
-                      key={f.name}
-                      className="flex items-center py-1 px-4 border rounded-md border-stone-600 gap-x-1">
-                      <Image
-                        aria-hidden
-                        src={f.path}
-                        alt={f.name}
-                        width={24}
-                        height={24}
-                        className="w-6 h-6 imageReveal"
-                      />
-                      <p className="imageReveal">{f.name}</p>
-                    </Link>
-                  ))}
-                </div>
-                <div className="flex flex-wrap gap-5">
-                  {PathIconLanguage.map((lg) => (
-                    <Link
-                      target="_blank"
-                      href={lg.link}
-                      key={lg.name}
-                      className="flex items-center py-1 px-4 border rounded-md border-stone-600 gap-x-1">
-                      <Image
-                        aria-hidden
-                        src={lg.path}
-                        alt={lg.name}
-                        width={24}
-                        height={24}
-                        className="w-6 h-6 imageReveal"
-                      />
-                      <p className="imageReveal">{lg.name}</p>
-                    </Link>
-                  ))}
-                </div>
-                <div className="flex flex-wrap gap-5">
-                  {PathIconLibrary.map((l) => (
-                    <Link
-                      target="_blank"
-                      href={l.link}
-                      key={l.name}
-                      className="flex items-center py-1 px-4 border rounded-md border-stone-600 gap-x-1">
-                      <Image
-                        aria-hidden
-                        src={l.path}
-                        alt={l.name}
-                        width={24}
-                        height={24}
-                        className="w-6 h-6 imageReveal"
-                      />
-                      <p className="imageReveal">{l.name}</p>
-                    </Link>
-                  ))}
-                </div>
-                <div className="flex flex-wrap gap-5">
-                  {PathIconDatabase.map((d) => (
-                    <Link
-                      target="_blank"
-                      href={d.link}
-                      key={d.name}
-                      className="flex items-center py-1 px-4 border rounded-md border-stone-600 gap-x-1">
-                      <Image
-                        aria-hidden
-                        src={d.path}
-                        alt={d.name}
-                        width={24}
-                        height={24}
-                        className="w-6 h-6 imageReveal"
-                      />
-                      <p className="imageReveal">{d.name}</p>
-                    </Link>
-                  ))}
-                </div>
-                <div className="flex flex-wrap gap-5">
-                  {PathIconHosting.map((h) => (
-                    <Link
-                      target="_blank"
-                      href={h.link}
-                      key={h.name}
-                      className="flex items-center py-1 px-4 border rounded-md border-stone-600 gap-x-1">
-                      <Image
-                        aria-hidden
-                        src={h.path}
-                        alt={h.name}
-                        width={24}
-                        height={24}
-                        className="w-6 h-6 imageReveal"
-                      />
-                      <p className="imageReveal">{h.name}</p>
-                    </Link>
-                  ))}
-                </div>
+              <div className="flex flex-wrap gap-5">
+                {PathIconFramework.map((f) => (
+                  <Link
+                    target="_blank"
+                    href={f.link}
+                    key={f.name}
+                    className="flex items-center py-1 px-4 border rounded-md border-stone-600 gap-x-1">
+                    <Image
+                      aria-hidden
+                      src={f.path}
+                      alt={f.name}
+                      width={24}
+                      height={24}
+                      className="w-6 h-6 imageReveal"
+                    />
+                    <p className="imageReveal">{f.name}</p>
+                  </Link>
+                ))}
               </div>
-            </section>
-          </Element>
+              <div className="flex flex-wrap gap-5">
+                {PathIconLanguage.map((lg) => (
+                  <Link
+                    target="_blank"
+                    href={lg.link}
+                    key={lg.name}
+                    className="flex items-center py-1 px-4 border rounded-md border-stone-600 gap-x-1">
+                    <Image
+                      aria-hidden
+                      src={lg.path}
+                      alt={lg.name}
+                      width={24}
+                      height={24}
+                      className="w-6 h-6 imageReveal"
+                    />
+                    <p className="imageReveal">{lg.name}</p>
+                  </Link>
+                ))}
+              </div>
+              <div className="flex flex-wrap gap-5">
+                {PathIconLibrary.map((l) => (
+                  <Link
+                    target="_blank"
+                    href={l.link}
+                    key={l.name}
+                    className="flex items-center py-1 px-4 border rounded-md border-stone-600 gap-x-1">
+                    <Image
+                      aria-hidden
+                      src={l.path}
+                      alt={l.name}
+                      width={24}
+                      height={24}
+                      className="w-6 h-6 imageReveal"
+                    />
+                    <p className="imageReveal">{l.name}</p>
+                  </Link>
+                ))}
+              </div>
+              <div className="flex flex-wrap gap-5">
+                {PathIconDatabase.map((d) => (
+                  <Link
+                    target="_blank"
+                    href={d.link}
+                    key={d.name}
+                    className="flex items-center py-1 px-4 border rounded-md border-stone-600 gap-x-1">
+                    <Image
+                      aria-hidden
+                      src={d.path}
+                      alt={d.name}
+                      width={24}
+                      height={24}
+                      className="w-6 h-6 imageReveal"
+                    />
+                    <p className="imageReveal">{d.name}</p>
+                  </Link>
+                ))}
+              </div>
+              <div className="flex flex-wrap gap-5">
+                {PathIconHosting.map((h) => (
+                  <Link
+                    target="_blank"
+                    href={h.link}
+                    key={h.name}
+                    className="flex items-center py-1 px-4 border rounded-md border-stone-600 gap-x-1">
+                    <Image
+                      aria-hidden
+                      src={h.path}
+                      alt={h.name}
+                      width={24}
+                      height={24}
+                      className="w-6 h-6 imageReveal"
+                    />
+                    <p className="imageReveal">{h.name}</p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
 
-          <Element name="projects">
-            <section className="w-full">
+          <section
+            ref={(el) => {
+              sectionsRef.current["projects"] = el;
+            }}
+            id="projects"
+            className="w-full min-h-1 lg:relative">
+            <div>
               <h1 className="topic autoShow">{text.navbar.projects.label}</h1>
               <div className="gap-y-28 flex flex-col w-full">
-                <div className="w-full gap-10 flex flex-col">
+                <div
+                  ref={(el) => {
+                    divProjectRef.current[getProjectByHref("GrapFood")] = el;
+                  }}
+                  id={getProjectByHref("GrapFood")}
+                  data-href={getProjectByHref("GrapFood")}
+                  className="w-full gap-10 flex flex-col scroll-mt-24">
                   <div className="gap-1 flex flex-col">
                     <div className="autoShow">
                       <p className="text-xl lg:text-2xl font-semibold">
@@ -611,7 +914,15 @@ export default function Home() {
                   </Suspense>
                 </div>
 
-                <div className="gap-4 flex flex-col">
+                <div
+                  ref={(el) => {
+                    divProjectRef.current[
+                      getProjectByHref("Flight_booking_website")
+                    ] = el;
+                  }}
+                  id={getProjectByHref("Flight_booking_website")}
+                  data-href={getProjectByHref("Flight_booking_website")}
+                  className="gap-4 flex flex-col scroll-mt-24">
                   <div className="autoShow">
                     <p className="text-xl lg:text-2xl font-semibold">
                       {lang != "en"
@@ -645,7 +956,7 @@ export default function Home() {
                         <li>Style & Responsive Design: Tailwind CSS.</li>
                         <li>
                           {lang != "en" ? "Chức năng:" : "Feature:"}
-                          <ul className="list-disc list-inside ml-5">
+                          <ul className="list-disc list-inside ml-7">
                             <li>
                               {lang != "en"
                                 ? "Tìm, sort chuyến bay."
@@ -723,7 +1034,7 @@ export default function Home() {
                         <li>Style: Tailwind CSS.</li>
                         <li>
                           {lang != "en" ? "Chức năng:" : "Feature:"}
-                          <ul className="list-disc list-inside ml-4">
+                          <ul className="list-disc list-inside ml-7">
                             <li>
                               {lang != "en"
                                 ? "Quản lý account & vé theo từng account."
@@ -812,7 +1123,17 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="gap-4 flex flex-col">
+                <div
+                  ref={(el) => {
+                    divProjectRef.current[
+                      getProjectByHref("Website_to_practice_writing_with_AI")
+                    ] = el;
+                  }}
+                  id={getProjectByHref("Website_to_practice_writing_with_AI")}
+                  data-href={getProjectByHref(
+                    "Website_to_practice_writing_with_AI"
+                  )}
+                  className="gap-4 flex flex-col scroll-mt-24">
                   <div className="autoShow">
                     <p className="text-xl lg:text-2xl font-semibold">
                       {lang != "en"
@@ -839,7 +1160,7 @@ export default function Home() {
                         <li>Style & Responsive Design: Tailwind CSS.</li>
                         <li>
                           {lang != "en" ? "Chức năng:" : "Feature:"}
-                          <ul className="list-disc list-inside ml-5">
+                          <ul className="list-disc list-inside ml-7">
                             <li>
                               {lang != "en"
                                 ? "Đăng, chỉnh sửa, gỡ bài viết."
@@ -931,7 +1252,15 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="gap-10 flex flex-col">
+                <div
+                  ref={(el) => {
+                    divProjectRef.current[
+                      getProjectByHref("Movie_ticket_booking_app")
+                    ] = el;
+                  }}
+                  id={getProjectByHref("Movie_ticket_booking_app")}
+                  data-href={getProjectByHref("Movie_ticket_booking_app")}
+                  className="gap-10 flex flex-col scroll-mt-24">
                   <div className="gap-y-1 flex flex-col">
                     <div className="autoShow">
                       <p className="text-xl lg:text-2xl font-semibold">
@@ -959,7 +1288,7 @@ export default function Home() {
 
                       <li>
                         {lang != "en" ? "Chức năng: " : "Feature: "}
-                        <ul className="list-disc list-inside ml-4">
+                        <ul className="list-disc list-inside ml-7">
                           <li>
                             {lang != "en"
                               ? "Tìm & xem danh sách phim."
@@ -1068,97 +1397,212 @@ export default function Home() {
                     />
                   </Suspense>
                 </div>
+
+                <div
+                  ref={(el) => {
+                    divProjectRef.current[
+                      getProjectByHref(
+                        "Build_a_website_to_manage_internships_at_the_university"
+                      )
+                    ] = el;
+                  }}
+                  id={getProjectByHref(
+                    "Build_a_website_to_manage_internships_at_the_university"
+                  )}
+                  data-href={getProjectByHref(
+                    "Build_a_website_to_manage_internships_at_the_university"
+                  )}
+                  className="gap-10 flex flex-col scroll-mt-24">
+                  <div className="gap-y-1 flex flex-col">
+                    <div className="autoShow">
+                      <p className="text-xl lg:text-2xl font-semibold">
+                        {lang != "en"
+                          ? "Xây dựng website quản lý thực tập tại Trường Đại học"
+                          : "Build a website to manage internships at the university"}
+                      </p>
+                      <h6 className="text-stone-500 text-base">
+                        September, 2025 - 23 November, 2025
+                      </h6>
+                    </div>
+
+                    <ul className="list-disc list-inside autoShow text-base lg:text-lg">
+                      <li>
+                        {lang != "en"
+                          ? "Website được xây dựng bằng Framework Next.js(TypeScript)."
+                          : "Website built using Next.js (TypeScript) Framework."}
+                      </li>
+                      <li>
+                        {lang != "en"
+                          ? "Lý do: Không tìm được nơi thực tập phù hợp cho bản thân vào năm cuối đại học."
+                          : "Reason: I couldn't find a suitable place for my internship in the final year of university."}
+                      </li>
+
+                      <li>
+                        {lang != "en"
+                          ? "Giới thiệu đề tài: Đề tài được xây dựng để quản lý thực tập tại Trường Đại học. Gồm 4 role: Sinh viên, Giảng viên, Ban chủ nhiệm và Phòng đào tạo."
+                          : "Introduction to the topic: The topic is built to manage internships at the university. Includes 4 roles: Student, Instructor, Dean and Training Department."}
+                      </li>
+
+                      <li>
+                        {lang != "en"
+                          ? "Các chức năng chính: "
+                          : "Main features: "}
+                        <ul className="list-disc list-inside ml-7">
+                          <li>
+                            {lang != "en"
+                              ? "Sinh viên đăng ký thực tập dựa vào đợt đăng ký được mở bởi Phòng đào tạo."
+                              : "Student register for internship based on the registration period opened by the Training Department."}
+                          </li>
+                          <li>
+                            {lang != "en"
+                              ? "Sau khi đăng ký thực tập, sinh viên có thể gửi yêu cầu đến Giảng viên hướng dẫn để được hướng dẫn."
+                              : "After registering for internship, students can send a request to the instructor to be guided."}
+                          </li>
+                          <li>
+                            {lang != "en"
+                              ? "Dựa vào số lượng sinh viên đăng ký mỗi năm - học kỳ mà Ban chủ nhiệm khoa phân công số lượng Giảng viên hướng dẫn."
+                              : "Based on the number of students registered each year - semester, the Dean of the faculty assigns the number of instructors."}
+                          </li>
+                          <li>
+                            {lang != "en"
+                              ? "Sau 7 ngày từ khi đăng ký thực tập, sinh viên không có Giảng viên hướng dẫn sẽ được Ban chủ nhiệm khoa chia."
+                              : "After 7 days from registering for internship, students without an instructor will be divided by the Dean of the faculty."}
+                          </li>
+                          <li>
+                            {lang != "en"
+                              ? "Giảng viên hướng dẫn có quản lý lớp thực tập và đăng các assignment/hướng dẫn cho sinh viên."
+                              : "The instructor manages the internship class and posts assignments/guides to students."}
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        {lang != "en"
+                          ? "Sử dụng middleware để xác thực role và token được lấy từ cookie."
+                          : "Use middleware to authenticate role and token from cookies."}
+                      </li>
+                      <li>
+                        {lang != "en"
+                          ? "Sử dụng Edge Store để upload file cho các chức năng như: gửi thông báo, nộp bài,..."
+                          : "Use Edge Store to upload files for features such as: sending notifications, submitting assignments,..."}
+                      </li>
+                    </ul>
+                  </div>
+
+                  <Suspense
+                    fallback={
+                      <div className="mx-auto text-lg w-fit h-fit py-1 px-3 text-white">
+                        Loading slide...
+                      </div>
+                    }>
+                    <LazySwiperSlideComponent
+                      arrImg={InternshipManagement}
+                      arrTechStack={InternshipManagementTechnologies}
+                      arrDeploy={InternshipManagementDeploy}
+                    />
+                  </Suspense>
+                </div>
               </div>
-            </section>
-          </Element>
+            </div>
+            <div className="absolute top-0 right-0 w-[270px] h-full bg-transparent z-10 hidden lg:flex">
+              <ul
+                ref={containerProjectRef}
+                className="gap-5 list-none p-4 h-fit w-full sticky top-24 backdrop-blur-sm bg-zinc-900/0 flex flex-col">
+                {arrProjects.map((p, index) => (
+                  <li
+                    key={index}
+                    className={`cursor-pointer transition-[background-color_color_box-shadow] duration-300 ease shadow-[0_0_0.5px_1.5px_transparent] ${
+                      initialActiveIndex === index
+                        ? "text-white"
+                        : "text-zinc-600"
+                    }`}>
+                    <a href={`#${p.href}`} className="line-clamp-1">
+                      {`${index + 1}. ${p.label}`}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
 
-          <Element name="contact">
-            <section className="h-fit mb-28 w-full autoShow">
-              <h1 className="topic">{text.navbar.contact.label}</h1>
-              <div className="flex flex-col gap-4 w-full">
-                <Link
-                  target="_blank"
-                  href="mailto:truongthanhlong1542004@gmail.com"
-                  className="w-fit h-fit flex gap-4 items-center animate-underline">
-                  <Image
-                    aria-hidden
-                    src="icons-social/gmail.svg"
-                    alt="Email"
-                    width={25}
-                    height={25}
-                  />
-                  <div className="flex flex-col items-start autoBlur">
-                    <h3>EMAIL </h3>
-                    <p className="break-all">
-                      truongthanhlong1542004@gmail.com
-                    </p>
-                  </div>
-                </Link>
+          <section
+            ref={(el) => {
+              sectionsRef.current["contact"] = el;
+            }}
+            id="contact"
+            className="w-full">
+            <h1 className="topic autoShow">{text.navbar.contact.label}</h1>
+            <div className="flex flex-col gap-4 w-full">
+              <Link
+                target="_blank"
+                href="mailto:truongthanhlong1542004@gmail.com"
+                className="w-fit h-fit flex gap-4 items-center animate-underline">
+                <Image
+                  aria-hidden
+                  src="icons-social/gmail.svg"
+                  alt="Email"
+                  width={25}
+                  height={25}
+                />
+                <div className="flex flex-col items-start autoBlur">
+                  <h3>EMAIL </h3>
+                  <p className="break-all">truongthanhlong1542004@gmail.com</p>
+                </div>
+              </Link>
 
-                <Link
-                  target="_blank"
-                  href="https://www.linkedin.com/in/long-th%C3%A0nh-54629237a"
-                  className="w-fit h-fit flex gap-4 items-center animate-underline">
-                  <Image
-                    aria-hidden
-                    src="icons-social/linkedin.svg"
-                    alt="Email"
-                    width={25}
-                    height={25}
-                  />
-                  <div className="flex flex-col items-start autoBlur">
-                    <h3>LINKEDIN </h3>
-                    <p className="break-all">
-                      https://www.linkedin.com/in/long-th%C3%A0nh-54629237a
-                    </p>
-                  </div>
-                </Link>
+              <Link
+                target="_blank"
+                href="https://www.linkedin.com/in/long-th%C3%A0nh-54629237a"
+                className="w-fit h-fit flex gap-4 items-center animate-underline">
+                <Image
+                  aria-hidden
+                  src="icons-social/linkedin.svg"
+                  alt="Email"
+                  width={25}
+                  height={25}
+                />
+                <div className="flex flex-col items-start autoBlur">
+                  <h3>LINKEDIN </h3>
+                  <p className="break-all">
+                    https://www.linkedin.com/in/long-th%C3%A0nh-54629237a
+                  </p>
+                </div>
+              </Link>
 
-                <Link
-                  target="_blank"
-                  href="tel:+84967994184"
-                  className="w-fit h-fit flex gap-4 items-center animate-underline">
-                  <Phone className="w-[25px] h-[25px]" />
-                  <div className="flex flex-col items-start autoBlur">
-                    <h3>PHONE </h3>
-                    <p>+84-967-994-184</p>
-                  </div>
-                </Link>
-              </div>
-            </section>
-          </Element>
+              <Link
+                target="_blank"
+                href="tel:+84967994184"
+                className="w-fit h-fit flex gap-4 items-center animate-underline">
+                <Phone className="w-[25px] h-[25px]" />
+                <div className="flex flex-col items-start autoBlur">
+                  <h3>PHONE </h3>
+                  <p>+84-967-994-184</p>
+                </div>
+              </Link>
+            </div>
+          </section>
         </main>
 
-        <footer className="border-t border-stone-600 w-full h-fit lg:px-0 px-5 pt-4 flex flex-col justify-center items-center gap-4">
+        <footer className="border-t border-stone-600 w-full h-fit lg:px-0 px-5 pt-4 mt-28 flex flex-col justify-center items-center gap-4">
           <div className="flex justify-around w-full lg:w-[90%]">
             <div className="flex flex-col gap-4">
               <h1>MOVE TO</h1>
-              <React_Scrool
-                to="home"
-                smooth={true}
-                duration={1100}
-                offset={-115}
+              <a
+                href={`#${text.navbar.home.href}`}
                 className="hover:underline hover:underline-offset-4 hover:cursor-pointer duration-1000 transition-colors py-1 rounded-md hover:text-white text-stone-300">
                 About me
-              </React_Scrool>
+              </a>
 
-              <React_Scrool
-                to="skills"
-                smooth={true}
-                duration={1100}
-                offset={-115}
+              <a
+                href={`#${text.navbar.skills.href}`}
                 className="hover:underline hover:underline-offset-4 hover:cursor-pointer duration-1000 transition-colors py-1 rounded-md hover:text-white text-stone-300">
                 Skills
-              </React_Scrool>
+              </a>
 
-              <React_Scrool
-                to="projects"
-                smooth={true}
-                duration={1100}
-                offset={-115}
+              <a
+                href={`#${text.navbar.projects.href}`}
                 className="hover:underline hover:underline-offset-4 hover:cursor-pointer duration-1000 transition-colors py-1 rounded-md hover:text-white text-stone-300">
                 Projects
-              </React_Scrool>
+              </a>
             </div>
             <div className="flex flex-col gap-4">
               <h1>SOCIAL</h1>

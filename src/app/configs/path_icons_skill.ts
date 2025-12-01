@@ -132,6 +132,11 @@ export const PathIconLibrary = [
     link: "https://react.dev/",
   },
   {
+    path: `${PATH_ICONS_LIBRARY}shadcn-ui.svg`,
+    name: "Shadcn UI",
+    link: "https://ui.shadcn.com/",
+  },
+  {
     path: `icons-ai/openai.svg`,
     name: "OpenAI",
     link: "https://openai.com/",

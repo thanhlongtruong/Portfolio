@@ -6,5 +6,5 @@ export const navItemsVI = {
 };
 
 export const vi = {
-  navbar: navItemsVI
+  navbar: navItemsVI,
 };

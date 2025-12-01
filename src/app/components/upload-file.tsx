@@ -3,7 +3,7 @@ import {
   UploaderProvider,
   type UploadFn,
 } from "@/components/upload/uploader-provider";
-import { useEdgeStore } from "../lib/edgestore";
+import { useEdgeStore } from "../libs/edgestore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { saveFile } from "../api-client/save-file";
 import { FileUploader } from "@/components/upload/multi-file";

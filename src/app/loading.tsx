@@ -5,6 +5,7 @@ import React, { useEffect, useRef } from "react";
 
 function Loading() {
   const counterRef = useRef<HTMLHeadingElement>(null);
+  const overlayRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
     let currentValue = 0;
@@ -53,7 +54,7 @@ function Loading() {
         0
       </h1>
 
-      <div className="overlay">
+      <div ref={overlayRef} className="overlay">
         <div className="bar"></div>
         <div className="bar"></div>
         <div className="bar"></div>

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import File from "../../models/file";
-import { connectDB } from "../../lib/connect-mult-mogoose";
+import { connectDB } from "../../libs/connect-mult-mogoose";
 
 export async function POST(req: Request) {
   await connectDB(process.env.MONGO_URI_PORTFOLIO!);
