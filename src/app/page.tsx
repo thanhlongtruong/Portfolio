@@ -649,7 +649,7 @@ export default function Home() {
               <div className="flex gap-5 items-center flex-wrap">
                 <Link
                   target="_blank"
-                  href="https://www.linkedin.com/in/long-thành-54629237a"
+                  href="http://linkedin.com/in/truongthanhlong"
                   className="w-fit h-fit">
                   <Image
                     alt="LinkedIn"
