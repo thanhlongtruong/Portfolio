@@ -10,7 +10,7 @@
     "npm": ">=11.11.1",
     "node": ">=22.15.0"
   },
-  "private": false,
+  "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",

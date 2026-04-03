@@ -11,7 +11,7 @@ export const ContactList = {
     name: "LinkedIn",
   },
   github: {
-    href: "https://github.com/thanhlongtruong",
+    href: "https://github.com/thanhlongtruong/Portfolio",
     path: "/icons-software/github.svg",
     name: "GitHub",
   },

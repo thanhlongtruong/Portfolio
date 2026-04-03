@@ -30,7 +30,7 @@ export default function IntroductionPage() {
             <p>{d("about2")}</p>
           </div>
 
-          <div className="flex gap-10">
+          <div className="flex flex-wrap gap-10">
             {links.map((value, i) => {
               const t = ContactList[value.key as "linkedin" | "github"];
               if (value.key === "cv") {
