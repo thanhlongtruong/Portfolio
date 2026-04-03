@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { SplitText } from "gsap/SplitText";
@@ -19,7 +21,7 @@ const ScrambledText: React.FC<ScrambledTextProps> = ({
   radius = 100,
   duration = 1.2,
   speed = 0.5,
-  scrambleChars = ".:",
+  scrambleChars = "!<>-_\\/[]{}—=+*^?#________",
   className = "",
   style = {},
   children,
@@ -56,6 +58,18 @@ const ScrambledText: React.FC<ScrambledTextProps> = ({
               chars: scrambleChars,
               speed,
             },
+            onStart: () => {
+              gsap.set(c, {
+                color: "oklch(70.5% 0.213 47.604)",
+                textShadow: "0 0 8px oklch(70.5% 0.213 47.604)",
+              });
+            },
+            onComplete: () => {
+              gsap.set(c, {
+                color: "",
+                textShadow: "",
+              });
+            },
             ease: "none",
           });
         }
@@ -72,7 +86,7 @@ const ScrambledText: React.FC<ScrambledTextProps> = ({
   }, [radius, duration, speed, scrambleChars]);
 
   return (
-    <div ref={rootRef} className={`w-fit font-mono ${className}`} style={style}>
+    <div ref={rootRef} className={`w-fit ${className}`} style={style}>
       <p>{children}</p>
     </div>
   );

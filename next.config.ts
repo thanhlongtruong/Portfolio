@@ -1,7 +1,25 @@
 import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  experimental: {
+    globalNotFound: true,
+  },
+  images: {
+    localPatterns: [
+      { pathname: "/background/**" },
+      { pathname: "/icons-database/**" },
+      { pathname: "/icons-design/**" },
+      { pathname: "/icons-framework/**" },
+      { pathname: "/icons-language/**" },
+      { pathname: "/icons-library/**" },
+      { pathname: "/icons-social/**" },
+      { pathname: "/icons-software/**" },
+      { pathname: "/projects/**" },
+    ],
+  },
 };
 
-export default nextConfig;
+const withNextIntl = createNextIntlPlugin();
+
+export default withNextIntl(nextConfig);

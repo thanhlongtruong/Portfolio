@@ -1,0 +1,373 @@
+{
+  "BackProjects": "Quay lại page Dự án",
+  "BackProject": "Quay lại",
+  "NextProject": "Tiếp theo",
+  "LoadingImages": "Đang tải ảnh...",
+  "Pending": "Đang gửi...",
+  "BtnClose": "Đóng",
+  "prev": "Tiếp",
+  "next": "Lùi",
+  "more": "Tất cả ảnh",
+  "IntroductionPage": {
+    "actor": "Trương Thành Long",
+    "university": {
+      "name": "Trường Đại học Ngoại ngữ - Tin học TP. Hồ Chí Minh (HUFLIT)",
+      "link": "https://huflit.edu.vn/vi/",
+      "major": "Chuyên ngành: Công nghệ phần mềm",
+      "GPA": "GPA: 2.95",
+      "state": "10/2022 - 4/2026 - Đã tốt nghiệp"
+    },
+    "about1": "Frontend Developer với định hướng Fullstack. Tập trung xây dựng giao diện tối ưu trải nghiệm người dùng bằng Next.js, React, Tailwind CSS, đồng thời sử dụng Node.js và MongoDB để thiết kế backend và tối ưu luồng dữ liệu hệ thống.",
+    "about2": "Hiện tại mình đang tìm kiếm vị trí Intern/Fresher để thực chiến và xây dựng các sản phẩm thực tế.",
+    "cv": {
+      "title": "CV (VI)",
+      "url": "https://docs.google.com/document/d/e/2PACX-1vSIzj1prSKnTCOUZsw4nZ-HFjrPtBddpz4pthPalow2uXP-W5FeMBSB56w8Gr5wseAZ6P6QCUhbdAVr/pub"
+    }
+  },
+  "SideBar": {
+    "introduction": "Giới thiệu",
+    "education": "Học vấn",
+    "projects": "Dự án",
+    "skillstools": "Skills & Tools",
+    "experience": "Kinh nghiệm",
+    "contact": "Liên hệ"
+  },
+  "ProjectsPage": {
+    "title": "Dự án",
+    "description": "Đây là các dự án mình từng thực hiện để giải quyết các bài toán thực tế, từ những dòng code đầu tiên đến các hệ thống Fullstack hoàn chỉnh.",
+    "projectList": {
+      "internship_management": {
+        "title": "Hệ thống quản lý thực tập tại trường Đại học",
+        "description": "Hệ thống quản lý thực tập toàn diện được xây dựng để tối ưu hóa quy trình kết nối giữa Sinh viên, Giảng viên và Nhà trường trong giai đoạn thực tập tốt nghiệp.",
+        "size": "Số lượng: 1",
+        "time": "9, 2025 - 11/2025",
+        "stack": {
+          "title": "Công nghệ",
+          "list": [
+            "Next.js 15",
+            "Shadcn UI",
+            "Node.js (Express)",
+            "MongoDB",
+            "Edge Store",
+            "JWT (HttpOnly Cookie)"
+          ]
+        },
+        "position": "Fullstack Developer (Dự án cá nhân)",
+        "features": {
+          "title": "Tính năng",
+          "list": [
+            "Phân quyền đa tầng (RBAC): Quản lý luồng công việc phức tạp giữa 4 đối tượng: Sinh viên, Giảng viên, Ban chủ nhiệm và Phòng đào tạo.",
+            "Quy trình đăng ký thông minh: Tự động hóa việc phân bổ Giảng viên hướng dẫn sau 7 ngày nếu sinh viên chưa tìm được người hướng dẫn phù hợp.",
+            "Lớp học số: Giảng viên có thể quản lý danh sách, đăng tải hướng dẫn và bài tập (Assignments) trực tiếp trên hệ thống.",
+            "Quản lý File tập trung: Tích hợp Edge Store để xử lý việc nộp báo cáo, đính kèm thông báo với tốc độ cao.",
+            "Bảo mật hệ thống: Sử dụng Middleware kết hợp HttpOnly Cookie để xác thực Token và kiểm soát quyền truy cập theo từng Role."
+          ]
+        },
+        "challenges": {
+          "title": "Thách thức",
+          "list": [
+            "Tiếp cận công nghệ mới: Lần đầu triển khai dự án với Next.js 15 và Shadcn UI, đòi hỏi việc tối ưu hóa Server/Client Components để đạt hiệu năng tốt nhất.",
+            "Logic nghiệp vụ phức tạp: Xây dựng thuật toán tự động phân bổ giảng viên dựa trên số lượng sinh viên theo từng học kỳ và niên khóa."
+          ]
+        },
+        "learnings": {
+          "title": "Kết quả",
+          "list": [
+            "Làm chủ hệ sinh thái Next.js hiện đại và cách xây dựng giao diện chuyên nghiệp, nhất quán với Shadcn UI.",
+            "Kỹ năng xử lý lưu trữ đám mây với Edge Store và quản lý bảo mật phía Backend thông qua cơ chế Cookie-based Auth."
+          ]
+        },
+        "images": {
+          "login": "Đăng nhập",
+          "register": "Đăng ký",
+          "account_information": "Thông tin tài khoản",
+          "open_internship_registration": "Mở đăng ký thực tập",
+          "update_internship_registration_period": "Cập nhật đợt đăng ký thực tập",
+          "delete_registration_period": "Xóa đợt đăng ký",
+          "internship_registration_history": "Lịch sử đã mở đăng ký thực tập",
+          "internship_registration": "Đăng ký thực tập",
+          "registered_student_list": "Danh sách sinh viên đã đăng ký",
+          "registered_student_details": "Thông tin sinh viên đã đăng ký thực tập",
+          "distribute_students": "Chia sinh viên",
+          "assign_supervisor": "Phân công giảng viên hướng dẫn",
+          "assigned_instructor_list": "Danh sách giảng viên đã phân công",
+          "send_request_to_instructor": "Gửi yêu cầu đến giảng viên hướng dẫn",
+          "student_internship_class": "Lớp thực tập sinh viên",
+          "internship_assignment_class": "Lớp thực tập assignment",
+          "internship_assignment_student_view": "Lớp thực tập assignment role sinh viên",
+          "instructor_info_student_view": "Lớp thực tập thông tin giảng viên role sinh viên",
+          "create_assignment": "Tạo assignment",
+          "update_assignment": "Cập nhật assignment",
+          "delete_assignment": "Xóa assignment",
+          "submit_assignment": "Nộp bài",
+          "submission_list": "Danh sách nộp bài",
+          "send_notification": "Gửi thông báo"
+        },
+        "links": {
+          "github": "https://internship-management-five.vercel.app/login",
+          "vercel": "https://github.com/thanhlongtruong/internship-management"
+        }
+      },
+      "cinefruit": {
+        "title": "Ứng dụng đặt vé xem phim - CineFruit",
+        "description": "Ứng dụng đặt vé xem phim đa nền tảng, cho phép người dùng chọn suất chiếu, giữ ghế thời gian thực và thanh toán trực tuyến tích hợp.",
+        "size": "Số lượng: 4",
+        "time": "5, 2025 - 8, 2025",
+        "stack": {
+          "title": "Công nghệ",
+          "list": [
+            "Flutter (Dart)",
+            "Node.js (Express)",
+            "MongoDB",
+            "Figma",
+            "JWT",
+            "MoMo/PayPal SDK"
+          ]
+        },
+        "position": "Team Leader & Fullstack Developer",
+        "features": {
+          "title": "Tính năng",
+          "list": [
+            "Thiết kế & Hiện thực UI: Trực tiếp thiết kế Prototype trên Figma và chuyển đổi thành giao diện Mobile mượt mà bằng Flutter.",
+            "Booking Flow: Tìm kiếm suất chiếu linh hoạt theo phim hoặc rạp.",
+            "Real-time Seat Holding: Cơ chế giữ chỗ trong 15 phút, tự động đồng bộ trạng thái đơn hàng khi người dùng quay lại ứng dụng.",
+            "Dịch vụ đi kèm: Tích hợp menu chọn đồ ăn, thức uống ngay trong luồng đặt vé.",
+            "Thanh toán & Bảo mật: Xử lý giao dịch qua MoMo/PayPal; hệ thống xác thực tài khoản qua Email và JWT bảo mật."
+          ]
+        },
+        "challenges": {
+          "title": "Thách thức",
+          "list": [
+            "Đồng bộ trạng thái: Xử lý logic để giữ nguyên tiến độ đặt vé của người dùng nếu app bị đóng đột ngột hoặc người dùng quay lại sau đó (trong thời gian hiệu lực).",
+            "Team Coordination: Quản lý workflow từ thiết kế UI đến khi hiện thực hóa mã nguồn và khớp nối với API từ server."
+          ]
+        },
+        "learnings": {
+          "title": "Kết quả",
+          "list": [
+            "Làm chủ quy trình phát triển Mobile app: Từ Design trên Figma đến việc triển khai thực tế trên thiết bị iOS qua AltStore.",
+            "Kỹ năng xử lý logic Backend phức tạp liên quan đến thời gian thực (Timeout/Expiration) và tích hợp cổng thanh toán quốc tế."
+          ]
+        },
+        "images": {
+          "home_page": "Trang chủ",
+          "cinema_list_page": "Trang Danh sách rạp",
+          "showtimes_by_cinema_page": "Trang Suất chiếu theo rạp",
+          "ticket_history_page": "Trang Lịch sử vé",
+          "movie_information_page": "Trang Thông tin phim",
+          "seat_selection_page": "Trang Chọn ghế",
+          "combo_list_page": "Trang danh sách Combo",
+          "payment_page": "Trang Thanh toán"
+        },
+        "links": {
+          "github": "https://github.com/thanhlongtruong/cinefruit",
+          "youtube": "https://youtu.be/tnN4lSVfiu0",
+          "figma": "https://www.figma.com/design/kbXqz4aedVBh7FknIAquoJ/App-dat-ve-xem-phim---CineFruit?node-id=0-1&t=1FfdUidmf1A5n0VV-1"
+        }
+      },
+      "travfruit": {
+        "title": "Hệ thống đặt vé máy bay (Client & Admin) - TRAVFRUIT",
+        "description": "Một hệ thống đặt vé máy bay toàn diện gồm 2 phân hệ riêng biệt cho người dùng và quản trị viên, hỗ trợ đặt vé khứ hồi và thanh toán trực tuyến đa nền tảng.",
+        "size": "Số lượng: 4",
+        "time": "7, 2024",
+        "stack": {
+          "title": "Công nghệ",
+          "list": [
+            "React (CRA/Vite)",
+            "Node.js (Express)",
+            "MongoDB",
+            "TanStack Query",
+            "JWT",
+            "MoMo/PayPal/VietQR SDK"
+          ]
+        },
+        "position": "Team Leader & Fullstack Developer",
+        "features": {
+          "title": "Tính năng",
+          "list": [
+            "Client-side: Tìm kiếm, lọc và đặt vé máy bay (một chiều & khứ hồi) với giao diện Responsive.",
+            "Thanh toán: Tích hợp cổng thanh toán MoMo, PayPal và VietQR giúp người dùng giao dịch linh hoạt.",
+            "Hệ thống Admin: Quản lý tập trung tài khoản, lịch trình chuyến bay và theo dõi trạng thái giao dịch thời gian thực.",
+            "Quản lý trạng thái: Sử dụng useQuery và useMutation để tối ưu hóa việc gọi API và đồng bộ dữ liệu mượt mà.",
+            "Xác thực & Bảo mật: Hệ thống Login bằng JWT, phân quyền truy cập và xác thực đăng ký qua Email."
+          ]
+        },
+        "challenges": {
+          "title": "Thách thức",
+          "list": [
+            "Dẫn dắt đội ngũ (Team Lead): Phân chia công việc cho 4 thành viên, đảm bảo tiến độ và tính thống nhất giữa 2 domain Client - Admin.",
+            "Xử lý nghiệp vụ đặt vé: Thiết lập cơ chế TTL (Time-To-Live) trong MongoDB để tự động hủy giữ chỗ nếu quá 15 phút chưa thanh toán."
+          ]
+        },
+        "learnings": {
+          "title": "Kết quả",
+          "list": [
+            "Kỹ năng quản lý dự án và phối hợp giữa các thành viên trong team thông qua việc thiết kế API chung trên Postman.",
+            "Kinh nghiệm thực tế trong việc tích hợp các bên thứ ba (Third-party payment gateways) và triển khai ứng dụng lên Vercel."
+          ]
+        },
+        "images": {
+          "home": "Trang chủ",
+          "ticket_history": "Lịch sử vé",
+          "enter_information": "Nhập thông tin",
+          "payment": "Thanh toán",
+          "account_management": "Quản lý tài khoản",
+          "flight_management": "Quản lý chuyến bay",
+          "add_flight": "Thêm chuyến bay",
+          "transaction_management": "Quản lý giao dịch",
+          "mobile_ui": "UI on the Mobile"
+        },
+        "links": {
+          "github": "https://github.com/thanhlongtruong/travFruit",
+          "vercel": "https://travfruitv4.vercel.app/",
+          "vercelA": "https://travfruitv3admin.vercel.app/"
+        }
+      },
+      "writing": {
+        "title": "Nền tảng hỗ trợ học tiếng Anh",
+        "description": "Một ứng dụng Fullstack hỗ trợ học tiếng Anh, tích hợp OpenAI API để cá nhân hóa nội dung học tập và tự động kiểm duyệt cộng đồng.",
+        "size": "Số lượng: 1",
+        "time": "Cập nhật lần cuối 08/2025",
+        "stack": {
+          "title": "Công nghệ",
+          "list": [
+            "React (Vite)",
+            "TypeScript",
+            "Tailwind CSS",
+            "Node.js (Express)",
+            "MongoDB",
+            "OpenAI API",
+            "JWT (JSON Web Token)"
+          ]
+        },
+        "position": "Fullstack Developer (Solo Project)",
+        "features": {
+          "title": "Tính năng",
+          "list": [
+            "Hệ thống xác thực: Đăng ký/Đăng nhập và duy trì phiên làm việc bảo mật bằng JWT.",
+            "AI Content Generator: Sử dụng model gpt-4o-mini để tạo bài mẫu, từ vựng và cụm từ theo chủ đề và trình độ người dùng yêu cầu.",
+            "AI Moderation: Tự động kiểm duyệt bình luận của người dùng (chống spam, thô tục, phân biệt chủng tộc) bằng OpenAI Moderation và GPT-4o-mini trước khi hiển thị.",
+            "Đánh giá bài viết: AI phân tích và phản hồi trực tiếp dựa trên bài làm của người học.",
+            "Responsive Design: Giao diện tối ưu cho trải nghiệm di động và máy tính."
+          ]
+        },
+        "challenges": {
+          "title": "Thách thức",
+          "list": [
+            "Xây dựng hệ thống Fullstack: Quản lý luồng dữ liệu giữa Frontend, Backend và Database sao cho đồng bộ.",
+            "Tích hợp AI: Thiết kế cấu trúc Prompt và xử lý dữ liệu trả về theo định dạng JSON thông qua zodTextFormat để đảm bảo tính chính xác cho UI."
+          ]
+        },
+        "learnings": {
+          "title": "Kết quả",
+          "list": [
+            "Sử dụng TypeScript để quản lý kiểu dữ liệu chặt chẽ, giảm thiểu lỗi runtime trong quá trình phát triển.",
+            "Hiểu sâu về cơ chế xác thực người dùng và bảo mật thông tin bằng Token.",
+            "Kỹ năng làm việc với AI API để tạo ra các tính năng."
+          ]
+        },
+        "images": {
+          "account_registration_page": "Trang Đăng ký tài khoản",
+          "home_page": "Trang chủ",
+          "writing_page": "Trang Writing",
+          "email": "Email"
+        },
+        "links": {
+          "github": "https://github.com/thanhlongtruong/English-Writing-AI",
+          "vercel": "https://english-writing-fruit-v1.vercel.app/"
+        }
+      },
+      "grapfood": {
+        "title": "GrabFood UI Clone",
+        "description": "Dự án mô phỏng giao diện người dùng của nền tảng đặt đồ ăn GrabFood, tập trung vào việc tối ưu hóa trải nghiệm hiển thị và luồng tương tác người dùng ở phía Frontend. Đây là dự án nền tảng giúp mình làm quen với React và tư duy thiết kế giao diện hiện đại.",
+        "size": "Số lượng: 1",
+        "time": "Cập nhật lần cuối 03/2024",
+        "stack": {
+          "title": "Công nghệ",
+          "list": [
+            "ReactJS (Create React App)",
+            "Javascript",
+            "Tailwind CSS",
+            "React Router DOM"
+          ]
+        },
+        "position": "Frontend Developer (Cá nhân)",
+        "features": {
+          "title": "Tính năng",
+          "list": [
+            "Hiển thị tối ưu trên nhiều thiết bị (Desktop, Tablet, Mobile) bằng việc sử dụng TailwindCSS.",
+            "Sử dụng React Router để chuyển đổi giữa các trang như Trang chủ, Chi tiết quán ăn, Danh mục mà không cần tải lại trang.",
+            "Xây dựng hệ thống component có khả năng tái sử dụng cao như Card món ăn, Thanh tìm kiếm,...",
+            "Hiển thị danh sách cửa hàng và thực đơn từ dữ liệu JSON giả lập."
+          ]
+        },
+        "challenges": {
+          "title": "Thách thức",
+          "list": [
+            "Chuyển đổi từ tư duy DOM truyền thống sang quản lý State và Props."
+          ]
+        },
+        "learnings": {
+          "title": "Kết quả",
+          "list": [
+            "Nắm vững cách React hoạt động, các Hooks như useState, useEffect quản lý dữ liệu và render giao diện.",
+            "Hình thành quy trình tự học công nghệ mới thông qua tài liệu chính thức (Documentation) và giải quyết vấn đề (Debug) thực tế.",
+            "Triển khai sản phẩm thực tế lên môi trường Internet thông qua GitHub Pages"
+          ]
+        },
+        "images": {
+          "home_page": "Trang chủ",
+          "dish_page": "Món ăn",
+          "eatery_page": "Quán ăn",
+          "order_page": "Đặt món"
+        },
+        "links": {
+          "github": "https://thanhlongtruong.github.io/GrapFood_TTL/",
+          "githubPage": "https://github.com/thanhlongtruong/GrapFood_TTL"
+        }
+      }
+    }
+  },
+  "Skills&Tools": {
+    "description": "Tập hợp các công nghệ mình đang sử dụng để phát triển sản phẩm trên Web, Mobile và hệ thống Backend."
+  },
+  "ContactPage": {
+    "title": "Liên hệ",
+    "contact": {
+      "title": "Tin nhắn",
+      "email": "Email",
+      "placeholderEmail": "nguyenvana@gmail.com",
+      "topic": "Chủ đề",
+      "placeholderTopic": "Viết chủ đề ở đây..",
+      "message": "Nội dung",
+      "placeholderMessage": "Viết nội dung của bạn ở đây...",
+      "btnSubmit": "Gửi",
+      "btnReset": "Đặt lại"
+    },
+    "form": {
+      "email": {
+        "invalid": "Email không hợp lệ.",
+        "min": "Email phải có ít nhất 5 ký tự.",
+        "max": "Email tối đa 100 ký tự."
+      },
+      "topic": {
+        "min": "Chủ đề phải có ít nhất 10 ký tự.",
+        "max": "Chủ đề tối đa 200 ký tự."
+      },
+      "message": {
+        "min": "Nội dung phải có ít nhất 100 ký tự.",
+        "max": "Nộidung tối đa 1000 ký tự."
+      }
+    },
+    "responsesAPI": {
+      "200": "Gửi email thành công.",
+      "sendFailed": "Gửi email thất bại.",
+      "500": "Gửi email không thành công.",
+      "429": "Vui lòng thử lại sau 10 phút."
+    }
+  },
+  "ExperiencePage": {
+    "title": "Kinh nghiệm",
+    "updating": "Oops! o_O"
+  }
+}

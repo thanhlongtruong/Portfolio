@@ -1,0 +1,374 @@
+{
+  "BackProjects": "Back to projects",
+  "NextProject": "Next to",
+  "BackProject": "Back",
+  "LoadingImages": "Loading images...",
+  "Pending": "Sending...",
+  "BtnClose": "Close",
+  "prev": "prev",
+  "next": "next",
+  "more": "Go to gallery",
+  "IntroductionPage": {
+    "actor": "Truong Thanh Long",
+    "university": {
+      "name": "HCMC University of Foreign Languages - Information Technology (HUFLIT)",
+      "link": "https://huflit.edu.vn/en/",
+      "major": "Major: Software Technology",
+      "GPA": "GPA: 2.95",
+      "state": "10/2022 - 4/2026 - Graduated"
+    },
+    "about1": "Frontend Developer with Fullstack mindset. I build responsive and user-friendly interfaces using Next.js, React, and Tailwind CSS, and develop backend services with Node.js and MongoDB to support complete web applications.",
+    "about2": "Currently seeking an Intern/Fresher position to gain real-world development experience.",
+    "cv": {
+      "title": "CV (EN)",
+      "url": "https://docs.google.com/document/d/e/2PACX-1vQ84dxnvl9tq8JoDA3EA688T4bhwpaGP8RET3FkWlY29Iloc36NMJsjyop_11dsKK8mxJCVRfy4jQ4N/pub"
+    }
+  },
+  "SideBar": {
+    "introduction": "Introduction",
+    "projects": "Projects",
+    "skillstools": "Skills  & Tools",
+    "experience": "Experience",
+    "contact": "Contact"
+  },
+  "ProjectsPage": {
+    "title": "Projects",
+    "description": "A collection of real-world projects I've built, tracking my progress from the first lines of code to full-stack systems.",
+    "projectList": {
+      "internship_management": {
+        "title": "University Internship Management System",
+        "description": "A comprehensive platform built to streamline the internship coordination process between Students, Faculty, and University Departments.",
+        "size": "Team size: 1",
+        "time": "Sep, 2025 - Nov, 2025",
+        "stack": {
+          "title": "Tech stack",
+          "list": [
+            "Next.js 15",
+            "Shadcn UI",
+            "Node.js (Express)",
+            "MongoDB",
+            "Edge Store",
+            "JWT (HttpOnly Cookie)"
+          ]
+        },
+        "position": "Fullstack Developer (Solo Project)",
+        "features": {
+          "title": "Features",
+          "list": [
+            "Multi-Role Workflow: Implemented Role-Based Access Control (RBAC) for Students, Instructors, Faculty Boards, and Training Departments.",
+            "Automated Allocation: Designed a logic to auto-assign supervisors to students after a 7-day grace period, ensuring no student is left unguided.",
+            "Virtual Classrooms: Enabled instructors to manage student lists, post guidelines, and grade assignments within a unified interface.",
+            "Efficient File Handling: Integrated Edge Store for seamless document uploads, including official notices and student report submissions.",
+            "Enhanced Security: Utilized custom Middlewares and HttpOnly Cookies for secure, role-specific session management."
+          ]
+        },
+        "challenges": {
+          "title": "Challenges",
+          "list": [
+            "Adopting Modern Tech: Self-taught and implemented Next.js 15 and Shadcn UI, balancing Server and Client components for optimal performance.",
+            "Complex Business Logic: Architected a system to handle dynamic instructor quotas and student distributions based on real-time enrollment data."
+          ]
+        },
+        "learnings": {
+          "title": "Learnings",
+          "list": [
+            "Mastered the modern Next.js ecosystem and learned how to build high-quality, accessible UIs with Shadcn UI.",
+            "Gained practical experience in cloud storage integration and hardening web security through cookie-based authentication."
+          ]
+        },
+        "images": {
+          "login": "Login",
+          "register": "Register",
+          "account_information": "Account Information",
+          "open_internship_registration": "Open Internship Registration",
+          "update_internship_registration_period": "Update Internship Registration Period",
+          "delete_registration_period": "Delete Registration Period",
+          "internship_registration_history": "Internship Registration History",
+          "internship_registration": "Internship Registration",
+          "registered_student_list": "Registered Student List",
+          "registered_student_details": "Registered Student Details",
+          "distribute_students": "Distribute Students",
+          "assign_supervisor": "Assign Supervisor/Instructor",
+          "assigned_instructor_list": "Assigned Instructor List",
+          "send_request_to_instructor": "Send Request to Instructor",
+          "student_internship_class": "Student Internship Class",
+          "internship_assignment_class": "Internship Assignment Class",
+          "internship_assignment_student_view": "Internship Assignment (Student View)",
+          "instructor_info_student_view": "Instructor Info (Student View)",
+          "create_assignment": "Create Assignment",
+          "update_assignment": "Update Assignment",
+          "delete_assignment": "Delete Assignment",
+          "submit_assignment": "Submit Assignment",
+          "submission_list": "Submission List",
+          "send_notification": "Send Notification"
+        },
+        "links": {
+          "github": "https://internship-management-five.vercel.app/login",
+          "vercel": "https://github.com/thanhlongtruong/internship-management"
+        }
+      },
+      "cinefruit": {
+        "title": "CineFruit - Movie Ticket Booking App",
+        "description": "A cross-platform mobile application for seamless movie ticket bookings, featuring real-time seat reservations and integrated digital payments.",
+        "size": "Team size: 4",
+        "time": "May, 2025 - Aug, 2025",
+        "stack": {
+          "title": "Tech stack",
+          "list": [
+            "Flutter (Dart)",
+            "Node.js (Express)",
+            "MongoDB",
+            "Figma",
+            "JWT",
+            "MoMo/PayPal SDK"
+          ]
+        },
+        "position": "Team Leader & Fullstack Developer",
+        "features": {
+          "title": "Features",
+          "list": [
+            "End-to-End Design: Crafted high-fidelity UI/UX prototypes in Figma and brought them to life using Flutter.",
+            "Intuitive Booking: Browse showtimes by movie or cinema with an interactive seat selection map.",
+            "State Persistence & Holding: Implemented a 15-minute seat-holding logic that restores the booking session if the user re-opens the app within the time limit.",
+            "Add-on Services: Integrated a streamlined interface for selecting food and beverage combos during the checkout flow.",
+            "Payment & Security: Secure transaction handling via MoMo and PayPal; robust JWT authentication with email verification."
+          ]
+        },
+        "challenges": {
+          "title": "Challenges",
+          "list": [
+            "Persistence Logic: Handling complex app states to ensure users don't lose their booking progress during interruptions.",
+            "Real-world Deployment: Navigating the process of sideloading and testing the app on physical iOS devices using AltServer/AltStore."
+          ]
+        },
+        "learnings": {
+          "title": "Learnings",
+          "list": [
+            "Mastered the full mobile development lifecycle, from initial UI concepts in Figma to backend integration and physical device testing.",
+            "Deepened expertise in managing real-time data expiration (TTL) and handling multi-step checkout processes."
+          ]
+        },
+        "images": {
+          "home_page": "Home Page",
+          "cinema_list_page": "Cinema List Page",
+          "showtimes_by_cinema_page": "Showtimes by Cinema Page",
+          "ticket_history_page": "Ticket History Page",
+          "movie_information_page": "Movie Information Page",
+          "seat_selection_page": "Seat Selection Page",
+          "combo_list_page": "Combo List Page",
+          "payment_page": "Payment Page"
+        },
+        "links": {
+          "github": "https://github.com/thanhlongtruong/cinefruit",
+          "youtube": "https://youtu.be/tnN4lSVfiu0",
+          "figma": "https://www.figma.com/design/kbXqz4aedVBh7FknIAquoJ/App-dat-ve-xem-phim---CineFruit?node-id=0-1&t=1FfdUidmf1A5n0VV-1"
+        }
+      },
+      "travfruit": {
+        "title": "TRAVFRUIT - Flight Booking System (Client & Admin)",
+        "description": "A complete flight booking ecosystem featuring two dedicated portals for travelers and admins, supporting round-trip bookings and multi-channel online payments.",
+        "size": "Team size: 4",
+        "time": "July, 2024",
+        "stack": {
+          "title": "Tech stack",
+          "list": [
+            "React (CRA/Vite)",
+            "Node.js (Express)",
+            "MongoDB",
+            "TanStack Query",
+            "JWT",
+            "MoMo/PayPal/VietQR SDK"
+          ]
+        },
+        "position": "Team Leader & Fullstack Developer",
+        "features": {
+          "title": "Features",
+          "list": [
+            "Client: Fully responsive UI for searching, filtering, and booking both one-way and round-trip flights.",
+            "Flexible Payments: Integrated MoMo, PayPal, and VietQR for a smooth and diverse checkout experience.",
+            "Admin Dashboard: Centralized management for user accounts, flight schedules, and real-time transaction tracking.",
+            "State Management: Leveraged useQuery and useMutation for optimized API calls and seamless data synchronization.",
+            "Security & Auth: Robust JWT-based authentication with role-based access control and email verification for new sign-ups."
+          ]
+        },
+        "challenges": {
+          "title": "Challenges",
+          "list": [
+            "Team Leadership: Coordinated a team of 4, managing task delegation and ensuring consistency between the Client and Admin domains to meet project deadlines.",
+            "Complex Booking Logic: Solved the 'ghost booking' issue by implementing MongoDB TTL indexes to auto-release seats if payment isn't completed within 15 minutes."
+          ]
+        },
+        "learnings": {
+          "title": "Learnings",
+          "list": [
+            "Gained hands-on experience in project management and team collaboration by maintaining clear API documentation via Postman.",
+            "Mastered the integration of third-party payment gateways and the deployment of complex full-stack apps on Vercel."
+          ]
+        },
+        "images": {
+          "home": "Home",
+          "ticket_history": "Ticket History",
+          "enter_information": "Enter Information",
+          "payment": "Payment",
+          "account_management": "Account Management",
+          "flight_management": "Flight Management",
+          "add_flight": "Add Flight",
+          "transaction_management": "Transaction Management",
+          "mobile_ui": "UI on the Mobile"
+        },
+        "links": {
+          "github": "https://github.com/thanhlongtruong/travFruit",
+          "vercel": "https://travfruitv4.vercel.app/",
+          "vercelA": "https://travfruitv3admin.vercel.app/"
+        }
+      },
+      "writing": {
+        "title": "AI-Powered English Learning Platform",
+        "description": "A Fullstack application designed to assist English learners. The platform leverages OpenAI's models to generate personalized study materials and maintain a healthy community through automated AI moderation.",
+        "size": "Team size: 1",
+        "time": "Last updated Aug, 2025",
+        "stack": {
+          "title": "Tech stack",
+          "list": [
+            "React (Vite)",
+            "TypeScript",
+            "Tailwind CSS",
+            "Node.js (Express)",
+            "MongoDB",
+            "OpenAI API",
+            "JWT (JSON Web Token)"
+          ]
+        },
+        "position": "Fullstack Developer (Solo Project)",
+        "features": {
+          "title": "Features",
+          "list": [
+            "Secure Authentication: Built a robust login/signup system with persistent sessions using JWT.",
+            "AI Writing Assistant: Integrated gpt-4o-mini to generate tailored essays, vocabulary, and phrases based on the user's specific topic and level.",
+            "Smart Community Moderation: Implemented a real-time comment filtering system using OpenAI's moderation models to detect and block toxic or invalid content automatically.",
+            "Automated Grading: Users receive instant feedback and evaluations on their writing tasks from the AI.",
+            "Fully Responsive UI: Crafted with a mobile-first approach using Tailwind CSS for a seamless across-device experience."
+          ]
+        },
+        "challenges": {
+          "title": "Challenges",
+          "list": [
+            "Fullstack Architecture: Managing the entire data flow from the UI to the Node.js server and MongoDB database while ensuring system stability.",
+            "AI Integration & Parsing: Engineering complex prompts and ensuring the AI responses strictly follow a specific JSON schema using zodTextFormat for consistent UI rendering."
+          ]
+        },
+        "learnings": {
+          "title": "Learnings",
+          "list": [
+            "Adopted TypeScript for stricter type safety, significantly reducing bugs during the development process.",
+            "Deepened knowledge of backend security and session management with JWT.",
+            "Integrate AI APIs to solve real-world problems like content moderation and automated education."
+          ]
+        },
+        "images": {
+          "account_registration_page": "Account Registration Page",
+          "home_page": "Home Page",
+          "writing_page": "Writing Page",
+          "email": "Email"
+        },
+
+        "links": {
+          "github": "https://github.com/thanhlongtruong/English-Writing-AI",
+          "vercel": "https://english-writing-fruit-v1.vercel.app/"
+        }
+      },
+      "grapfood": {
+        "title": "GrabFood UI Clone",
+        "description": "A UI-focused project mimicking the GrabFood food delivery platform. This was my very first step into the React ecosystem, where I learned how to build modern, interactive user interfaces from scratch.",
+        "size": "Team size: 1",
+        "time": "Last updated April, 2024",
+        "stack": {
+          "title": "Tech stack",
+          "list": [
+            "ReactJS (Create React App)",
+            "Javascript",
+            "Tailwind CSS",
+            "React Router DOM"
+          ]
+        },
+        "position": "Frontend Developer (Solo Project)",
+        "features": {
+          "title": "Features",
+          "list": [
+            "Fully responsive layout across Desktop, Tablet, and Mobile using Tailwind CSS.",
+            "Smooth, no-reload navigation between the Homepage, Restaurant Details, and Category pages via React Router.",
+            "Modular components like Food Cards and Search Bars designed for high reusability.",
+            "Dynamic rendering of restaurant lists and menus using mock JSON data."
+          ]
+        },
+        "challenges": {
+          "title": "Challenges",
+          "list": [
+            "Shifting my mindset from traditional DOM manipulation to React's State and Props management for the first time."
+          ]
+        },
+        "learnings": {
+          "title": "Learnings",
+          "list": [
+            "Gained a solid grasp of React's core mechanics, especially using Hooks like useState and useEffect to manage data and UI rendering.",
+            "Developed a self-learning workflow by diving into official documentation and troubleshooting real-world bugs during development.",
+            "Learned how to deploy and manage a live web application using GitHub Pages for real-world accessibility."
+          ]
+        },
+        "images": {
+          "home_page": "Home Page",
+          "dish_page": "Dish Page",
+          "eatery_page": "Eatery Page",
+          "order_page": "Order Page"
+        },
+
+        "links": {
+          "github": "https://thanhlongtruong.github.io/GrapFood_TTL/",
+          "githubPage": "https://github.com/thanhlongtruong/GrapFood_TTL"
+        }
+      }
+    }
+  },
+  "Skills&Tools": {
+    "description": "A breakdown of the languages, frameworks, and tools I use to build Web, Mobile, and Backend solutions."
+  },
+  "ContactPage": {
+    "title": "Contact",
+    "contact": {
+      "title": "Your message",
+      "email": "Email",
+      "placeholderEmail": "your-email@gmail.com",
+      "topic": "Topic",
+      "placeholderTopic": "What's the topic today?",
+      "message": "Content",
+      "placeholderMessage": "Type your message here.",
+      "btnSubmit": "Send",
+      "btnReset": "Default"
+    },
+    "form": {
+      "email": {
+        "invalid": "Invalid email address.",
+        "min": "Email must be at least 5 characters",
+        "max": "Email must be at most 100 characters"
+      },
+      "topic": {
+        "min": "Topic must be at least 10 characters",
+        "max": "Topic must be at most 200 characters"
+      },
+      "message": {
+        "min": "Message must be at least 100 characters",
+        "max": "Message must be at most 1000 characters"
+      }
+    },
+    "responsesAPI": {
+      "200": "Email sent.",
+      "sendFailed": "Send failed.",
+      "500": "Something wrong!",
+      "429": "Please try again after 10 minutes."
+    }
+  },
+  "ExperiencePage": {
+    "title": "Experience",
+    "updating": "... No service"
+  }
+}
