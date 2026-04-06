@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   },
   description:
     "Portfolio of Truong Thanh Long - Software Engineer specializing in Next.js, Flutter, Node.js.",
-  keywords: ["Truong Thanh Long", "Portfolio"],
+  keywords: ["Fruit", "Portfolio", "Truong Thanh Long Portfolio"],
   openGraph: {
     title: "Truong Thanh Long Portfolio",
     description:

@@ -18,9 +18,11 @@ export default function IntroductionPage() {
       <div className="flex gap-10">
         <div className="w-full flex flex-col gap-10">
           <div className="flex flex-col gap-y-3">
-            <p className="uppercase font-bold lg:text-5xl md:text-3xl text-2xl">
+            <h1
+              itemProp="name"
+              className="uppercase font-bold lg:text-5xl md:text-3xl text-2xl">
               {d("actor")}
-            </p>
+            </h1>
             <p className="md:text-xl uppercase font-normal text-lg">
               Frontend | Fullstack-oriented | Mobile Flutter
             </p>
