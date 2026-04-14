@@ -11,11 +11,13 @@ const nextConfig: NextConfig = {
       { pathname: "/icons-database/**" },
       { pathname: "/icons-design/**" },
       { pathname: "/icons-framework/**" },
+      { pathname: "/icons-hosting/**" },
       { pathname: "/icons-language/**" },
       { pathname: "/icons-library/**" },
       { pathname: "/icons-social/**" },
       { pathname: "/icons-software/**" },
       { pathname: "/projects/**" },
+      { pathname: "/favicon.ico" },
     ],
   },
 };
