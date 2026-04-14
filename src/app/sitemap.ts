@@ -21,14 +21,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   routes.forEach((route) => {
     languages.forEach((lang) => {
+      const fullUrl = `${baseUrl}/${lang}${route}`;
+
       sitemap.push({
-        url: `${baseUrl}/${route}`,
+        url: fullUrl,
         lastModified: new Date(),
         changeFrequency: "monthly",
         priority: route === "" ? 1 : 0.8,
         alternates: {
           languages: {
-            [lang]: `${baseUrl}/${lang}${route}`,
+            en: `${baseUrl}/en${route}`,
+            vi: `${baseUrl}/vi${route}`,
           },
         },
       });
