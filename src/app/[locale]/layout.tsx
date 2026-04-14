@@ -22,38 +22,53 @@ export function generateStaticParams() {
   );
 }
 
-export const metadata: Metadata = {
-  metadataBase: new URL("https://portfolio-thanhlong.vercel.app"),
-  title: {
-    default: "Truong Thanh Long Portfolio",
-    template: "%s | Truong Thanh Long",
-  },
-  description:
-    "Portfolio of Truong Thanh Long - Software Engineer specializing in Next.js, Flutter, Node.js.",
-  keywords: ["Fruit", "Portfolio", "Truong Thanh Long Portfolio"],
-  openGraph: {
-    title: "Truong Thanh Long Portfolio",
-    description:
-      "Software Engineer Portfolio - Frontend | Fullstack | Mobile Flutter",
-    url: "https://portfolio-thanhlong.vercel.app",
-    siteName: "Truong Thanh Long Portfolio",
-    locale: "en_US",
-    type: "website",
-    images: [
-      {
-        url: "/opengraph-image.png",
-        width: 1200,
-        height: 630,
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return {
+    metadataBase: new URL("https://portfolio-thanhlong.vercel.app"),
+    alternates: {
+      canonical: `/${locale}`,
+      languages: {
+        "en-US": "/en",
+        "vi-VN": "/vi",
       },
-    ],
-  },
-  alternates: {
-    languages: {
-      en: "/en",
-      vi: "/vi",
     },
-  },
-};
+    icons: {
+      icon: [
+        { url: "/favicon.ico" },
+        { url: "/icon.png", sizes: "512x512", type: "image/png" },
+      ],
+      apple: "/apple-icon.png",
+    },
+    title: {
+      default: "Truong Thanh Long Portfolio",
+      template: "%s | Truong Thanh Long",
+    },
+    description:
+      "Portfolio of Truong Thanh Long - Software Engineer specializing in Next.js, Flutter, Node.js.",
+    keywords: ["Fruit", "Portfolio", "Truong Thanh Long Portfolio"],
+    openGraph: {
+      title: "Truong Thanh Long Portfolio",
+      description:
+        "Software Engineer Portfolio - Frontend | Fullstack | Mobile Flutter",
+      url: "https://portfolio-thanhlong.vercel.app",
+      siteName: "Truong Thanh Long Portfolio",
+      locale: "en_US",
+      type: "website",
+      images: [
+        {
+          url: "/opengraph-image.png",
+          width: 1200,
+          height: 630,
+        },
+      ],
+    },
+  };
+}
 
 const roboto_mono = Roboto_Mono({
   subsets: ["latin", "vietnamese"],

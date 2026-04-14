@@ -1,4 +1,3 @@
-// Import global styles and fonts
 import "./globals.css";
 import { Roboto_Mono } from "next/font/google";
 import type { Metadata } from "next";
@@ -10,6 +9,7 @@ const roboto_mono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://portfolio-thanhlong.vercel.app"),
   title: "404 - Page Not Found",
   description: "The page you are looking for does not exist.",
 };

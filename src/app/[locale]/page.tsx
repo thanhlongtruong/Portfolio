@@ -48,7 +48,7 @@ export default function IntroductionPage() {
                       className="w-fit h-fit flex gap-4 items-center">
                       <Image
                         aria-hidden
-                        src="/background/favicon.ico"
+                        src="/favicon.ico"
                         alt="actor"
                         width={22}
                         height={22}
