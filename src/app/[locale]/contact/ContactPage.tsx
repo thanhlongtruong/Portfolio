@@ -97,6 +97,7 @@ export default function ContactPage() {
                 <div className="flex flex-wrap gap-5">
                   <Link
                     target="_blank"
+                    rel="noopener noreferrer"
                     href={t.href}
                     className="w-fit h-fit flex gap-4 items-center animate-underline">
                     <Image

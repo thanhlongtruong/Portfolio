@@ -17,7 +17,9 @@ const nextConfig: NextConfig = {
       { pathname: "/icons-social/**" },
       { pathname: "/icons-software/**" },
       { pathname: "/projects/**" },
+      { pathname: "/screenshots/**" },
       { pathname: "/favicon.ico" },
+      { pathname: "/icon.png" },
     ],
   },
 };

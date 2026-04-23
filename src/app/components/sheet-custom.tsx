@@ -75,7 +75,7 @@ export function SheetCustom() {
                   className={`w-fit py-2 uppercase`}
                   variant="link"
                   asChild>
-                  <Link href={t.href} target="_blank">
+                  <Link href={t.href} target="_blank" rel="noopener noreferrer">
                     {t.name}
                     <ArrowUpRight />
                   </Link>

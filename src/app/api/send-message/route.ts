@@ -30,7 +30,6 @@ export async function POST(req: Request) {
       );
     }
     await transporter.verify();
-    console.log("Server is ready to take our messages");
 
     const info = await transporter.sendMail({
       from: `"Portfolio Contact" <${process.env.SMTP_USER}>`,

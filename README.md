@@ -1,11 +1,11 @@
 <h1 align="center">Welcome to portfolio 👋</h1>
 <p align="center">
-  <a href="https://nextjs.org/" target="_blank">
+  <a href="https://nextjs.org/" target="_blank" rel="noopener noreferrer">
     <img alt="Next" src="https://img.shields.io/npm/v/next?label=Next">
   </a>
   <img src="https://img.shields.io/badge/npm-%3E%3D11.11.1-blue.svg" />
   <img src="https://img.shields.io/badge/node-%3E%3D22.15.0-blue.svg" />
-  <a href="https://github.com/thanhlongtruong/Portfolio#readme" target="_blank">
+  <a href="https://github.com/thanhlongtruong/Portfolio#readme" target="_blank" rel="noopener noreferrer">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
 </p>

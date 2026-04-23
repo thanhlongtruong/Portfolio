@@ -44,6 +44,7 @@ export default function IntroductionPage() {
                     className="animate-hover-btn">
                     <Link
                       target="_blank"
+                      rel="noopener noreferrer"
                       href={d("cv.url")}
                       className="w-fit h-fit flex gap-4 items-center">
                       <Image
@@ -67,6 +68,7 @@ export default function IntroductionPage() {
                     className="animate-hover-btn">
                     <Link
                       target="_blank"
+                      rel="noopener noreferrer"
                       href={t.href}
                       className="w-fit h-fit flex gap-4 items-center">
                       <Image
@@ -102,6 +104,7 @@ export default function IntroductionPage() {
             <div className="w-full h-full px-2 py-5 flex flex-col justify-start gap-3 bg-stone-950 text-white text-sm">
               <Link
                 target="_blank"
+                rel="noopener noreferrer"
                 href={d("university.link")}
                 className="hover:underline hover:underline-offset-2">
                 {d("university.name")}

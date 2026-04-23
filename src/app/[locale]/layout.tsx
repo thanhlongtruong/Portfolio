@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { setRequestLocale } from "next-intl/server";
 
-import type { Metadata } from "next";
 import { Roboto_Mono } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "@/app/globals.css";

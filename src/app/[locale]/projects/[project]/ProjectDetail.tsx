@@ -172,7 +172,10 @@ export default function ProjectDetail({ project }: { project: string }) {
                         variant="outline"
                         key={i}
                         className="animate-hover-btn">
-                        <Link target="_blank" href={dProject("links.github")}>
+                        <Link
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href={dProject("links.github")}>
                           <Image
                             src="/icons-software/github.svg"
                             alt="GitHub"
@@ -195,6 +198,7 @@ export default function ProjectDetail({ project }: { project: string }) {
                         className="animate-hover-btn">
                         <Link
                           target="_blank"
+                          rel="noopener noreferrer"
                           href={dProject("links.githubPage")}>
                           <Image
                             src="/icons-software/github.svg"
@@ -216,7 +220,10 @@ export default function ProjectDetail({ project }: { project: string }) {
                         variant="outline"
                         key={i}
                         className="animate-hover-btn">
-                        <Link target="_blank" href={dProject("links.vercel")}>
+                        <Link
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href={dProject("links.vercel")}>
                           <Image
                             src="/icons-hosting/vercel.svg"
                             alt="Vercel"
@@ -237,7 +244,10 @@ export default function ProjectDetail({ project }: { project: string }) {
                         variant="outline"
                         key={i}
                         className="animate-hover-btn">
-                        <Link target="_blank" href={dProject("links.vercelA")}>
+                        <Link
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href={dProject("links.vercelA")}>
                           <Image
                             src="/icons-hosting/vercel.svg"
                             alt="Vercel"
@@ -257,7 +267,10 @@ export default function ProjectDetail({ project }: { project: string }) {
                         variant="outline"
                         key={i}
                         className="animate-hover-btn">
-                        <Link target="_blank" href={dProject("links.youtube")}>
+                        <Link
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href={dProject("links.youtube")}>
                           <Image
                             src="/icons-social/youtube.svg"
                             alt="YouTube"
@@ -277,7 +290,10 @@ export default function ProjectDetail({ project }: { project: string }) {
                         variant="outline"
                         key={i}
                         className="animate-hover-btn">
-                        <Link target="_blank" href={dProject("links.figma")}>
+                        <Link
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href={dProject("links.figma")}>
                           <Image
                             src="/icons-design/figma.svg"
                             alt="Figma"
