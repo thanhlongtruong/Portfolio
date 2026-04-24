@@ -4,11 +4,10 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import TransitionLink from "./transition-link";
 import { usePathname } from "@/i18n/navigation";
 import { menuItems } from "../configs/sidebar";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 
 function BtnNavigatePage() {
   const d = useTranslations();
-  const locale = useLocale();
   const pathname = usePathname();
 
   const backPage = () => {
@@ -26,17 +25,17 @@ function BtnNavigatePage() {
     return menuItems[(currentIndex + 1) % menuItems.length];
   };
   return (
-    <div className="lg:hidden flex justify-between flex-1 items-end">
+    <div className="lg:hidden flex justify-between flex-wrap gap-y-5 flex-1 items-end">
       <TransitionLink
         href={backPage()?.link}
-        className="h-fit flex items-center gap-1 uppercase rounded-full shadow shadow-stone-300 dark:shadow-stone-100 px-3 py-2">
-        <ArrowLeft /> {locale === "en" && d("prev")}
+        className="h-fit flex items-center gap-1 uppercase rounded-full shadow shadow-stone-300 dark:shadow-stone-200 px-3 py-2">
+        <ArrowLeft /> {d("prev")}
       </TransitionLink>
 
       <TransitionLink
         href={nextPage()?.link}
-        className="h-fit flex items-center gap-1 uppercase rounded-full shadow shadow-stone-300 dark:shadow-stone-100 px-3 py-2">
-        {locale === "en" && d("next")}
+        className="h-fit flex items-center gap-1 uppercase rounded-full shadow shadow-stone-300 dark:shadow-stone-200 px-3 py-2">
+        {d("next")}
         <ArrowRight />
       </TransitionLink>
     </div>
