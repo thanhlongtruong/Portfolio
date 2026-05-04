@@ -58,8 +58,6 @@ export async function POST(req: Request) {
         msg: string;
       };
 
-      if (!existing) return null;
-
       if (existing.msg === "processing") {
         return NextResponse.json(
           { msg: "Request is processing" },
@@ -69,8 +67,6 @@ export async function POST(req: Request) {
 
       return NextResponse.json(existing, { status: 200 });
     }
-
-    await new Promise((resolve) => setTimeout(resolve, 10000));
 
     await transporter.verify();
 
