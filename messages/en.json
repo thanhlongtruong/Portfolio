@@ -103,8 +103,8 @@
           "send_notification": "Send Notification"
         },
         "links": {
-          "github": "https://internship-management-five.vercel.app/login",
-          "vercel": "https://github.com/thanhlongtruong/internship-management"
+          "vercel": "https://internship-management-five.vercel.app/login",
+          "github": "https://github.com/thanhlongtruong/internship-management"
         }
       },
       "cinefruit": {
