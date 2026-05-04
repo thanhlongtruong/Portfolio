@@ -4,6 +4,7 @@ import { transporter } from "@/app/service/transporter";
 import { ratelimit } from "@/app/service/rate-limit";
 import { formSchema } from "@/app/libs/validations/form-contact-schema";
 import { getTranslations } from "next-intl/server";
+import { Redis } from "@upstash/redis";
 
 export async function POST(req: Request) {
   const cookieStore = await cookies();
@@ -29,18 +30,60 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+
+    const redis = Redis.fromEnv();
+
+    const { email, topic, message } = data.data;
+
+    const key = `email:${email}:${topic}:${message}`;
+
+    const hash = await crypto.subtle.digest(
+      "SHA-256",
+      new TextEncoder().encode(key)
+    );
+
+    const idempotencyKey = Buffer.from(hash).toString("hex");
+
+    const lock = await redis.set(
+      idempotencyKey,
+      JSON.stringify({ msg: "processing" }),
+      {
+        nx: true,
+        ex: 300, // TTL 300s
+      }
+    );
+
+    if (!lock) {
+      const existing = (await redis.get(idempotencyKey)) as {
+        msg: string;
+      };
+
+      if (!existing) return null;
+
+      if (existing.msg === "processing") {
+        return NextResponse.json(
+          { msg: "Request is processing" },
+          { status: 202 }
+        );
+      }
+
+      return NextResponse.json(existing, { status: 200 });
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 10000));
+
     await transporter.verify();
 
     const info = await transporter.sendMail({
       from: `"Portfolio Contact" <${process.env.SMTP_USER}>`,
       to: process.env.EMAIL_TO,
-      replyTo: data.data.email,
-      subject: data.data.topic,
-      text: data.data.message,
+      replyTo: email,
+      subject: topic,
+      text: message,
       html: `
-      <p><b>Email:</b> ${data.data.email}</p>
-        <p><b>Topic:</b> ${data.data.topic}</p>
-        <p><b>Message:</b> ${data.data.message}</p>
+      <p><b>Email:</b> ${email}</p>
+        <p><b>Topic:</b> ${topic}</p>
+        <p><b>Message:</b> ${message}</p>
       `,
     });
 
@@ -51,6 +94,14 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+
+    await redis.set(
+      idempotencyKey,
+      JSON.stringify({ msg: t("responsesAPI.200") }),
+      {
+        ex: 300,
+      }
+    );
 
     return NextResponse.json({ msg: t("responsesAPI.200") }, { status: 200 });
   } catch (e) {

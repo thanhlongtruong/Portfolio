@@ -3,5 +3,5 @@ import { Redis } from "@upstash/redis";
 
 export const ratelimit = new Ratelimit({
   redis: Redis.fromEnv(),
-  limiter: Ratelimit.slidingWindow(1, "10 m"),
+  limiter: Ratelimit.slidingWindow(2, "10 m"),
 });

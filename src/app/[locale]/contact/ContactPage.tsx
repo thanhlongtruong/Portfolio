@@ -67,16 +67,12 @@ export default function ContactPage() {
         },
         body: JSON.stringify(value),
       });
-
       const result = await res.json();
-
       setPending(false);
       form.reset();
-
       if (!res.ok) {
         return toast.warning(result?.msg || d("responsesAPI.500"));
       }
-
       return toast.success(result?.msg || d("responsesAPI.200"));
     },
   });
@@ -236,7 +232,7 @@ export default function ContactPage() {
           <CardFooter className="flex-col gap-2">
             <Field>
               {isPending && (
-                <Button variant="secondary" disabled>
+                <Button disabled variant="secondary">
                   <Spinner data-icon="inline-start" />
                   {dPending("Pending")}
                 </Button>
