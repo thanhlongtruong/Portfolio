@@ -129,7 +129,7 @@
           "list": [
             "End-to-End Design: Crafted high-fidelity UI/UX prototypes in Figma and brought them to life using Flutter.",
             "Intuitive Booking: Browse showtimes by movie or cinema with an interactive seat selection map.",
-            "State Persistence & Holding: Implemented a 15-minute seat-holding logic that restores the booking session if the user re-opens the app within the time limit.",
+            "State Persistence & Holding: Implemented a 10-minute seat-holding logic that restores the booking session if the user re-opens the app within the time limit.",
             "Add-on Services: Integrated a streamlined interface for selecting food and beverage combos during the checkout flow.",
             "Payment & Security: Secure transaction handling via MoMo and PayPal; robust JWT authentication with email verification."
           ]
@@ -365,7 +365,13 @@
       "sendFailed": "Send failed.",
       "500": "Something wrong!",
       "429": "Please try again after 10 minutes."
-    }
+    },
+    "btn": {
+      "expire": "Send in",
+      "undo": "Undo",
+      "cancel": "Canceled"
+    },
+    "abort": "Email sending has been undone."
   },
   "ExperiencePage": {
     "title": "Experience",

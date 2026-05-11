@@ -130,7 +130,7 @@
           "list": [
             "Thiết kế & Hiện thực UI: Trực tiếp thiết kế Prototype trên Figma và chuyển đổi thành giao diện Mobile mượt mà bằng Flutter.",
             "Booking Flow: Tìm kiếm suất chiếu linh hoạt theo phim hoặc rạp.",
-            "Real-time Seat Holding: Cơ chế giữ chỗ trong 15 phút, tự động đồng bộ trạng thái đơn hàng khi người dùng quay lại ứng dụng.",
+            "Real-time Seat Holding: Cơ chế giữ chỗ trong 10 phút, tự động đồng bộ trạng thái đơn hàng khi người dùng quay lại ứng dụng.",
             "Dịch vụ đi kèm: Tích hợp menu chọn đồ ăn, thức uống ngay trong luồng đặt vé.",
             "Thanh toán & Bảo mật: Xử lý giao dịch qua MoMo/PayPal; hệ thống xác thực tài khoản qua Email và JWT bảo mật."
           ]
@@ -364,7 +364,13 @@
       "sendFailed": "Gửi email thất bại.",
       "500": "Gửi email không thành công.",
       "429": "Vui lòng thử lại sau 10 phút."
-    }
+    },
+    "btn": {
+      "expire": "Gửi sau",
+      "undo": "Hủy",
+      "cancel": "Đã hủy"
+    },
+    "abort": "Đã hoàn tác gửi email."
   },
   "ExperiencePage": {
     "title": "Kinh nghiệm",

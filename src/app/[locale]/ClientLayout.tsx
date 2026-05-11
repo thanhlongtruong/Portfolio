@@ -37,7 +37,7 @@ export default function ClientLayout({ children }: Props) {
             </div>
           </main>
           <Footer />
-          <Toaster position="bottom-right" richColors />
+          <Toaster position="bottom-right" richColors invert />
         </div>
 
         <div className="overlay">

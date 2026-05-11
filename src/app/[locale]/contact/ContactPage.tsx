@@ -34,9 +34,17 @@ import {
   InputGroupTextarea,
 } from "@/components/ui/input-group";
 import { formSchema } from "@/app/libs/validations/form-contact-schema";
-import { useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
 import BtnNavigatePage from "@/app/components/btn-navigatepage";
+
+type FormValues = {
+  email: string;
+  topic: string;
+  message: string;
+};
+
+const STORAGE_KEY = "email-form";
 
 export default function ContactPage() {
   const d = useTranslations("ContactPage");
@@ -46,12 +54,50 @@ export default function ContactPage() {
 
   const topic = [{ key: "email" }, { key: "linkedin" }];
 
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const abortRef = useRef<AbortController | null>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      abortRef.current?.abort();
+    };
+  }, []);
+
+  const defaultValues = useMemo<FormValues>(() => {
+    if (typeof window === "undefined") {
+      return {
+        email: "",
+        topic: "",
+        message: "",
+      };
+    }
+
+    const saved = sessionStorage.getItem(STORAGE_KEY);
+
+    if (!saved) {
+      return {
+        email: "",
+        topic: "",
+        message: "",
+      };
+    }
+
+    try {
+      return JSON.parse(saved);
+    } catch {
+      return {
+        email: "",
+        topic: "",
+        message: "",
+      };
+    }
+  }, []);
+
   const form = useForm({
-    defaultValues: {
-      email: "",
-      topic: "",
-      message: "",
-    },
+    defaultValues: defaultValues,
     validators: {
       onSubmit: formSchema(d),
     },
@@ -60,22 +106,97 @@ export default function ContactPage() {
 
       setPending(true);
 
-      const res = await fetch("/api/send-message", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(value),
-      });
-      const result = await res.json();
-      setPending(false);
-      form.reset();
-      if (!res.ok) {
-        return toast.warning(result?.msg || d("responsesAPI.500"));
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
       }
-      return toast.success(result?.msg || d("responsesAPI.200"));
+
+      const controller = new AbortController();
+      abortRef.current = controller;
+
+      let timeLeft = 5000;
+      const start = Date.now();
+
+      timeoutRef.current = setTimeout(async () => {
+        try {
+          const res = await fetch("/api/send-message", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(value),
+            signal: controller.signal,
+          });
+
+          toast.dismiss(toastId);
+
+          const result = await res.json();
+
+          form.reset({
+            email: "",
+            message: "",
+            topic: "",
+          });
+
+          sessionStorage.removeItem(STORAGE_KEY);
+
+          if (!res.ok) {
+            return toast.warning(result?.msg || d("responsesAPI.500"));
+          }
+
+          return toast.success(result?.msg || d("responsesAPI.200"));
+        } catch (e) {
+          if (controller.signal.aborted) return toast.warning(d("abort"));
+        } finally {
+          if (timeoutRef.current) clearTimeout(timeoutRef.current);
+          if (intervalRef.current) clearInterval(intervalRef.current);
+          if (!controller.signal.aborted) setPending(false);
+        }
+      }, timeLeft);
+
+      const toastId = toast(`${d("btn.expire")} 5s`, {
+        action: {
+          label: "Undo",
+
+          onClick: () => {
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+            if (intervalRef.current) clearInterval(intervalRef.current);
+
+            controller.abort();
+            setPending(false);
+            toast.error(d("btn.cancel"));
+          },
+        },
+        duration: timeLeft,
+        dismissible: false,
+      });
+
+      intervalRef.current = setInterval(() => {
+        const elapsed = Date.now() - start;
+        const remaining = Math.max(0, timeLeft - elapsed);
+
+        const seconds = Math.ceil(remaining / 1000);
+
+        toast(`${d("btn.expire")} ${seconds}s`, {
+          id: toastId,
+          duration: timeLeft,
+        });
+
+        if (remaining <= 0) {
+          toast.dismiss(toastId);
+          clearInterval(intervalRef.current!);
+        }
+      }, 100);
     },
   });
+
+  useEffect(() => {
+    form.store.subscribe(() => {
+      const values = form.store.state.values;
+
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(values));
+    });
+  }, [form.state.values]);
 
   return (
     <>
@@ -111,7 +232,7 @@ export default function ContactPage() {
           })}
         </div>
 
-        <Card className="w-full max-w-sm">
+        <Card className="w-full md:max-w-sm">
           <CardHeader>
             <CardTitle>{d("contact.title")}</CardTitle>
             <CardDescription></CardDescription>
@@ -120,7 +241,15 @@ export default function ContactPage() {
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() => form.reset()}>
+                  onClick={() => {
+                    form.reset({
+                      email: "",
+                      message: "",
+                      topic: "",
+                    });
+
+                    sessionStorage.removeItem(STORAGE_KEY);
+                  }}>
                   {d("contact.btnReset")}
                 </Button>
               </Field>
