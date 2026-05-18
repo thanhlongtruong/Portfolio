@@ -8,6 +8,11 @@
   "prev": "prev",
   "next": "next",
   "more": "Go to gallery",
+  "clipboard": {
+    "200": "Email copied.",
+    "404": "Clipboard API is not supported.",
+    "500": "Failed to copy Email."
+  },
   "IntroductionPage": {
     "actor": "Truong Thanh Long",
     "university": {

@@ -8,6 +8,11 @@
   "prev": "Trang trước",
   "next": "Trang sau",
   "more": "Tất cả ảnh",
+  "clipboard": {
+    "200": "Copy Email thành công.",
+    "404": "Clipboard API không hỗ trợ.",
+    "500": "Copy không thành công."
+  },
   "IntroductionPage": {
     "actor": "Trương Thành Long",
     "university": {

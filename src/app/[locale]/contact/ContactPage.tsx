@@ -37,6 +37,7 @@ import { formSchema } from "@/app/libs/validations/form-contact-schema";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
 import BtnNavigatePage from "@/app/components/btn-navigatepage";
+import { Copy } from "lucide-react";
 
 type FormValues = {
   email: string;
@@ -47,8 +48,8 @@ type FormValues = {
 const STORAGE_KEY = "email-form";
 
 export default function ContactPage() {
-  const d = useTranslations("ContactPage");
-  const dPending = useTranslations();
+  const dContactPage = useTranslations("ContactPage");
+  const d = useTranslations();
 
   const [isPending, setPending] = useState(false);
 
@@ -99,7 +100,7 @@ export default function ContactPage() {
   const form = useForm({
     defaultValues: defaultValues,
     validators: {
-      onSubmit: formSchema(d),
+      onSubmit: formSchema(dContactPage),
     },
     onSubmit: async ({ value }) => {
       if (isPending) return;
@@ -140,12 +141,15 @@ export default function ContactPage() {
           sessionStorage.removeItem(STORAGE_KEY);
 
           if (!res.ok) {
-            return toast.warning(result?.msg || d("responsesAPI.500"));
+            return toast.warning(
+              result?.msg || dContactPage("responsesAPI.500")
+            );
           }
 
-          return toast.success(result?.msg || d("responsesAPI.200"));
+          return toast.success(result?.msg || dContactPage("responsesAPI.200"));
         } catch (e) {
-          if (controller.signal.aborted) return toast.warning(d("abort"));
+          if (controller.signal.aborted)
+            return toast.warning(dContactPage("abort"));
         } finally {
           if (timeoutRef.current) clearTimeout(timeoutRef.current);
           if (intervalRef.current) clearInterval(intervalRef.current);
@@ -153,7 +157,7 @@ export default function ContactPage() {
         }
       }, timeLeft);
 
-      const toastId = toast(`${d("btn.expire")} 5s`, {
+      const toastId = toast(`${dContactPage("btn.expire")} 5s`, {
         action: {
           label: "Undo",
 
@@ -164,7 +168,7 @@ export default function ContactPage() {
 
             controller.abort();
             setPending(false);
-            toast.error(d("btn.cancel"));
+            toast.error(dContactPage("btn.cancel"));
           },
         },
         duration: timeLeft,
@@ -177,7 +181,7 @@ export default function ContactPage() {
 
         const seconds = Math.ceil(remaining / 1000);
 
-        toast(`${d("btn.expire")} ${seconds}s`, {
+        toast(`${dContactPage("btn.expire")} ${seconds}s`, {
           id: toastId,
           duration: timeLeft,
         });
@@ -198,10 +202,27 @@ export default function ContactPage() {
     });
   }, [form.state.values]);
 
+  const writeTextInClipboard = (text: string) => {
+    if ("clipboard" in navigator) {
+      navigator.clipboard
+        .writeText(text)
+        .then(() => {
+          toast.success(d("clipboard.200"));
+        })
+        .catch((err) => {
+          console.error("Failed to copy text: ", err);
+          toast.warning(d("clipboard.404"));
+        });
+    } else {
+      console.error("Clipboard API is not supported!");
+      toast.error(d("clipboard.500"));
+    }
+  };
+
   return (
     <>
       <h1 itemProp="contact" className="topic">
-        {d("title")}
+        {dContactPage("title")}
       </h1>
 
       <div className="flex flex-col md:flex-row gap-10">
@@ -210,7 +231,21 @@ export default function ContactPage() {
             const t = ContactList[value.key as "email" | "linkedin"];
             return (
               <div key={i} className="flex flex-col gap-2">
-                <p className="title">{t.name}</p>
+                {t.name === "Email" ? (
+                  <div className="flex items-center gap-5">
+                    <p className="title">{t.name}</p>{" "}
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() =>
+                        writeTextInClipboard(t.href.split(":")[1])
+                      }>
+                      <Copy />
+                    </Button>
+                  </div>
+                ) : (
+                  <p className="title">{t.name}</p>
+                )}
                 <div className="flex flex-wrap gap-5">
                   <Link
                     target="_blank"
@@ -234,7 +269,7 @@ export default function ContactPage() {
 
         <Card className="w-full md:max-w-sm">
           <CardHeader>
-            <CardTitle>{d("contact.title")}</CardTitle>
+            <CardTitle>{dContactPage("contact.title")}</CardTitle>
             <CardDescription></CardDescription>
             <CardAction>
               <Field orientation="horizontal">
@@ -250,7 +285,7 @@ export default function ContactPage() {
 
                     sessionStorage.removeItem(STORAGE_KEY);
                   }}>
-                  {d("contact.btnReset")}
+                  {dContactPage("contact.btnReset")}
                 </Button>
               </Field>
             </CardAction>
@@ -271,7 +306,7 @@ export default function ContactPage() {
                     return (
                       <Field data-invalid={isInvalid}>
                         <FieldLabel htmlFor={field.name}>
-                          {d("contact.email")}
+                          {dContactPage("contact.email")}
                         </FieldLabel>
                         <Input
                           id={field.name}
@@ -281,7 +316,7 @@ export default function ContactPage() {
                           onBlur={field.handleBlur}
                           onChange={(e) => field.handleChange(e.target.value)}
                           aria-invalid={isInvalid}
-                          placeholder={d("contact.placeholderEmail")}
+                          placeholder={dContactPage("contact.placeholderEmail")}
                           autoComplete="off"
                         />
                         {isInvalid && (
@@ -299,7 +334,7 @@ export default function ContactPage() {
                     return (
                       <Field data-invalid={isInvalid}>
                         <FieldLabel htmlFor={field.name}>
-                          {d("contact.topic")}
+                          {dContactPage("contact.topic")}
                         </FieldLabel>
                         <Input
                           id={field.name}
@@ -309,7 +344,7 @@ export default function ContactPage() {
                           onBlur={field.handleBlur}
                           onChange={(e) => field.handleChange(e.target.value)}
                           aria-invalid={isInvalid}
-                          placeholder={d("contact.placeholderTopic")}
+                          placeholder={dContactPage("contact.placeholderTopic")}
                           autoComplete="off"
                         />
                         {isInvalid && (
@@ -327,7 +362,7 @@ export default function ContactPage() {
                     return (
                       <Field data-invalid={isInvalid}>
                         <FieldLabel htmlFor={field.name}>
-                          {d("contact.message")}
+                          {dContactPage("contact.message")}
                         </FieldLabel>
                         <InputGroup>
                           <InputGroupTextarea
@@ -336,7 +371,9 @@ export default function ContactPage() {
                             value={field.state.value}
                             onBlur={field.handleBlur}
                             onChange={(e) => field.handleChange(e.target.value)}
-                            placeholder={d("contact.placeholderMessage")}
+                            placeholder={dContactPage(
+                              "contact.placeholderMessage"
+                            )}
                             rows={6}
                             className="min-h-24 resize-none"
                             aria-invalid={isInvalid}
@@ -363,13 +400,13 @@ export default function ContactPage() {
               {isPending && (
                 <Button disabled variant="secondary">
                   <Spinner data-icon="inline-start" />
-                  {dPending("Pending")}
+                  {d("Pending")}
                 </Button>
               )}
 
               {!isPending && (
                 <Button type="submit" form="bug-report-form">
-                  {d("contact.btnSubmit")}
+                  {dContactPage("contact.btnSubmit")}
                 </Button>
               )}
             </Field>
