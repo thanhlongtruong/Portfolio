@@ -21,6 +21,12 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   };
 }
 
-export default function Page() {
-  return <ProjectsPage />;
+export default async function Page({ params }: Params) {
+  const { locale } = await params;
+
+  const trans = await getTranslations({
+    locale,
+    namespace: "ProjectsPage",
+  });
+  return <ProjectsPage t={trans} />;
 }

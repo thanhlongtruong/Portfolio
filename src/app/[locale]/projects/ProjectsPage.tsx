@@ -1,4 +1,4 @@
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 
 import {
@@ -9,34 +9,39 @@ import {
 import TransitionLink from "@/app/components/transition-link";
 import BtnNavigatePage from "@/app/components/btn-navigatepage";
 
-export default function ProjectsPage() {
-  const d = useTranslations("ProjectsPage");
+type Props = {
+  t: Awaited<ReturnType<typeof getTranslations<"ProjectsPage">>>;
+};
 
-  const projectList = d.raw("projectList");
+export default function ProjectsPage({ t }: Props) {
+  const projectList = t.raw("projectList") as Record<
+    string,
+    { title: string; description: string }
+  >;
 
-  const projectKey = Object.keys(projectList);
+  const projectKeys = Object.keys(projectList);
 
   return (
     <>
       <div className="flex flex-col gap-y-3">
         <h1 itemProp="projects" className="topic">
-          {d("title")}
+          {t("title")}
         </h1>
-        <h3 className="">{d("description")}</h3>
+        <h3 className="">{t("description")}</h3>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {projectKey &&
-          projectKey.map((value, i) => (
-            <HoverCard key={i} openDelay={10} closeDelay={100}>
+        {projectKeys &&
+          projectKeys.map((value) => (
+            <HoverCard key={value} openDelay={10} closeDelay={100}>
               <HoverCardTrigger asChild>
                 <TransitionLink
                   href={`projects/${value}`}
                   className="border rounded-md p-5 shadow animate-hover-btn">
                   <p className="font-medium block text-left mb-2">
-                    {d(`projectList.${value}.title`)}
+                    {t(`projectList.${value}.title`)}
                   </p>
                   <p className="line-clamp-3 text-left text-sm text-stone-600 dark:text-stone-500 font-normal">
-                    {d(`projectList.${value}.description`)}
+                    {t(`projectList.${value}.description`)}
                   </p>
                 </TransitionLink>
               </HoverCardTrigger>

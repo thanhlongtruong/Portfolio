@@ -19,14 +19,22 @@ export default function GlobalNotFound() {
     <html lang="en">
       <body
         className={`${roboto_mono.className} tracking-wider antialiased font-normal`}>
-        <div className="flex flex-col items-center justify-center h-screen text-center p-3">
-          <h1 className="text-6xl font-bold">{"(O_O')"}</h1>
-          <p className="mt-3 text-base">
-            404 | Trang này không tồn tại. - Sorry, this page does not exist.
-          </p>
+        <div className="h-dvh flex flex-col items-center justify-center text-center p-3">
+          <h1 className="text-6xl font-bold tracking-tight">{"(O_O')"}</h1>
+          <div className="mt-4 space-y-1">
+            <p className="text-lg font-medium">
+              404 — Trang này không tồn tại.
+            </p>
+
+            <p className="text-sm text-muted-foreground">
+              Sorry, this page does not exist.
+            </p>
+          </div>
+
           <Link
             href="/"
-            className="mt-5 text-main text-base hover:underline hover:underline-offset-2 after:content-['_↗']">
+            replace
+            className="mt-5 text-main text-base hover:underline hover:underline-offset-2">
             Trang chủ - Homepage
           </Link>
         </div>

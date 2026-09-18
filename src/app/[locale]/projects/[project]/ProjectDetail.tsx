@@ -50,10 +50,10 @@ export default function ProjectDetail({ project }: { project: string }) {
         filter: "blur(3px)",
         autoAlpha: 0,
         scale: 0.9,
-        // position: 'sticky',
+        // position: "sticky",
         scrollTrigger: {
           trigger: el,
-          start: "bottom bottom-=100",
+          start: "bottom bottom-=250",
           end: "bottom top",
           pin: true,
           pinSpacing: false,
@@ -158,7 +158,7 @@ export default function ProjectDetail({ project }: { project: string }) {
                 ))}
             </ul>
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 sticky top-6">
             <p className="title">Links</p>
             <div className="flex flex-wrap gap-5">
               {keyLinks &&

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 import { useTranslations } from "next-intl";
@@ -58,7 +60,7 @@ export function SheetCustom() {
               <TransitionLink
                 key={index}
                 href={item.link}
-                onClick={() => setOpen(!isOpen)}
+                onClick={() => setOpen(false)}
                 className="w-full uppercase text-left">
                 <SplitTextCustom text={d(item.label)} index={index + 1} />
               </TransitionLink>
