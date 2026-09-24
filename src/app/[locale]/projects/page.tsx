@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import ProjectsPage from "./ProjectsPage";
+import ProjectsSection from "../../components/sections/ProjectsSection";
 import { Metadata } from "next";
 
 type Params = {
@@ -28,5 +28,5 @@ export default async function Page({ params }: Params) {
     locale,
     namespace: "ProjectsPage",
   });
-  return <ProjectsPage t={trans} />;
+  return <ProjectsSection t={trans} />;
 }

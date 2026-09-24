@@ -22,7 +22,12 @@ import TransitionLink from "@/app/components/transition-link";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-export default function ProjectDetail({ project }: { project: string }) {
+type Props = {
+  project: string;
+  modeScroll: ModeScroll;
+};
+
+export default function ProjectDetail({ project, modeScroll }: Props) {
   const boxInfoRef = useRef<HTMLDivElement>(null);
   const isMounted = useIsMounted();
 
@@ -95,7 +100,10 @@ export default function ProjectDetail({ project }: { project: string }) {
 
   return (
     <div className="w-full min-h-screen flex flex-col gap-y-10">
-      <BackButton path="/projects" back={d("BackProjects")} />
+      <BackButton
+        path={modeScroll === "one-page" ? "/#projects" : "/projects"}
+        back={d("BackProjects")}
+      />
 
       <div ref={boxInfoRef} className="flex flex-col gap-10">
         <div className="flex flex-col gap-y-3">

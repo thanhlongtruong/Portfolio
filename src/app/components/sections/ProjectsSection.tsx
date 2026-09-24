@@ -13,7 +13,7 @@ type Props = {
   t: Awaited<ReturnType<typeof getTranslations<"ProjectsPage">>>;
 };
 
-export default function ProjectsPage({ t }: Props) {
+export default function ProjectsSection({ t }: Props) {
   const projectList = t.raw("projectList") as Record<
     string,
     { title: string; description: string }
@@ -22,7 +22,7 @@ export default function ProjectsPage({ t }: Props) {
   const projectKeys = Object.keys(projectList);
 
   return (
-    <>
+    <section className="flex flex-col gap-y-10">
       <div className="flex flex-col gap-y-3">
         <h1 itemProp="projects" className="topic">
           {t("title")}
@@ -60,6 +60,6 @@ export default function ProjectsPage({ t }: Props) {
           ))}
       </div>
       <BtnNavigatePage />
-    </>
+    </section>
   );
 }

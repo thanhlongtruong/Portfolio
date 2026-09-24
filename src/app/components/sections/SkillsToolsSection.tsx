@@ -2,12 +2,15 @@ import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { SkillsToolsList } from "@/app/configs/skillstools";
-import { useTranslations } from "next-intl";
 import BtnNavigatePage from "@/app/components/btn-navigatepage";
+import { getTranslations } from "next-intl/server";
 
-export default function SkillsToolsPage() {
-  const d = useTranslations("Skills&Tools");
+type Props = {
+  t: Awaited<ReturnType<typeof getTranslations<"Skills&Tools">>>;
+  mode?: ModeScroll;
+};
 
+export default function SkillsToolsSection({ t, mode = "multi-page" }: Props) {
   const topic = [
     { topic: "Frontend Web", key: "fe-web" },
     { topic: "Frontend App", key: "fe-app" },
@@ -17,12 +20,12 @@ export default function SkillsToolsPage() {
     { topic: "Others", key: "others" },
   ];
   return (
-    <>
+    <section className="min-h-dvh flex flex-col gap-y-10">
       <div className="flex flex-col gap-y-3">
         <h1 itemProp="skillstools" className="topic">
           SKILLS & TOOLS
         </h1>
-        <h3 className="">{d("description")}</h3>
+        <h3 className="">{t("description")}</h3>
       </div>
       {topic.map((value, i) => (
         <div key={i} className="flex flex-col gap-2">
@@ -71,7 +74,8 @@ export default function SkillsToolsPage() {
           </div>
         </div>
       ))}
-      <BtnNavigatePage />
-    </>
+
+      {mode === "multi-page" && <BtnNavigatePage />}
+    </section>
   );
 }

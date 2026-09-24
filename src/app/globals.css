@@ -110,7 +110,7 @@ p {
   }
 }
 
-nav:before {
+header:before {
   content: "";
   background: linear-gradient(90deg, #0000, var(--color-main), #0000);
   width: 100%;

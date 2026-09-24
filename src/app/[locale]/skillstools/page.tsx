@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { Metadata } from "next";
-import SkillsToolsPage from "./SkillsToolsPage";
+import SkillsToolsSection from "@/app/components/sections/SkillsToolsSection";
 
 type Params = {
   params: Promise<{
@@ -21,6 +21,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   };
 }
 
-export default function Page() {
-  return <SkillsToolsPage />;
+export default async function Page({ params }: Params) {
+  const { locale } = await params;
+
+  const trans = await getTranslations({
+    locale,
+    namespace: "Skills&Tools",
+  });
+
+  return <SkillsToolsSection t={trans} />;
 }

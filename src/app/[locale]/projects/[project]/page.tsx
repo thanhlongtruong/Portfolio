@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import ProjectDetail from "./ProjectDetail";
+import { getScrollModeCookie } from "@/app/scroll-mode";
 
 type Params = {
   params: Promise<{
@@ -44,5 +45,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function Page({ params }: Params) {
   const { project } = await params;
-  return <ProjectDetail project={project} />;
+  const modeScroll = await getScrollModeCookie();
+  
+  return <ProjectDetail project={project} modeScroll={modeScroll} />;
 }

@@ -47,7 +47,11 @@ type FormValues = {
 
 const STORAGE_KEY = "email-form";
 
-export default function ContactPage() {
+type Props = {
+  mode?: ModeScroll;
+};
+
+export default function ContactSection({ mode = "multi-page" }: Props) {
   const dContactPage = useTranslations("ContactPage");
   const d = useTranslations();
 
@@ -220,7 +224,7 @@ export default function ContactPage() {
   };
 
   return (
-    <>
+    <section className="flex flex-col gap-y-10">
       <h1 itemProp="contact" className="topic">
         {dContactPage("title")}
       </h1>
@@ -414,7 +418,7 @@ export default function ContactPage() {
         </Card>
       </div>
 
-      <BtnNavigatePage />
-    </>
+      {mode === "multi-page" && <BtnNavigatePage />}
+    </section>
   );
 }

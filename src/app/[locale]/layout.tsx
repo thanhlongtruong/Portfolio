@@ -10,6 +10,9 @@ import "lenis/dist/lenis.css";
 import ClientLayout from "./ClientLayout";
 import { projectNameArray } from "../configs/projects";
 import GlobalNotFound from "../global-not-found";
+import { cookies } from "next/headers";
+import { getScrollModeCookie } from "../scroll-mode";
+import SwitchModeScroll from "../components/SwitchModeScroll";
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
@@ -86,12 +89,14 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   setRequestLocale(locale);
 
+  const modeScroll = await getScrollModeCookie();
+
   return (
-    <html lang={locale} suppressHydrationWarning data-scroll-behavior="smooth">
+    <html lang={locale} suppressHydrationWarning>
       <body
-        className={`${roboto_mono.className} tracking-wider antialiased scroll-smooth font-light`}>
+        className={`${roboto_mono.className} tracking-wider antialiased font-light`}>
         <NextIntlClientProvider>
-          <ClientLayout children={children} />
+          <ClientLayout children={children} modeScroll={modeScroll} />
         </NextIntlClientProvider>
       </body>
       <GoogleAnalytics gaId="G-3HKLQM0401" />

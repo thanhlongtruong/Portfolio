@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import ContactPage from "./ContactPage";
+import ContactSection from "../../components/sections/ContactSection";
 import { getTranslations } from "next-intl/server";
 
 type Props = {
@@ -15,5 +15,5 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 export default function Page() {
-  return <ContactPage />;
+  return <ContactSection />;
 }

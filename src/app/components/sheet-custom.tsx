@@ -23,7 +23,7 @@ import { ThemeSwitcher } from "./mode-switcher";
 import LanguageSwitcher from "./language-switcher";
 import TransitionLink from "./transition-link";
 import { ContactList } from "../configs/contact";
-import { menuItems } from "../configs/sidebar";
+import { sidebarItems } from "../configs/sidebarItems";
 
 const socialItems = [{ key: "github" }, { key: "linkedin" }];
 
@@ -55,14 +55,14 @@ export function SheetCustom() {
           </SheetTitle>
         </SheetHeader>
         <div className="flex-1 overflow-y-auto overscroll-none px-5 flex flex-col">
-          {menuItems.map((item, index) => {
+          {Object.values(sidebarItems).map((item, index) => {
             return (
               <TransitionLink
-                key={index}
+                key={item.id}
                 href={item.link}
                 onClick={() => setOpen(false)}
                 className="w-full uppercase text-left">
-                <SplitTextCustom text={d(item.label)} index={index + 1} />
+                <SplitTextCustom text={d(item.id)} index={index + 1} />
               </TransitionLink>
             );
           })}

@@ -3,7 +3,7 @@
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import TransitionLink from "./transition-link";
 import { usePathname } from "@/i18n/navigation";
-import { menuItems } from "../configs/sidebar";
+import { sidebarItems } from "../configs/sidebarItems";
 import { useTranslations } from "next-intl";
 
 function BtnNavigatePage() {
@@ -13,16 +13,23 @@ function BtnNavigatePage() {
   const backPage = () => {
     const segment = pathname.split("/");
     const item = segment[1] === "" ? "introduction" : segment[1];
-    const index = menuItems.findIndex((val) => val.label === item);
-    return menuItems[(index - 1 + menuItems.length) % menuItems.length];
+    const index = Object.keys(sidebarItems).findIndex((val) => val === item);
+    return Object.values(sidebarItems)[
+      (index - 1 + Object.keys(sidebarItems).length) %
+        Object.keys(sidebarItems).length
+    ];
   };
 
   const nextPage = () => {
     const segment = pathname.split("/");
     const item = segment[1] === "" ? "introduction" : segment[1];
-    const currentIndex = menuItems.findIndex((val) => val.label === item);
+    const currentIndex = Object.keys(sidebarItems).findIndex(
+      (val) => val === item
+    );
 
-    return menuItems[(currentIndex + 1) % menuItems.length];
+    return Object.values(sidebarItems)[
+      (currentIndex + 1) % Object.keys(sidebarItems).length
+    ];
   };
   return (
     <div className="lg:hidden flex justify-between flex-wrap gap-y-5 flex-1 items-end">
