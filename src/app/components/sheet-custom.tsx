@@ -25,6 +25,7 @@ import TransitionLink from "./transition-link";
 import { ContactList } from "../configs/contact";
 import { sidebarItems } from "../configs/sidebarItems";
 import SwitchModeScroll from "./SwitchModeScroll";
+import { useActiveSidebarStore } from "../store/active-sidebar-store";
 
 const socialItems = [{ key: "github" }, { key: "linkedin" }];
 
@@ -32,6 +33,10 @@ export function SheetCustom({ modeScroll }: { modeScroll: ModeScroll }) {
   const [isOpen, setOpen] = useState(false);
   const d = useTranslations("SideBar");
   const dO = useTranslations();
+
+  const scrollToSection = useActiveSidebarStore(
+    (state) => state.scrollToSection
+  );
 
   const items = Object.values(sidebarItems).filter((item) => {
     if (modeScroll === "one-page") {
@@ -43,7 +48,7 @@ export function SheetCustom({ modeScroll }: { modeScroll: ModeScroll }) {
 
   return (
     <Sheet modal={true} open={isOpen} onOpenChange={() => setOpen(!isOpen)}>
-      <SheetTrigger asChild className="lg:hidden">
+      <SheetTrigger asChild className="">
         <Button variant="outline">
           Menu <Plus />
         </Button>
@@ -64,8 +69,19 @@ export function SheetCustom({ modeScroll }: { modeScroll: ModeScroll }) {
           </SheetTitle>
         </SheetHeader>
         <div className="flex-1 overflow-y-auto overscroll-none px-5 flex flex-col">
-          {items.map((item, index) => {
-            return (
+          {items.map((item, index) =>
+            modeScroll === "one-page" ? (
+              <button
+                key={item.id}
+                type="button"
+                className="w-full uppercase text-left"
+                onClick={() => {
+                  setOpen(false);
+                  scrollToSection(item.id);
+                }}>
+                <SplitTextCustom text={d(item.id)} index={index + 1} />
+              </button>
+            ) : (
               <TransitionLink
                 key={item.id}
                 href={item.link}
@@ -73,10 +89,10 @@ export function SheetCustom({ modeScroll }: { modeScroll: ModeScroll }) {
                 className="w-full uppercase text-left">
                 <SplitTextCustom text={d(item.id)} index={index + 1} />
               </TransitionLink>
-            );
-          })}
+            )
+          )}
         </div>
-        <div className="px-5">
+        <div className="px-5 md:hidden">
           <SwitchModeScroll modeScroll={modeScroll} />
         </div>
         <SheetFooter>
