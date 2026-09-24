@@ -48,7 +48,7 @@ export function SheetCustom({ modeScroll }: { modeScroll: ModeScroll }) {
 
   return (
     <Sheet modal={true} open={isOpen} onOpenChange={() => setOpen(!isOpen)}>
-      <SheetTrigger asChild className="">
+      <SheetTrigger asChild className="lg:hidden">
         <Button variant="outline">
           Menu <Plus />
         </Button>
