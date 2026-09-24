@@ -59,14 +59,12 @@ export default function OnePagePortfolio({ mode }: Props) {
         trigger: pin,
         start: id === "contact" ? "bottom 90%" : "bottom 70%",
         end: "bottom top",
-        pin: true,
-        pinType: "transform",
         scrub: 0.5,
-        anticipatePin: 1,
         invalidateOnRefresh: true,
         animation: gsap.to(content, {
           filter: id === "contact" ? "blur(0px)" : "blur(3px)",
           scale: 0.9,
+          duration: 5,
         }),
       });
 
@@ -139,7 +137,7 @@ export default function OnePagePortfolio({ mode }: Props) {
   });
 
   return (
-    <div>
+    <div className="flex flex-col gap-y-10">
       <div ref={introductionPinRef} id="introduction" className="h-fit">
         <IntroductionSection mode={mode} />
       </div>

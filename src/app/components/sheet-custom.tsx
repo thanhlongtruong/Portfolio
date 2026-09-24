@@ -24,13 +24,22 @@ import LanguageSwitcher from "./language-switcher";
 import TransitionLink from "./transition-link";
 import { ContactList } from "../configs/contact";
 import { sidebarItems } from "../configs/sidebarItems";
+import SwitchModeScroll from "./SwitchModeScroll";
 
 const socialItems = [{ key: "github" }, { key: "linkedin" }];
 
-export function SheetCustom() {
+export function SheetCustom({ modeScroll }: { modeScroll: ModeScroll }) {
   const [isOpen, setOpen] = useState(false);
   const d = useTranslations("SideBar");
   const dO = useTranslations();
+
+  const items = Object.values(sidebarItems).filter((item) => {
+    if (modeScroll === "one-page") {
+      return item.id !== "experience";
+    }
+
+    return true;
+  });
 
   return (
     <Sheet modal={true} open={isOpen} onOpenChange={() => setOpen(!isOpen)}>
@@ -55,7 +64,7 @@ export function SheetCustom() {
           </SheetTitle>
         </SheetHeader>
         <div className="flex-1 overflow-y-auto overscroll-none px-5 flex flex-col">
-          {Object.values(sidebarItems).map((item, index) => {
+          {items.map((item, index) => {
             return (
               <TransitionLink
                 key={item.id}
@@ -66,6 +75,9 @@ export function SheetCustom() {
               </TransitionLink>
             );
           })}
+        </div>
+        <div className="px-5">
+          <SwitchModeScroll modeScroll={modeScroll} />
         </div>
         <SheetFooter>
           <div className="flex justify-evenly">

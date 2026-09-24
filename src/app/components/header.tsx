@@ -22,7 +22,7 @@ export default function Header({ modeScroll }: { modeScroll: ModeScroll }) {
           <LanguageSwitcher />
         </div>
 
-        <SheetCustom />
+        <SheetCustom modeScroll={modeScroll} />
       </div>
     </header>
   );
