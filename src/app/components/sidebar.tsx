@@ -106,7 +106,7 @@ function Sidebar({ modeScroll }: Props) {
                         ? "border-main border-l-8 font-bold"
                         : "border-l-0 font-light hover:border-main hover:border-l-8 hover:font-medium hover:opacity-80"
                     }`}
-                    onClick={() => scrollToSection(item.id)}>
+                    onClick={() => scrollToSection?.(item.id)}>
                     {d(item.id)}
                   </button>
                 ) : (
