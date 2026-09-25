@@ -77,7 +77,7 @@ export function SheetCustom({ modeScroll }: { modeScroll: ModeScroll }) {
                 className="w-full uppercase text-left"
                 onClick={() => {
                   setOpen(false);
-                  scrollToSection(item.id);
+                  scrollToSection?.(item.id);
                 }}>
                 <SplitTextCustom text={d(item.id)} index={index + 1} />
               </button>
