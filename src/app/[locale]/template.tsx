@@ -9,9 +9,9 @@ export default function Template({ children }: { children: React.ReactNode }) {
   useGSAP(() => {
     const tl = gsap.timeline();
 
-    tl.to(".bar", {
+    tl.fromTo(".bar", { yPercent: 0 }, {
       yPercent: -100,
-      duration: 0.6,
+      duration: 0.4,
       ease: "power4.inOut",
       stagger: 0.05,
     });

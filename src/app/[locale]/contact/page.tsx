@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import ContactSection from "../../components/sections/ContactSection";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getPageAlternates } from "@/utils/metadata";
 
 type Props = {
@@ -9,6 +9,9 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
+
+  setRequestLocale(locale);
+
   const t = await getTranslations({ locale, namespace: "ContactPage" });
 
   return {

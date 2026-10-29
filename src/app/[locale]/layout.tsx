@@ -1,6 +1,6 @@
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { routing } from "@/i18n/routing";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getMessages } from "next-intl/server";
 
 import { Roboto_Mono } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
@@ -82,13 +82,15 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   setRequestLocale(locale);
 
+  const messages = await getMessages();
+
   const modeScroll = await getScrollModeCookie();
 
   return (
     <html lang={locale} suppressHydrationWarning>
       <body
         className={`${roboto_mono.className} tracking-wider antialiased font-light`}>
-        <NextIntlClientProvider>
+        <NextIntlClientProvider messages={messages}>
           <ClientLayout children={children} modeScroll={modeScroll} />
         </NextIntlClientProvider>
       </body>

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import ProjectDetail from "./ProjectDetail";
 import { getScrollModeCookie } from "@/app/scroll-mode";
 import { getPageAlternates } from "@/utils/metadata";
@@ -13,6 +13,8 @@ type Params = {
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { project, locale } = await params;
+
+  setRequestLocale(locale);
 
   const baseUrl = "https://portfolio-thanhlong.vercel.app";
 

@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Metadata } from "next";
 import SkillsToolsSection from "@/app/components/sections/SkillsToolsSection";
 import { getPageAlternates } from "@/utils/metadata";
@@ -11,6 +11,8 @@ type Params = {
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { locale } = await params;
+
+  setRequestLocale(locale);
 
   const t = await getTranslations({
     locale,
