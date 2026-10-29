@@ -42,7 +42,7 @@ export default function ClientLayout({ children, modeScroll }: Props) {
                   ease: [0.22, 1, 0.36, 1],
                 },
               }}
-              className="w-full h-fit lg:pl-[20vw] pr-5 pl-5 pb-5 lg:-skew-1 lg:border-b-8 lg:border-r-8 border-l-4 lg:border-l-0 border-main">
+              className="w-full min-h-dvh lg:pl-[20vw] pr-5 pl-5 pb-5 lg:-skew-1 lg:border-b-8 lg:border-r-8 border-l-4 lg:border-l-0 border-main">
               {children}
             </motion.div>
           </main>
