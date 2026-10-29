@@ -14,6 +14,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
+    "bs": "npm run build && npm run start",
     "start": "next start",
     "lint": "eslint"
   },

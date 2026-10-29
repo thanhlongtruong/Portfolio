@@ -32,7 +32,7 @@ export default function ClientLayout({ children, modeScroll }: Props) {
           <SplashCursor />
           <Header modeScroll={modeScroll} />
 
-          <main className="w-full h-fit lg:pt-[7.5rem] pt-20 flex">
+          <main className="w-full min-h-dvh lg:pt-[7.5rem] pt-20 flex">
             <Sidebar modeScroll={modeScroll} />
             <motion.div
               layout
@@ -51,17 +51,15 @@ export default function ClientLayout({ children, modeScroll }: Props) {
         </div>
 
         <div className="overlay">
-          <div className="bar dark:bg-white bg-stone-950"></div>
-          <div className="bar dark:bg-white bg-stone-950"></div>
-          <div className="bar dark:bg-white bg-stone-950"></div>
-          <div className="bar dark:bg-white bg-stone-950"></div>
-          <div className="bar dark:bg-white bg-stone-950"></div>
-          <div className="bar dark:bg-white bg-stone-950"></div>
-          <div className="bar dark:bg-white bg-stone-950"></div>
-          <div className="bar dark:bg-white bg-stone-950"></div>
-          <div className="bar dark:bg-white bg-stone-950"></div>
-          <div className="bar dark:bg-white bg-stone-950"></div>
+          {[...Array(10)].map((_, i) => (
+            <div
+              key={i}
+              className="bar dark:bg-[#19130e] bg-[#fbf6f0] dark:border-r dark:border-orange-500/20 border-r border-orange-500/10"
+            />
+          ))}
         </div>
+
+
       </ReactLenis>
     </ThemeProvider>
   );
