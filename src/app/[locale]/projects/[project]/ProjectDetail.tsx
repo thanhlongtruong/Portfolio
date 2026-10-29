@@ -99,7 +99,7 @@ export default function ProjectDetail({ project, modeScroll }: Props) {
   const [loadImages, setLoadImages] = useState(true);
 
   return (
-    <div className="w-full min-h-screen flex flex-col gap-y-10">
+    <div className="w-full min-h-dvh flex flex-col gap-y-10">
       <BackButton
         path={modeScroll === "one-page" ? "/#projects" : "/projects"}
         back={d("BackProjects")}
@@ -320,11 +320,10 @@ export default function ProjectDetail({ project, modeScroll }: Props) {
       </div>
 
       <div
-        className={`w-full h-fit gap-5 ${
-          project === "cinefruit"
-            ? "columns-2 md:columns-3 lg:columns-4"
-            : "columns-1 md:columns-2"
-        }`}>
+        className={`w-full h-fit gap-5 ${project === "cinefruit"
+          ? "columns-2 md:columns-3 lg:columns-4"
+          : "columns-1 md:columns-2"
+          }`}>
         {getImages(projectImages) &&
           getImages(projectImages).map(([key, value]) => (
             <div
@@ -340,9 +339,8 @@ export default function ProjectDetail({ project, modeScroll }: Props) {
                   width={500}
                   height={500}
                   style={{ width: "100%", height: "auto" }}
-                  className={`rounded-md transition-opacity duration-300 ${
-                    loadImages ? "opacity-0" : "opacity-100"
-                  }`}
+                  className={`rounded-md transition-opacity duration-300 ${loadImages ? "opacity-0" : "opacity-100"
+                    }`}
                 />
               </div>
               <p className="">{dProject(`images.${key}`)}</p>

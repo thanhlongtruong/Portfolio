@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import ProjectDetail from "./ProjectDetail";
 import { getScrollModeCookie } from "@/app/scroll-mode";
+import { getPageAlternates } from "@/utils/metadata";
 
 type Params = {
   params: Promise<{
@@ -40,12 +41,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
         },
       ],
     },
+    alternates: getPageAlternates(locale, `/projects/${project}`),
   };
 }
 
 export default async function Page({ params }: Params) {
   const { project } = await params;
   const modeScroll = await getScrollModeCookie();
-  
+
   return <ProjectDetail project={project} modeScroll={modeScroll} />;
 }

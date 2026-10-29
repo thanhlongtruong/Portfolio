@@ -31,13 +31,6 @@ export async function generateMetadata({
   const { locale } = await params;
   return {
     metadataBase: new URL("https://portfolio-thanhlong.vercel.app"),
-    alternates: {
-      canonical: `/${locale}`,
-      languages: {
-        "en-US": "/en",
-        "vi-VN": "/vi",
-      },
-    },
     icons: {
       icon: [
         { url: "/favicon.ico" },

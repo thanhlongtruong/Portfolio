@@ -15,6 +15,7 @@ export default function Header({ modeScroll }: { modeScroll: ModeScroll }) {
       </TransitionLink>
       <div className="gap-x-10 flex">
         <div className="gap-x-10 hidden md:flex">
+
           <SwitchModeScroll modeScroll={modeScroll} />
 
           <ThemeSwitcher />

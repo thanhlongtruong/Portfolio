@@ -224,7 +224,7 @@ export default function ContactSection({ mode = "multi-page" }: Props) {
   };
 
   return (
-    <section className="flex flex-col gap-y-10">
+    <section className="min-h-dvh flex flex-col gap-y-10">
       <h1 itemProp="contact" className="topic">
         {dContactPage("title")}
       </h1>

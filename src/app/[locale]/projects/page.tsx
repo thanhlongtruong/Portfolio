@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import ProjectsSection from "../../components/sections/ProjectsSection";
 import { Metadata } from "next";
+import { getPageAlternates } from "@/utils/metadata";
 
 type Params = {
   params: Promise<{
@@ -15,9 +16,11 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     locale,
     namespace: "ProjectsPage",
   });
+
   return {
     title: `${t("title")}`,
     description: t("description"),
+    alternates: getPageAlternates(locale, "/projects"),
   };
 }
 
